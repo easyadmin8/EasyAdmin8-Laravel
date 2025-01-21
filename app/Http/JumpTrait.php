@@ -17,7 +17,7 @@ trait JumpTrait
      * @param int $wait 跳转等待时间
      * @return Response|JsonResponse|View
      */
-    protected function success(string $msg = '', array $data = [], string $url = null, int $wait = 3): Response|JsonResponse|View
+    protected function success(string $msg = '', array $data = [], ?string $url = null, int $wait = 3): Response|JsonResponse|View
     {
         if (empty($msg)) $msg = ea_trans('operation successful');
         if (is_null($url) && isset($_SERVER["HTTP_REFERER"])) {
@@ -45,7 +45,7 @@ trait JumpTrait
      * @param int $wait
      * @return Response|JsonResponse|View
      */
-    public function error(string $msg = '', array $data = [], string $url = null, int $wait = 3): Response|JsonResponse|View
+    public function error(string $msg = '', array $data = [], ?string $url = null, int $wait = 3): Response|JsonResponse|View
     {
         if (empty($msg)) $msg = ea_trans('operation failed');
         if (is_null($url)) {
@@ -72,7 +72,7 @@ trait JumpTrait
      * @param int $wait
      * @return Response|JsonResponse|View
      */
-    public function responseView(string $msg = '', array $data = [], string $url = null, int $wait = 3): Response|JsonResponse|View
+    public function responseView(string $msg = '', array $data = [], ?string $url = null, int $wait = 3): Response|JsonResponse|View
     {
         if (empty($msg)) $msg = ea_trans('operation failed');
         if (is_null($url)) {
