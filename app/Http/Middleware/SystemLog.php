@@ -44,15 +44,10 @@ class SystemLog
         $url    = $request->getPathInfo();
         $title  = '';
         try {
-            $pathInfo    = $request->getPathInfo();
-            $pathInfoExp = explode('/', $pathInfo);
-            $_action     = end($pathInfoExp) ?? '';
-            $pathInfoExp = explode('.', $pathInfoExp[2] ?? '');
-            $_name       = $pathInfoExp[0] ?? '';
-            $_controller = ucfirst($pathInfoExp[1] ?? '');
-            if ($_name && $_controller) {
-                $className        = "App\Http\Controllers\admin\\{$_name}\\{$_controller}Controller";
-                $reflectionMethod = new \ReflectionMethod($className, $_action);
+            $currentAdminAction        = currentAdminAction();
+            $currentAdminActionExplode = explode('@', $currentAdminAction);
+            if ($currentAdminActionExplode) {
+                $reflectionMethod = new \ReflectionMethod($currentAdminActionExplode[0], $currentAdminActionExplode[1]);
                 $attributes       = $reflectionMethod->getAttributes(MiddlewareAnnotation::class);
                 foreach ($attributes as $attribute) {
                     $annotation = $attribute->newInstance();
@@ -60,7 +55,7 @@ class SystemLog
                     if (in_array('log', array_map('strtolower', $_ignore))) return $response;
                 }
                 $controllerTitle      = $nodeTitle = '';
-                $controllerAttributes = (new \ReflectionClass($className))->getAttributes(ControllerAnnotation::class);
+                $controllerAttributes = (new \ReflectionClass($currentAdminActionExplode[0]))->getAttributes(ControllerAnnotation::class);
                 $actionAttributes     = $reflectionMethod->getAttributes(NodeAnnotation::class);
                 foreach ($controllerAttributes as $controllerAttribute) {
                     $controllerAnnotation = $controllerAttribute->newInstance();
