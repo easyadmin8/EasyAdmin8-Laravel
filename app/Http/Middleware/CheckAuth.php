@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\admin\ErrorPageController;
 use App\Http\JumpTrait;
+use App\Http\Services\annotation\MiddlewareAnnotation;
 use App\Http\Services\AuthService;
 use Closure;
 use Illuminate\Http\Request;
@@ -26,6 +26,15 @@ class CheckAuth
         $parameters  = request()->route()->parameters;
         $controller  = $parameters['controller'] ?? 'index';
         $adminId     = session('admin.id', 0);
+        try {
+            $currentAdminAction        = currentAdminAction();
+            $currentAdminActionExplode = explode('@', $currentAdminAction);
+            $reflectionClass           = new \ReflectionMethod($currentAdminActionExplode[0], $currentAdminActionExplode[1]);
+            $checkIgnoreLogin          = $reflectionClass->getAttributes(MiddlewareAnnotation::class)[0]->newInstance()->ignore;
+            // 不需要登录的页面 跳过检测权限
+            if (strtolower($checkIgnoreLogin) == 'login') return $next($request);
+        }catch (\Throwable) {
+        }
         // 验证权限
         if ($adminId) {
             $authService = app(AuthService::class, ['adminId' => $adminId]);

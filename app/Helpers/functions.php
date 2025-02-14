@@ -34,7 +34,7 @@ if (!function_exists('parse_name')) {
     function parse_name(string $name, int $type = 0, bool $ucfirst = true): string
     {
         if ($type) {
-            $name = preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+            $name = preg_replace_callback('/_([a-zA-Z])/', function($match) {
                 return strtoupper($match[1]);
             }, $name);
 
@@ -150,6 +150,33 @@ if (!function_exists('updateFields')) {
         return $row->save();
     }
 
+}
+
+if (!function_exists('currentAdminAction')) {
+    function currentAdminAction(?string $action = null): string
+    {
+        $request     = request();
+        $pathInfo    = $request->getPathInfo();
+        $pathInfoExp = explode('/', $pathInfo);
+        $_action     = end($pathInfoExp) ?? '';
+        $pathInfoExp = explode('.', $pathInfoExp[2] ?? '');
+        $_name       = $pathInfoExp[0] ?? '';
+        $_controller = ucfirst($pathInfoExp[1] ?? '');
+        switch ($action) {
+            case 'controller':
+                if (empty($_controller)) $_controller = ucfirst($_name);
+                return $_controller;
+            case 'action':
+                return $_action;
+            default:
+                $namespace = "App\Http\Controllers\admin\\{$_name}\\{$_controller}Controller@{$_action}";
+                if (empty($_controller)) {
+                    $_controller = ucfirst($_name);
+                    $namespace   = "App\Http\Controllers\admin\\{$_controller}Controller@{$_action}";
+                }
+                return $namespace;
+        }
+    }
 }
 
 /**

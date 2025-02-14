@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Http\Services\annotation\NodeAnnotation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -81,7 +82,7 @@ class AuthService
         // 判断是否需要获取当前节点
         if (empty($node)) {
             $node = $this->getCurrentNode();
-        } else {
+        }else {
             $node = $this->parseNodeStr($node);
         }
         // 判断是否加入节点控制，优先获取缓存信息
@@ -100,7 +101,27 @@ class AuthService
         if (isset($this->adminNode[$node])) {
             return true;
         }
+        if ($this->checkNodeAnnotationAttrAuth($node)) return true;
         return false;
+    }
+
+    protected function checkNodeAnnotationAttrAuth(string $node): bool
+    {
+        $bool = false;
+        try {
+            $currentAdminAction        = currentAdminAction();
+            $currentAdminActionExplode = explode('@', $currentAdminAction);
+            $nodeExplode               = explode('/', $node);
+            $action                    = end($nodeExplode);
+            $reflectionClass           = new \ReflectionMethod($currentAdminActionExplode[0], $action);
+            $attributes                = $reflectionClass->getAttributes(NodeAnnotation::class);
+            foreach ($attributes as $attribute) {
+                $annotation = $attribute->newInstance();
+                $bool       = $annotation->auth === false;
+            }
+        }catch (\Throwable) {
+        }
+        return $bool;
     }
 
     /**
@@ -122,19 +143,19 @@ class AuthService
         $nodeList  = [];
         $adminInfo = DB::table($this->config['system_admin'])
             ->where([
-                        'id'     => $this->adminId,
-                        'status' => 1,
-                    ])->first();
+                'id'     => $this->adminId,
+                'status' => 1,
+            ])->first();
         $adminInfo = get_object_vars($adminInfo);
         if (!empty($adminInfo) && !empty($adminInfo['auth_ids'])) {
 
             $nodeIds  = DB::table($this->config['system_auth_node'])
                 ->whereIn('auth_id', explode(',', $adminInfo['auth_ids']))
-                ->select('node_id')->get()->map(function ($value) {
+                ->select('node_id')->get()->map(function($value) {
                     return (array)$value;
                 })->toArray();
             $nodeList = DB::table($this->config['system_node'])
-                ->whereIn('id', $nodeIds)->get()->keyBy('node')->map(function ($value) {
+                ->whereIn('id', $nodeIds)->get()->keyBy('node')->map(function($value) {
                     return (array)$value;
                 })->toArray();
         }
