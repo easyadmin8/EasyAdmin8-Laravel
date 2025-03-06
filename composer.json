@@ -3,7 +3,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -19,7 +22,8 @@
         "qiniu/php-sdk": "^7.11",
         "webman/captcha": "^1.0",
         "wolf-leo/phplogviewer": "^0.11.3",
-        "wolfcode/authenticator": "^0.0.6"
+        "wolfcode/authenticator": "^0.0.6",
+        "wolfcode/rate-limiting": "^0.1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

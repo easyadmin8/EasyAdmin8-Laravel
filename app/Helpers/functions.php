@@ -155,24 +155,23 @@ if (!function_exists('updateFields')) {
 if (!function_exists('currentAdminAction')) {
     function currentAdminAction(?string $action = null): string
     {
-        $request     = request();
-        $pathInfo    = $request->getPathInfo();
-        $pathInfoExp = explode('/', $pathInfo);
-        $_action     = end($pathInfoExp) ?? '';
-        $pathInfoExp = explode('.', $pathInfoExp[2] ?? '');
-        $_name       = $pathInfoExp[0] ?? '';
-        $_controller = ucfirst($pathInfoExp[1] ?? '');
+        $request    = request();
+        $controller = $request->controller ?: 'Index';
+        $action     = $request->action ?: 'index';
+        $name       = $request->route()->parameter('secondary');
+        $controller = ucfirst($controller);
+        $_name      = '';
         switch ($action) {
             case 'controller':
                 if (empty($_controller)) $_controller = ucfirst($_name);
                 return $_controller;
             case 'action':
-                return $_action;
+                return $action;
             default:
-                $namespace = "App\Http\Controllers\admin\\{$_name}\\{$_controller}Controller@{$_action}";
-                if (empty($_controller)) {
-                    $_controller = ucfirst($_name);
-                    $namespace   = "App\Http\Controllers\admin\\{$_controller}Controller@{$_action}";
+                if ($name) {
+                    $namespace = "App\Http\Controllers\admin\\{$name}\\{$controller}Controller@{$action}";
+                }else {
+                    $namespace = "App\Http\Controllers\admin\\{$controller}Controller@{$action}";
                 }
                 return $namespace;
         }
