@@ -10,19 +10,20 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
-        "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1",
         "ext-pdo": "*",
         "aliyuncs/oss-sdk-php": "^2.6",
         "doctrine/annotations": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "jianyan74/php-excel": "^1.0",
+        "laravel/framework": "^12.0",
+        "laravel/tinker": "^2.10.1",
         "phpoffice/phpspreadsheet": "^1.29",
         "qcloud/cos-sdk-v5": "^2.6",
         "qiniu/php-sdk": "^7.11",
         "webman/captcha": "^1.0",
         "wolf-leo/phplogviewer": "^0.11.3",
         "wolfcode/authenticator": "^0.0.6",
+        "wolfcode/php-ai": "^0.1.2",
         "wolfcode/rate-limiting": "^0.1.0"
     },
     "require-dev": {

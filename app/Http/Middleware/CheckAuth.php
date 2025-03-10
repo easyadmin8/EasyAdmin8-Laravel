@@ -44,7 +44,7 @@ class CheckAuth
                 if (!$check) return (request()->ajax() || request()->method() == 'POST') ? $this->error('无权限访问') : $this->responseView('无权限访问');
                 // 判断是否为演示环境
                 if (config('easyadmin.IS_DEMO', false) && \request()->method() == 'POST') {
-                    if (!in_array($currentNode, ['system.log/record', ''])) return (request()->ajax() || request()->method() == 'POST') ? $this->error('演示环境下不允许修改') : $this->responseView('无权限访问');
+                    if (!in_array($currentNode, ['system.log/record', 'mall.goods/aiOptimization'])) return (request()->ajax() || request()->method() == 'POST') ? $this->error('演示环境下不允许修改') : $this->responseView('无权限访问');
                 }
             }
         }
