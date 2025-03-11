@@ -84,8 +84,44 @@ class LogController extends AdminController
 
     #[MiddlewareAnnotation(ignore: MiddlewareAnnotation::IGNORE_LOG)]
     #[NodeAnnotation(title: 'Framework Log', auth: true, ignore: NodeAnnotation::IGNORE_NODE)]
-    public function record()
+    public function record(): View
     {
         return (new \Wolfcode\PhpLogviewer\laravel\LogViewer())->fetch();
     }
+
+    #[NodeAnnotation(title: 'Delete specified log', auth: true)]
+    public function deleteMonthLog(): View|JsonResponse
+    {
+        if (!request()->ajax()) {
+            return $this->fetch();
+        }
+
+        if ($this->isDemo) return $this->error(ea_trans('Modification is not allowed in the demonstration environment', false));
+
+        $monthsAgo = (int)request()->post('month', 0);
+        if ($monthsAgo < 1) return $this->error('Month error');
+
+        $dbPrefix   = env('DB_PREFIX');
+        $dbLike     = "{$dbPrefix}system_log_";
+        $tables     = Db::select("SHOW TABLES LIKE '$dbLike%'");
+        $threshold  = date('Ym', strtotime("-$monthsAgo month"));
+        $tableNames = [];
+        try {
+            foreach ($tables as $table) {
+                $tableName = current($table);
+                if (!preg_match("/^$dbLike\d{6}$/", $tableName)) continue;
+                $datePart   = substr($tableName, -6);
+                $issetTable = DB::select("SHOW TABLES LIKE '$tableName'");
+                if (!$issetTable) continue;
+                if ($datePart - $threshold <= 0) {
+                    DB::statement("DROP TABLE `$tableName`");
+                    $tableNames[] = $tableName;
+                }
+            }
+        }catch (\Throwable) {
+        }
+        if (empty($tableNames)) return $this->error('Nothing to delete');
+        return $this->success('success <br/>' . implode('<br>', $tableNames));
+    }
+
 }

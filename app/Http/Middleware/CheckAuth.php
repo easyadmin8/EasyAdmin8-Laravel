@@ -44,7 +44,7 @@ class CheckAuth
                 if (!$check) return (request()->ajax() || request()->method() == 'POST') ? $this->error(ea_trans('Unauthorized access', false)) : $this->responseView(ea_trans('Unauthorized access', false));
                 // 判断是否为演示环境
                 if (config('easyadmin.IS_DEMO', false) && \request()->method() == 'POST') {
-                    if (!in_array($currentNode, ['system.log/record', ''])) return (request()->ajax() || request()->method() == 'POST') ? $this->error(ea_trans('Modification is not allowed in the demonstration environment', false)) : $this->responseView(ea_trans('Unauthorized access', false));
+                    if (!in_array($currentNode, ['system.log/record', 'mall.goods/aiOptimization'])) return (request()->ajax() || request()->method() == 'POST') ? $this->error(ea_trans('Modification is not allowed in the demonstration environment', false)) : $this->responseView(ea_trans('Unauthorized access', false));
                 }
             }
         }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Controllers\admin\ErrorPageController;
 use App\Http\JumpTrait;
 use App\Http\Services\annotation\MiddlewareAnnotation;
 use Closure;
@@ -54,12 +53,12 @@ class CheckLogin
             $adminId    = session('admin.id', 0);
             $expireTime = session('admin.expire_time');
             if (empty($adminId)) {
-                return $this->responseView('请先登录后台', [], __url("/login"));
+                return $this->responseView(ea_trans('Please log in to the backend first', false), [], __url("/login"));
             }
             // 判断是否登录过期
             if ($expireTime !== true && time() > $expireTime) {
                 $request->session()->forget('admin');
-                return $this->responseView('登录已过期，请重新登录', [], __url("/login"));
+                return $this->responseView(ea_trans('Login has expired, please log in again', false), [], __url("/login"));
             }
         }
         return $response;

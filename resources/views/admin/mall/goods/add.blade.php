@@ -10,9 +10,18 @@
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">{{ea_trans('goods name',true,'common')}}</label>
-            <div class="layui-input-block">
-                <input type="text" name="title" class="layui-input" lay-verify="required" placeholder="{{ea_trans('please enter',false)}}" value="">
+            <div class="layui-row">
+                <label class="layui-form-label required">{{ea_trans('goods name',true,'common')}}</label>
+                <div class="layui-input-block layui-col-space5">
+                    <div class="layui-col-xs10">
+                        <div class="layui-input-wrap">
+                            <input type="text" name="title" class="layui-input" lay-verify="required" placeholder="{{ea_trans('please enter',false)}}" value="">
+                        </div>
+                    </div>
+                    <div class="layui-col-xs2">
+                        <button class="layui-btn layui-bg-purple layui-btn-fluid" type="button" lay-on="AiOptimization">AI</button>
+                    </div>
+                </div>
             </div>
         </div>
 

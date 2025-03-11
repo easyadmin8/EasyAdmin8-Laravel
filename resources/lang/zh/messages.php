@@ -271,6 +271,8 @@ return [
                     'data'                     => '请求数据',
                     'response'                 => '回调数据',
                     'Click to preview'         => '点击预览',
+                    'Delete specified log'     => '删除指定日志',
+                    'Months ago Logs'          => '个月前的日志',
                 ],
             ],
             'admin'        => [
