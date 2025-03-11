@@ -16,16 +16,16 @@
 
 ## 项目介绍
 
-> `EasyAdmin8-Laravel` 在 [`EasyAdmin`](https://gitee.com/zhongshaofa/easyadmin) 的基础上使用 Laravel 11.x 重构，PHP 最低版本要求不低于 8.2
+> `EasyAdmin8-Laravel` 在 [`EasyAdmin`](https://gitee.com/zhongshaofa/easyadmin) 的基础上使用 Laravel 12.x 重构，PHP 最低版本要求不低于 8.2
 >
-> 请注意：当前项目采用 `laravel 11.x` 构建，如需要 `laravel 10.x` 请在分支中选择 `10.x`
+> 请注意：当前项目采用 `laravel 12.x` 构建，如需要 `laravel 10.x` 请在分支中选择 `10.x`
 >
 > Laravel v10.x 和 layui v2.9.x 的快速开发的后台管理系统。
 >
 > 项目地址：[http://easyadmin8.top](http://easyadmin8.top)
 >
 > 演示地址：
-> - `11.x版本` [http://laravel.easyadmin8.top/admin](http://laravel.easyadmin8.top/admin)
+> - `12.x版本` [http://laravel.easyadmin8.top/admin](http://laravel.easyadmin8.top/admin)
 > - `10.x版本` [http://laravel-10.easyadmin8.top/admin](http://laravel-10.easyadmin8.top/admin)
 >
 >【如果不能访问，可以自行本地搭建预览或参考下方界面预览图】
