@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Helpers\Utils;
 use App\Http\Controllers\common\AdminController;
 use App\Models\SystemAdmin;
 use Illuminate\Http\JsonResponse;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Webman\Captcha\CaptchaBuilder;
 use Webman\Captcha\PhraseBuilder;
+use Wolfcode\RateLimiting\Attributes\RateLimitingMiddleware;
 
 class LoginController extends AdminController
 {
@@ -21,7 +23,7 @@ class LoginController extends AdminController
             redirect(__url())->send();
         }
     }
-
+    #[RateLimitingMiddleware(key: [Utils::class, 'getIp'], seconds: 1, limit: 1, message: 'Frequent operations...')]
     public function index(): View|JsonResponse
     {
         $captcha = config('easyadmin.CAPTCHA', false);

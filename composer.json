@@ -23,6 +23,7 @@
         "wolf-leo/phplogviewer": "^0.11.3",
         "wolfcode/authenticator": "^0.0.6",
         "wolfcode/php-ai": "^0.1.0",
+        "wolfcode/rate-limiting": "^0.1.0",
         "ext-pdo": "*"
     },
     "require-dev": {
