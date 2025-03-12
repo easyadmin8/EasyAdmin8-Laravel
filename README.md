@@ -39,22 +39,16 @@
 
 > EasyAdmin8-Laravel 使用 Composer 来管理项目依赖。因此，在使用 EasyAdmin8-Laravel 之前，请确保你的机器已经安装了 Composer。
 
-### 通过一键安装命令
-
-```
-if [ -f /usr/bin/curl ];then curl -sSO https://easyadmin8.top/auto-install-EasyAdmin8-Laravel.sh;else wget -O auto-install-EasyAdmin8-Laravel.sh https://easyadmin8.top/auto-install-EasyAdmin8-Laravel.sh;fi;bash auto-install-EasyAdmin8-Laravel.sh
-```
-
 ### 通过`git`下载安装包，`composer`安装依赖包
 
 ```
 1.下载安装包
 
-  git clone https://github.com/wolf-leo/EasyAdmin8-Laravel
+  git clone -b 11.x https://github.com/wolf-leo/EasyAdmin8-Laravel
 
   或者
 
-  git clone https://gitee.com/wolf18/EasyAdmin8-Laravel
+  git clone -b 11.x https://gitee.com/wolf18/EasyAdmin8-Laravel
 
 2.安装依赖包（确保 PHP 版本 >= 8.2 如需要本地上传则须装 fileinfo 扩展）
 
