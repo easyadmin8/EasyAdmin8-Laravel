@@ -45,11 +45,11 @@ if [ -f /usr/bin/curl ];then curl -sSO https://easyadmin8.top/auto-install-EasyA
 ```
 1.下载安装包
 
-  git clone https://github.com/wolf-leo/EasyAdmin8-Laravel
+  git clone -b 12.x-i18n https://github.com/wolf-leo/EasyAdmin8-Laravel
 
   或者
 
-  git clone https://gitee.com/wolf18/EasyAdmin8-Laravel
+  git clone -b 12.x-i18n https://gitee.com/wolf18/EasyAdmin8-Laravel
 
 2.安装依赖包（确保 PHP 版本 >= 8.2 如需要本地上传则须装 fileinfo 扩展）
 
