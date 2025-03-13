@@ -70,7 +70,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">数据库密码</label>
                 <div class="layui-input-block">
-                    <input type="password" class="layui-input" name="db_password" autocomplete="off" lay-verify="required" lay-reqtext="请输入数据库密码" placeholder="root" value="{{$envInfo['DB_PASS']}}">
+                    <input type="password" class="layui-input" name="db_password" autocomplete="off" lay-verify="required" lay-reqtext="请输入数据库密码" placeholder="请输入数据库密码" value="{{$envInfo['DB_PASS']}}">
                 </div>
             </div>
 
