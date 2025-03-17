@@ -103,7 +103,7 @@ class LogController extends AdminController
 
         $dbPrefix   = env('DB_PREFIX');
         $dbLike     = "{$dbPrefix}system_log_";
-        $tables     = Db::select("SHOW TABLES LIKE '$dbLike%'");
+        $tables     = DB::select("SHOW TABLES LIKE '$dbLike%'");
         $threshold  = date('Ym', strtotime("-$monthsAgo month"));
         $tableNames = [];
         try {
