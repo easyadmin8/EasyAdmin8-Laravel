@@ -6,6 +6,7 @@ use App\Http\Controllers\common\AdminController;
 use App\Http\Services\annotation\MiddlewareAnnotation;
 use App\Http\Services\annotation\NodeAnnotation;
 use App\Http\Services\annotation\ControllerAnnotation;
+use App\Models\MallCate;
 use App\Models\MallGoods;
 use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
@@ -22,6 +23,8 @@ class GoodsController extends AdminController
     {
         parent::initialize();
         $this->model = new MallGoods();
+        $cate        = (new MallCate())->pluck('title', 'id')->toArray();
+        $this->assign(compact('cate'));
     }
 
     #[NodeAnnotation(title: 'list', auth: true)]
