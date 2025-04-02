@@ -87,7 +87,7 @@ class AuthService
         }
         // 判断是否加入节点控制，优先获取缓存信息
         if (!isset($this->nodeList[$node])) {
-            return false;
+            return true;
         }
         $nodeInfo = get_object_vars($this->nodeList[$node]);
         if ($nodeInfo['is_auth'] == 0) {
@@ -194,6 +194,7 @@ class AuthService
             }
         }
         $node = implode('/', $array);
+        $node = Str::camel($node);
         return $node;
     }
 
