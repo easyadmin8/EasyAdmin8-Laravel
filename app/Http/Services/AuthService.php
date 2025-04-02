@@ -87,7 +87,7 @@ class AuthService
         }
         // 判断是否加入节点控制，优先获取缓存信息
         if (!isset($this->nodeList[$node])) {
-            return true;
+            return false;
         }
         $nodeInfo = get_object_vars($this->nodeList[$node]);
         if ($nodeInfo['is_auth'] == 0) {
