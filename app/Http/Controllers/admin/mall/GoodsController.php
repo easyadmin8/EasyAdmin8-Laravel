@@ -33,7 +33,7 @@ class GoodsController extends AdminController
         if (!request()->ajax()) return $this->fetch();
         list($page, $limit, $where) = $this->buildTableParams();
         $count = $this->model->where($where)->count();
-        $list  = $this->model->where($where)->with(['cate'])->orderByDesc($this->order)->paginate($limit)->items();
+        $list  = $this->model->where($where)->with(['cate'])->orderBy($this->order, $this->orderDirection)->paginate($limit)->items();
         $data  = [
             'code'  => 0,
             'msg'   => '',

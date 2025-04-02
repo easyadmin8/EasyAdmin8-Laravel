@@ -115,7 +115,7 @@ class AjaxController extends AdminController
         $where       = [];
         if ($title) $where[] = ['original_name', 'LIKE', "%{$title}%"];
         $count = $this->model->where($where)->count();
-        $list  = $this->model->where($where)->orderByDesc($this->order)->paginate($limit)->items();
+        $list  = $this->model->where($where)->orderBy($this->order, $this->orderDirection)->paginate($limit)->items();
         $data  = [
             'code'  => 0,
             'msg'   => '',

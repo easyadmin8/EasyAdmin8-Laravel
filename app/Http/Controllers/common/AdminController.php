@@ -31,6 +31,11 @@ class AdminController extends Controller
     public string $order = 'id';
 
     /**
+     * @var string
+     */
+    public string $orderDirection = 'desc';
+
+    /**
      * 过滤节点更新
      * @var array
      */
@@ -98,6 +103,22 @@ class AdminController extends Controller
             'adminEditor'          => sysconfig('site', 'editor_type') ?: 'wangEditor',
         ];
         $this->assign($data);
+        $this->setOrder();
+    }
+
+    /**
+     * 初始化排序
+     * @return $this
+     */
+    public function setOrder(): static
+    {
+        $tableOrder = request()->get('tableOrder', '');
+        if (!empty($tableOrder)) {
+            [$orderField, $orderType] = explode(' ', $tableOrder);
+            $this->order          = $orderField;
+            $this->orderDirection = $orderType;
+        }
+        return $this;
     }
 
     /**

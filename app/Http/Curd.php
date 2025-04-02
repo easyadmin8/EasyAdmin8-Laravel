@@ -29,7 +29,7 @@ trait Curd
         }
         list($page, $limit, $where) = $this->buildTableParams();
         $count = $this->model->where($where)->count();
-        $list  = $this->model->where($where)->orderByDesc($this->order)->paginate($limit)->items();
+        $list  = $this->model->where($where)->orderBy($this->order, $this->orderDirection)->paginate($limit)->items();
         $data  = [
             'code'  => 0,
             'msg'   => '',
@@ -105,7 +105,7 @@ trait Curd
                 $header[] = [$comment, $vo->Field];
             }
         }
-        $list = $this->model->where($where)->limit(100000)->orderByDesc('id')->get();
+        $list = $this->model->where($where)->limit(100000)->orderByDesc($this->order, $this->orderDirection)->get();
         if (empty($list)) return $this->error(ea_trans('No data available', false));
         $list     = $list->toArray();
         $fileName = time();
