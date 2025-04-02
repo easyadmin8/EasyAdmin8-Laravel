@@ -84,13 +84,13 @@ class AjaxController extends AdminController
         $upload_type = $uploadConfig['upload_type'];
         try {
             $upload = UploadService::instance()->setConfig($uploadConfig)->$upload_type($file, $type);
-        } catch (\Exception $e) {
+        }catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
         $code = $upload['code'] ?? 0;
         if ($code == 0) {
             return $this->error($upload['data'] ?? '');
-        } else {
+        }else {
             return $type == 'editor' ? json(
                 [
                     'error'    => ['message' => '上传成功', 'number' => 201,],
@@ -115,7 +115,7 @@ class AjaxController extends AdminController
         $where       = [];
         if ($title) $where[] = ['original_name', 'LIKE', "%{$title}%"];
         $count = $this->model->where($where)->count();
-        $list  = $this->model->where($where)->orderByDesc($this->order)->paginate($limit)->items();
+        $list  = $this->model->where($where)->orderBy($this->order, $this->orderDirection)->paginate($limit)->items();
         $data  = [
             'code'  => 0,
             'msg'   => '',
@@ -135,7 +135,7 @@ class AjaxController extends AdminController
         $upload_allow_size = $uploadConfig['upload_allow_size'];
         $_upload_allow_ext = explode(',', $uploadConfig['upload_allow_ext']);
         $upload_allow_ext  = [];
-        array_map(function ($value) use (&$upload_allow_ext) {
+        array_map(function($value) use (&$upload_allow_ext) {
             $upload_allow_ext[] = '.' . $value;
         }, $_upload_allow_ext);
         $config      = [
@@ -179,10 +179,10 @@ class AjaxController extends AdminController
                     $code   = $upload['code'] ?? 0;
                     if ($code == 0) {
                         return json(['state' => $upload['data'] ?? '上传错误信息']);
-                    } else {
+                    }else {
                         return json(['state' => 'SUCCESS', 'url' => $upload['data']['url'] ?? '']);
                     }
-                } catch (\Exception $e) {
+                }catch (\Exception $e) {
                     return $this->error($e->getMessage());
                 }
             case 'listImage':

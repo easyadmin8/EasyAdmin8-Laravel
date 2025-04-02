@@ -275,6 +275,9 @@ define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect
                 // 监听表格开关切换
                 admin.table.listenEdit(options.init, options.layFilter, options.id, options.modifyReload);
 
+                // 监听表格排序
+                admin.table.listenSort(options);
+
                 return newTable;
             },
             renderToolbar: function (data, elem, tableId, init) {
@@ -948,6 +951,29 @@ define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect
                     });
                 }
             },
+            listenSort: function (options) {
+                table.on('sort(' + options.layFilter + ')', function (obj) {
+                    let defaultWhere = {}
+                    $.each(options.cols, function (_, colsV) {
+                        let formatFilter = {}
+                        let formatOp = {}
+                        $.each(colsV, function (i, v) {
+                            if (v.field) {
+                                if ($('#c-' + v.field).val()) {
+                                    formatFilter[v.field] = $('#c-' + v.field).val()
+                                    formatOp[v.field] = v.searchOp || '='
+                                    defaultWhere['filter'] = JSON.stringify(formatFilter);
+                                    defaultWhere['op'] = JSON.stringify(formatOp);
+                                }
+                            }
+                        })
+                    })
+                    let sortWhere = {tableOrder: obj.field + ' ' + obj.type}
+                    table.reload(options.id, {
+                        where: {...defaultWhere, ...sortWhere}
+                    });
+                });
+            }
         },
         checkMobile: function () {
             var userAgentInfo = navigator.userAgent;
