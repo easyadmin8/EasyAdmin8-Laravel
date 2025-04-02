@@ -46,8 +46,10 @@ class MenuController extends AdminController
             if ($validator->fails()) {
                 return $this->error($validator->errors()->first());
             }
+            $params = [];
+            if (empty($post['href'])) $params['href'] = '';
             try {
-                $save = insertFields($this->model);
+                $save = insertFields($this->model, $params);
             }catch (\Exception $e) {
                 return $this->error(ea_trans('operation failed', false));
             }
@@ -86,6 +88,7 @@ class MenuController extends AdminController
             }
             $params = [];
             if ($row->pid == HOME_PID) $params['pid'] = HOME_PID;
+            if (empty($post['href'])) $params['href'] = '';
             try {
                 $save = updateFields($this->model, $row, $params);
             }catch (\Exception $e) {
