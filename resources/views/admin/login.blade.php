@@ -9,7 +9,7 @@
                 <span class="bg2"></span>
             </div>
             <form class="layui-form login-bottom">
-                <div class="demo @if(!$isDemo)layui-hide;@endif">{{ea_trans('username',false)}}:admin {{ea_trans('password',false)}}:123456</div>
+                <div class="demo @if(!$isDemo)layui-hide@endif">{{ea_trans('username',false)}}:admin {{ea_trans('password',false)}}:123456</div>
                 <div class="center">
 
                     <div class="item">
