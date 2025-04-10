@@ -75,8 +75,8 @@ html.dark, body {
 
 /**重写layui表格自适应*/
 .layuimini-container .layui-table-cell {
-    height: 100%;
-    max-width: 100%;
+    height: 47px;
+    line-height: 40px;
 }
 
 /**数据表格-搜索表单样式*/
