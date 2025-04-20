@@ -82,6 +82,14 @@
             </div>
         </div>
 
+        <!-- 文档：https://xm-select.com/file/xm-select/v1.2.4/#/basic/use -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">模拟多选</label>
+            <div class="layui-input-block">
+                <div id="demo1" class="xm-select-demo"></div>
+            </div>
+        </div>
+
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label">备注信息</label>
             <div class="layui-input-block">
