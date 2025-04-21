@@ -2,10 +2,6 @@
 <div class="layuimini-container">
     <div class="layuimini-main">
         <table id="currentTable" class="layui-table layui-hide"
-               data-auth-add="{{auths('mall.goods/add')}}"
-               data-auth-edit="{{auths('mall.goods/edit')}}"
-               data-auth-delete="{{auths('mall.goods/delete')}}"
-               data-auth-stock="{{auths('mall.goods/stock')}}"
                data-auth-recycle="{{auths('mall.goods/recycle')}}"
                lay-filter="currentTable">
         </table>

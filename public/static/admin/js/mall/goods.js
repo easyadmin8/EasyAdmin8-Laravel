@@ -10,6 +10,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         export_url: 'mall.goods/export',
         modify_url: 'mall.goods/modify',
         stock_url: 'mall.goods/stock',
+        recycle_url: 'mall.goods/recycle',
     };
 
     return {
@@ -26,7 +27,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                         icon: 'fa fa-plus ',
                     }],
-                    'delete', 'export'],
+                    'delete', 'export', 'recycle'],
                 cols: [[
                     {type: "checkbox"},
                     {field: 'id', width: 80, title: 'ID', searchOp: '='},
@@ -141,6 +142,78 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
         stock: function () {
+            ea.listen();
+        },
+        recycle: function () {
+            init.index_url = init.recycle_url;
+            ea.table.render({
+                init: init,
+                toolbar: ['refresh',
+                    [{
+                        class: 'layui-btn layui-btn-sm',
+                        method: 'get',
+                        field: 'id',
+                        icon: 'fa fa-refresh',
+                        text: '全部恢复',
+                        title: '确定恢复？',
+                        auth: 'recycle',
+                        url: init.recycle_url + '?type=restore',
+                        checkbox: true
+                    }, {
+                        class: 'layui-btn layui-btn-danger layui-btn-sm',
+                        method: 'get',
+                        field: 'id',
+                        icon: 'fa fa-delete',
+                        text: '彻底删除',
+                        title: '确定彻底删除？',
+                        auth: 'recycle',
+                        url: init.recycle_url + '?type=delete',
+                        checkbox: true
+                    }], 'export',
+                ],
+                cols: [[
+                    {type: "checkbox"},
+                    {field: 'id', width: 80, title: 'ID', searchOp: '='},
+                    {field: 'sort', width: 80, title: '排序', edit: 'text'},
+                    {field: 'cate_id', minWidth: 80, title: '商品分类', search: 'select', selectList: cate, laySearch: true},
+                    {field: 'title', minWidth: 80, title: '商品名称'},
+                    {field: 'logo', minWidth: 80, title: '分类图片', search: false, templet: ea.table.image},
+                    {field: 'status', title: '状态', width: 85, selectList: {0: '禁用', 1: '启用'}},
+                    // 演示多选，实际数据库并无 status2 字段，搜索后会报错
+                    {
+                        field: 'status2', title: '演示多选', width: 105, search: 'xmSelect', selectList: {1: '模拟选项1', 2: '模拟选项2', 3: '模拟选项3', 4: '模拟选项4', 5: '模拟选项5'},
+                        searchOp: 'in', templet: function (res) {
+                            // 根据自己实际项目进行输出
+                            return res?.status2 || '模拟数据'
+                        }
+                    },
+                    {field: 'create_time', minWidth: 80, title: '创建时间', search: 'range'},
+                    {field: 'delete_time', minWidth: 80, title: '删除时间', search: 'range'},
+                    {
+                        width: 250,
+                        title: '操作',
+                        templet: ea.table.tool,
+                        operat: [
+                            [{
+                                title: '确认恢复？',
+                                text: '恢复数据',
+                                filed: 'id',
+                                url: init.recycle_url + '?type=restore',
+                                method: 'get',
+                                auth: 'recycle',
+                                class: 'layui-btn layui-btn-xs layui-btn-success',
+                            }, {
+                                title: '想好了吗？',
+                                text: '彻底删除',
+                                filed: 'id',
+                                method: 'get',
+                                url: init.recycle_url + '?type=delete',
+                                auth: 'recycle',
+                                class: 'layui-btn layui-btn-xs layui-btn-normal layui-bg-red',
+                            }]]
+                    }
+                ]],
+            });
             ea.listen();
         },
     };

@@ -1141,6 +1141,7 @@ class BuildCurd
                 'table'          => $this->table,
                 'prefix_table'   => $samePrefix ? "" : $this->tablePrefix,
                 'deleteTime'     => $this->delete ? '"delete_time"' : 'false',
+                'softDelete'     => $this->delete ? '' : 'public static function bootSoftDeletes() {}',
                 'relationList'   => $relationList,
                 //                'selectList'     => $selectList,
                 'selectArrays'   => CommonTool::replaceArrayString(var_export($selectArrays, true)),
@@ -1338,6 +1339,16 @@ class BuildCurd
                 'formList' => $editFormList,
             ]);
         $this->fileList[$viewEditFile] = $viewEditValue;
+
+        $viewRecycleFile                  = "{$this->rootDir}{$this->DS}resources{$this->DS}views{$this->DS}admin{$this->DS}{$this->viewFilename}{$this->DS}recycle.blade.php";
+        $viewRecycleValue                 = CommonTool::replaceTemplate(
+            $this->getTemplate("view{$this->DS}recycle"),
+            [
+                'controllerUrl' => $this->controllerUrl,
+                'notesScript'   => $this->formatNotesScript(),
+            ]
+        );
+        $this->fileList[$viewRecycleFile] = $viewRecycleValue;
         return $this;
     }
 
@@ -1425,6 +1436,18 @@ class BuildCurd
                 'controllerUrl' => $this->controllerUrl,
                 'indexCols'     => $indexCols,
             ]);
+        $this->fileList[$jsFile] = $jsValue;
+
+        $recycleCols = $indexCols;
+        $indexCols   .= $this->formatColsRow("{width: 250, title: '操作', templet: ea.table.tool},\r");
+        $jsValue     = CommonTool::replaceTemplate(
+            $this->getTemplate("static{$this->DS}js"),
+            [
+                'controllerUrl' => $this->controllerUrl,
+                'indexCols'     => $indexCols,
+                'recycleCols'   => $recycleCols,
+            ]
+        );
         $this->fileList[$jsFile] = $jsValue;
         return $this;
     }

@@ -240,7 +240,7 @@ define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect
                 }
 
                 // 初始化表格左上方工具栏
-                options.toolbar = options.toolbar || ['refresh', 'add', 'delete', 'export'];
+                options.toolbar = options.toolbar || ['refresh', 'add', 'delete', 'export', 'recycle'];
                 options.toolbar = admin.table.renderToolbar(options.toolbar, options.elem, options.id, options.init);
 
                 // 判断是否有操作列表权限
@@ -297,6 +297,14 @@ define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect
                     } else if (v === 'export') {
                         if (admin.checkAuth('export', elem)) {
                             toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel-o"></i> 导出</button>\n';
+                        }
+                    } else if (v === 'recycle') {
+                        if (init.recycle_url === undefined) {
+                            console.warn('未定义回收站地址 init.recycle_url')
+                            return false
+                        }
+                        if (admin.checkAuth('recycle', elem)) {
+                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-bg-orange" data-open="' + init.recycle_url + '" data-title="回收站"><i class="fa fa-recycle"></i> 回收站</button>\n';
                         }
                     } else if (typeof v === "object") {
                         $.each(v, function (ii, vv) {
