@@ -92,17 +92,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 },
             })
 
-            let colors = [
-                '#f10f0f', //  红色
-                '#ffaf00', //  橙色
-                '#FF69B4', //  猛男粉
-                '#0087ff', //  蓝色
-                '#00ff00', //  青青草原
-            ];
             var demo1 = xmSelect.render({
                 el: '#demo1',
                 name: 'xxx', // form表单提交的name
-                theme: {color: colors[Math.floor(Math.random() * colors.length)]},
+                theme: {color: getComputedStyle(document.documentElement).getPropertyValue('--ea8-theme-main-color') || '#16b777'},
                 data: [
                     {name: 'Make', value: 1},
                     {name: 'PHP', value: 2},
@@ -121,17 +114,10 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 },
             })
 
-            let colors = [
-                '#f10f0f', //  红色
-                '#ffaf00', //  橙色
-                '#FF69B4', //  猛男粉
-                '#0087ff', //  蓝色
-                '#00ff00', //  青青草原
-            ];
             var demo1 = xmSelect.render({
                 el: '#demo1',
                 name: 'xxx', // form表单提交的name
-                theme: {color: colors[Math.floor(Math.random() * colors.length)]},
+                theme: {color: getComputedStyle(document.documentElement).getPropertyValue('--ea8-theme-main-color') || '#16b777'},
                 data: [
                     {name: 'Make', value: 1},
                     {name: 'PHP', value: 2, selected: true,},

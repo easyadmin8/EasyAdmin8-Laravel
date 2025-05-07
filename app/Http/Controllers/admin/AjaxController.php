@@ -198,4 +198,23 @@ class AjaxController extends AdminController
                 return json($config);
         }
     }
+
+    public function composerInfo(): JsonResponse
+    {
+        $lockFilePath = base_path() . '/composer.lock';
+        $list         = [];
+        if (file_exists($lockFilePath)) {
+            $lockFileContent = file_get_contents($lockFilePath);
+            if ($lockFileContent !== false) {
+                $lockData = json_decode($lockFileContent, true);
+                if (!empty($lockData['packages'])) {
+                    foreach ($lockData['packages'] as $package) {
+                        $list[] = ['name' => $package['name'], 'version' => $package['version']];
+                    }
+                }
+            }
+        }
+        return $this->success('success', $list);
+    }
+
 }

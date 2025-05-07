@@ -246,5 +246,5 @@ define(["jquery"], function ($) {
     };
 
 
-   return miniMenu;
+    return miniMenu;
 });

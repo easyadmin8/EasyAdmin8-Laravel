@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\CheckAuth;
+use App\Http\Middleware\CheckInstall;
 use App\Http\Middleware\CheckLogin;
 use App\Http\Middleware\RateLimiting;
 use App\Http\Middleware\SystemLog;
@@ -22,7 +23,7 @@ use Illuminate\Support\Str;
 // 系统首页
 Route::get('/', function() {
     return redirect('/' . config('easyadmin.ADMIN'));
-})->middleware([\App\Http\Middleware\CheckInstall::class]);
+})->middleware([CheckInstall::class]);
 
 // 首次安装管理系统
 Route::controller(\App\Http\Controllers\common\InstallController::class)->group(function() {
@@ -32,7 +33,7 @@ Route::controller(\App\Http\Controllers\common\InstallController::class)->group(
 // 后台所有路由
 $admin = config('admin.admin_alias_name');
 
-Route::middleware([RateLimiting::class, CheckLogin::class, SystemLog::class, CheckAuth::class])->group(function() use ($admin) {
+Route::middleware([CheckInstall::class, RateLimiting::class, CheckLogin::class, SystemLog::class, CheckAuth::class])->group(function() use ($admin) {
     Route::prefix($admin)->group(function() {
 
         // 后台首页
@@ -45,27 +46,7 @@ Route::middleware([RateLimiting::class, CheckLogin::class, SystemLog::class, Che
             $namespace = $adminNamespace . $secondary . '\\';
             $className = $namespace . ucfirst($controller . "Controller");
             $className = Str::studly($className);
-            if (class_exists($className)) {
-                $obj = new $className();
-                if (method_exists($obj, $action)) {
-                    $reflectionClass = new ReflectionClass($className);
-                    $actionMethod    = $reflectionClass->getMethod($action);
-                    $args            = [];
-                    foreach ($actionMethod->getParameters() as $items) {
-                        try {
-                            if ($items->hasType()) {
-                                $type   = $items->getType()->getName();
-                                $args[] = str_contains($type, 'App\\') ? new $type() : Container::getInstance()->make($type);
-                            }else {
-                                $args[] = request($items->getName(), '');
-                            }
-                        }catch (Throwable $exception) {
-                        }
-                    }
-                    return call_user_func([$obj, $action], ...$args);
-                }
-            }
-            abort(404);
+            return webRouteExtracted($className, $action);
         });
 
         // 动态路由 (匹配 controller)
@@ -73,56 +54,44 @@ Route::middleware([RateLimiting::class, CheckLogin::class, SystemLog::class, Che
             $namespace = $adminNamespace;
             $className = $namespace . ucfirst($controller . "Controller");
             $action    = 'index';
-            if (class_exists($className)) {
-                $obj = new $className();
-                if (method_exists($obj, $action)) {
-                    $reflectionClass = new ReflectionClass($className);
-                    $actionMethod    = $reflectionClass->getMethod($action);
-                    $args            = [];
-                    foreach ($actionMethod->getParameters() as $items) {
-                        try {
-                            if ($items->hasType()) {
-                                $type   = $items->getType()->getName();
-                                $args[] = str_contains($type, 'App\\') ? new $type() : Container::getInstance()->make($type);
-                            }else {
-                                $args[] = request($items->getName(), '');
-                            }
-                        }catch (Throwable $exception) {
-                        }
-                    }
-                    return call_user_func([$obj, $action], ...$args);
-                }
-            }
-            abort(404);
+            return webRouteExtracted($className, $action);
         });
 
         // 动态路由 (匹配 controller/action)
         Route::match(['get', 'post'], '/{controller}/{action}', function($controller, $action) use ($adminNamespace) {
             $namespace = $adminNamespace;
             $className = $namespace . ucfirst($controller . "Controller");
-            if (class_exists($className)) {
-                $obj = new $className();
-                if (method_exists($obj, $action)) {
-                    $reflectionClass = new ReflectionClass($className);
-                    $actionMethod    = $reflectionClass->getMethod($action);
-                    $args            = [];
-                    foreach ($actionMethod->getParameters() as $items) {
-                        try {
-                            if ($items->hasType()) {
-                                $type   = $items->getType()->getName();
-                                $args[] = str_contains($type, 'App\\') ? new $type() : Container::getInstance()->make($type);
-                            }else {
-                                $args[] = request($items->getName(), '');
-                            }
-                        }catch (Throwable $exception) {
-                        }
-                    }
-                    return call_user_func([$obj, $action], ...$args);
-                }
-            }
-            abort(404);
+            return webRouteExtracted($className, $action);
         });
 
     });
 });
 
+
+if (!function_exists('webRouteExtracted')) {
+
+    function webRouteExtracted(string $className, string $action)
+    {
+        if (class_exists($className)) {
+            $obj = new $className();
+            if (method_exists($obj, $action)) {
+                $reflectionClass = new ReflectionClass($className);
+                $actionMethod    = $reflectionClass->getMethod($action);
+                $args            = [];
+                foreach ($actionMethod->getParameters() as $items) {
+                    try {
+                        if ($items->hasType()) {
+                            $type   = $items->getType()->getName();
+                            $args[] = str_contains($type, 'App\\') ? new $type() : Container::getInstance()->make($type);
+                        } else {
+                            $args[] = request($items->getName(), '');
+                        }
+                    } catch (Throwable $exception) {
+                    }
+                }
+                return call_user_func([$obj, $action], ...$args);
+            }
+        }
+        abort(404);
+    }
+}

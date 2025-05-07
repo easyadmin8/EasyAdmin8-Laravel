@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect) {
+define(["jquery", "tableSelect", "miniTheme", "xmSelect"], function ($, tableSelect, miniTheme, xmSelect) {
 
     var form = layui.form,
         layer = layui.layer,
@@ -9,7 +9,7 @@ define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect
         laytpl = layui.laytpl,
         tableSelect = layui.tableSelect,
         util = layui.util;
-
+    miniTheme.changeThemeMainColor();
     layer.config({
         skin: 'layui-layer-easy'
     });
@@ -845,7 +845,8 @@ define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect
                         })
                         init.xmSelectModel[index] = xmSelect.render({
                             el: '.xmSelect-' + index, language: 'zn', data: keysArray, name: index,
-                            filterable: true, paging: true, pageSize: 10, theme: {color: '#16b777'}, toolbar: {show: true},
+                            filterable: true, paging: true, pageSize: 10, toolbar: {show: true},
+                            theme: {color: getComputedStyle(document.documentElement).getPropertyValue('--ea8-theme-main-color') || '#16b777'}
                         })
                     })
                 }

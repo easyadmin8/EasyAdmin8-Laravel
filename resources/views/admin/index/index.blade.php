@@ -92,8 +92,8 @@
         <div class="layuimini-site-mobile"><i class="layui-icon"></i></div>
 
         <div class="layui-body">
-            <div class="layuimini-tab layui-tab-rollTool layui-tab" lay-filter="layuiminiTab" lay-allowclose="true">
-                <ul class="layui-tab-title">
+            <div class="layuimini-tab layui-tabs-rollTool layui-tabs" lay-filter="layuiminiTab" id="layuiminiTab">
+                <ul class="layui-tabs-header">
                     <li class="layui-this" id="layuiminiHomeTabId" lay-id=""></li>
                 </ul>
                 <div class="layui-tab-control">
@@ -112,8 +112,8 @@
                         </ul>
                     </li>
                 </div>
-                <div class="layui-tab-content">
-                    <div id="layuiminiHomeTabIframe" class="layui-tab-item layui-show"></div>
+                <div class="layui-tabs-body">
+                    <div id="layuiminiHomeTabIframe" class="layui-tabs-item layui-show"></div>
                 </div>
             </div>
         </div>

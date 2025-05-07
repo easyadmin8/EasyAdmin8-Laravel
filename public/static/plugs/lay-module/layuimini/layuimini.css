@@ -123,43 +123,47 @@
 
 /**tab选项卡 */
 .layuimini-tab {
-    margin: 0px;
+    margin: 0;
     overflow: hidden;
     height: 100% !important;
 }
 
-.layuimini-tab .layui-tab-content {
+.layuimini-tab .layui-tabs-scroll {
+    position: marker;
+}
+
+.layuimini-tab .layui-tabs-body {
     height: calc(100% - 37px) !important;
 }
 
-.layuimini-tab .layui-tab-content .layui-tab-item {
+.layuimini-tab .layui-tabs-body .layui-tabs-item {
     height: 100%;
 }
 
-.layuimini-tab .layui-tab-content {
-    padding: 0px;
+.layuimini-tab .layui-tabs-body {
+    padding: 0;
 }
 
-.layuimini-tab .layui-tab-title {
+.layuimini-tab .layui-tabs-header {
     border: none;
     border: 1px solid whitesmoke;
     background-color: white;
 }
 
-.layuimini-tab .layui-tab-title li {
+.layuimini-tab .layui-tabs-header li {
     border-right: 1px solid whitesmoke;
     color: dimgray;
 }
 
-.layuimini-tab .layui-tab-title .layui-tab-bar {
+.layuimini-tab .layui-tabs-header .layui-tab-bar {
     display: none;
 }
 
-.layuimini-tab .layui-tab-title .layui-this:after {
+.layuimini-tab .layui-tabs-header .layui-this:after {
     display: none;
 }
 
-.layuimini-tab .layui-tab-title .layuimini-tab-active {
+.layuimini-tab .layui-tabs-header .layuimini-tab-active {
     display: inline-block;
     background-color: lightgray;
     width: 9px;
@@ -168,49 +172,52 @@
     margin-right: 5px;
 }
 
-.layuimini-tab .layui-tab-title .layui-this .layuimini-tab-active {
-    background-color: #1aa094;
+.layuimini-tab .layui-tabs-header .layui-this .layuimini-tab-active {
+    background-color: var(--ea8-theme-main-color);
 }
 
-.layuimini-tab > .layui-tab-title, .layuimini-tab > .close-box {
+.layuimini-tab > .layui-tabs-header, .layuimini-tab > .close-box {
     height: 35px !important;
 }
 
-.layuimini-tab > .layui-tab-title li, .layuimini-tab > .close-box li {
+.layuimini-tab > .layui-tabs-header li, .layuimini-tab > .close-box li {
     line-height: 35px !important;
 }
 
-.layuimini-tab .layui-tab-title span {
+.layuimini-tab .layui-tabs-header span {
     color: #acafb1;
 }
 
-.layuimini-tab .layui-tab-title .layui-this span {
+.layuimini-tab .layui-tabs-header .layui-this span {
     color: dimgray;
 }
 
-.layuimini-tab .layui-tab-title .layui-tab-close {
+.layuimini-tab .layui-tabs-header .layui-tab-close {
     font-size: 12px !important;
     width: 14px !important;
     height: 14px !important;
     line-height: 16px !important;
+    margin-left: 5px;
+    padding: 2px;
 }
 
-.layuimini-tab .layui-tab-title .layui-tab-close:hover {
+.layuimini-tab .layui-tabs-header .layui-tab-close:hover {
     border-radius: 4em;
     background: #ff5722;
+    color: #fff;
 }
 
-.layuimini-tab .layui-tab-title .disable-close + .layui-tab-close {
+.layuimini-tab .layui-tabs-header .disable-close + .layui-tab-close {
     display: none;
 }
 
-.layuimini-tab .layui-tab-title .able-close + .layui-tab-close {
+.layuimini-tab .layui-tabs-header .able-close + .layui-tab-close {
     display: inline-block;
 }
 
 .layuimini-tab .layui-tab-control > li {
     position: absolute;
-    top: 0px;
+    top: 0;
     height: 35px;
     line-height: 35px;
     width: 35px;
@@ -221,7 +228,7 @@
 }
 
 .layuimini-tab .layuimini-tab-roll-left {
-    left: 0px;
+    left: 0;
     border-right: whitesmoke 1px solid;
     border-left: whitesmoke 1px solid;
 }
@@ -232,7 +239,7 @@
 }
 
 .layuimini-tab .layui-tab-tool {
-    right: 0px;
+    right: 0;
     border-left: 1px solid whitesmoke;
 }
 
@@ -248,11 +255,11 @@
 }
 
 .layuimini-tab.layui-tab-roll .layui-tab-control .layuimini-tab-roll-right {
-    right: 0px;
+    right: 0;
     border-right: 1px solid whitesmoke;
 }
 
-.layuimini-tab.layui-tab-roll .layui-tab-title {
+.layuimini-tab.layui-tab-roll .layui-tabs-header {
     padding-left: 35px;
     padding-right: 35px;
 }
@@ -262,13 +269,13 @@
     display: block;
 }
 
-.layuimini-tab.layui-tab-tool .layui-tab-title {
-    padding-left: 0px;
+.layuimini-tab.layui-tab-tool .layui-tabs-header {
+    padding-left: 0;
     padding-right: 35px;
 }
 
 
-.layuimini-tab.layui-tab-rollTool .layui-tab-title {
+.layuimini-tab.layui-tab-rollTool .layui-tabs-header {
     padding-left: 35px;
     padding-right: 80px;
 }
@@ -451,7 +458,7 @@
 
 
 /**其它 */
-.layui-tab-item {
+.layui-tabs-item {
     width: 100% !important;
     height: 100% !important;
 }
@@ -466,7 +473,7 @@
 }
 
 .layui-tab {
-    margin: 0 0 0 0;
+    margin: 0;
     z-index: 99999;
 }
 
@@ -607,7 +614,6 @@
 }
 
 .layuimini-color .more-menu-item {
-    color: #595959;
     height: 50px;
     line-height: 50px;
     font-size: 16px;
@@ -615,10 +621,6 @@
     border-bottom: 1px solid #e8e8e8;
     font-style: normal;
     display: block;
-}
-
-.layuimini-color .more-menu-item:hover {
-    background-color: whitesmoke;
 }
 
 .layuimini-color .more-menu-item:after {
@@ -635,9 +637,10 @@
 .layuimini-tab-mousedown {
     display: none;
     width: 80px;
-    position: absolute;
-    top: 0px !important;
-    left: 0px !important;
+    position: fixed;
+    top: 55px !important;
+    left: 0 !important;
+    z-index: 99999;
 }
 
 .layuimini-tab-mousedown dd a {
@@ -645,26 +648,28 @@
     color: #484545;
 }
 
-.layuimini-tab-make{
+.layuimini-tab-make {
     position: absolute;
     top: 36px;
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
-    background: rgb(255, 255, 255,0);
-    padding: 0px;
+    background: rgb(255, 255, 255, 0);
+    padding: 0;
     overflow: hidden;
 }
 
 /**
 菜单缩放
  */
-.popup-tips .layui-layer-TipsG{
+.popup-tips .layui-layer-TipsG {
     display: none;
 }
-.popup-tips.layui-layer-tips .layui-layer-content{
+
+.popup-tips.layui-layer-tips .layui-layer-content {
     padding: 0;
 }
-.popup-tips .layui-nav-tree{
+
+.popup-tips .layui-nav-tree {
     width: 150px;
     border-radius: 10px;
 }
@@ -675,13 +680,13 @@
 }
 
 /**头部菜单字体间距*/
-.layui-layout-admin .layui-header .layuimini-header-menu.layuimini-pc-show,.layui-layout-admin .layui-header .layuimini-header-menu.layuimini-mobile-show {
+.layui-layout-admin .layui-header .layuimini-header-menu.layuimini-pc-show, .layui-layout-admin .layui-header .layuimini-header-menu.layuimini-mobile-show {
     letter-spacing: 1px;
 }
 
 
 /**左侧菜单更多下拉样式*/
-.layuimini-menu-left .layui-nav-more,.layuimini-menu-left-zoom .layui-nav-more {
+.layuimini-menu-left .layui-nav-more, .layuimini-menu-left-zoom .layui-nav-more {
     font-family: layui-icon !important;
     font-size: 12px;
     font-style: normal;
@@ -700,10 +705,11 @@
     margin-top: -6px !important;
 }
 
-.layuimini-menu-left .layui-nav-more:before,.layuimini-menu-left-zoom .layui-nav-more:before {
+.layuimini-menu-left .layui-nav-more:before, .layuimini-menu-left-zoom .layui-nav-more:before {
     content: "\e61a";
 }
-.layuimini-menu-left .layui-nav-itemed > a > .layui-nav-more,.layuimini-menu-left-zoom .layui-nav-itemed > a > .layui-nav-more {
+
+.layuimini-menu-left .layui-nav-itemed > a > .layui-nav-more, .layuimini-menu-left-zoom .layui-nav-itemed > a > .layui-nav-more {
     transform: rotate(180deg);
     -ms-transform: rotate(180deg);
     -moz-transform: rotate(180deg);
@@ -711,10 +717,10 @@
     -o-transform: rotate(180deg);
     width: 12px;
     text-align: center;
-    border-style:none;
+    border-style: none;
 }
 
-.layuimini-menu-left .layui-nav-itemed > a > .layui-nav-more:before,.layuimini-menu-left-zoom .layui-nav-itemed > a > .layui-nav-more:before {
+.layuimini-menu-left .layui-nav-itemed > a > .layui-nav-more:before, .layuimini-menu-left-zoom .layui-nav-itemed > a > .layui-nav-more:before {
     content: '\e61a';
     background-color: transparent;
     display: inline-block;
@@ -722,7 +728,7 @@
 }
 
 /**修复左侧菜单字体不对齐的问题*/
-.layuimini-menu-left .layui-nav-item a .fa,.layuimini-menu-left .layui-nav-item a .layui-icon{
+.layuimini-menu-left .layui-nav-item a .fa, .layuimini-menu-left .layui-nav-item a .layui-icon {
     width: 20px;
 }
 
@@ -778,16 +784,18 @@
         left: 95px !important;
     }
 
-    .layuimini-pc-show{
+    .layuimini-pc-show {
         display: block;
     }
-    .layuimini-mobile-show{
+
+    .layuimini-mobile-show {
         display: none;
     }
 
     /**菜单缩放*/
-    .layuimini-mini .layuimini-menu-left .layui-nav-more,.layuimini-mini .layuimini-menu-left .layui-nav-child{
-        display: none;!important;
+    .layuimini-mini .layuimini-menu-left .layui-nav-more, .layuimini-mini .layuimini-menu-left .layui-nav-child {
+        display: none;
+    !important;
     }
 }
 
@@ -799,29 +807,31 @@
     /**
     todo 修复低版本IOS不能滑动问题, 但还是有问题, 低版本IOS部分情况下子页面无法自适应
     */
-    .layuimini-tab .layui-tab-content .layui-tab-item{
+    .layuimini-tab .layui-tabs-body .layui-tabs-item {
         -webkit-overflow-scrolling: touch;
         overflow: scroll;
-        width:100%;
-        height:100%;
+        width: 100%;
+        height: 100%;
     }
 
-    .layuimini-tab .layui-tab-content .layui-tab-item iframe {
+    .layuimini-tab .layui-tabs-body .layui-tabs-item iframe {
         height: 100%;
         width: 100%;
     }
 
-    .layuimini-pc-show{
+    .layuimini-pc-show {
         display: none;
     }
-    .layuimini-mobile-show{
+
+    .layuimini-mobile-show {
         display: block;
     }
+
     .layuimini-header-content {
         left: 0;
     }
 
-    .layui-layout-admin .layui-body .layui-tab-item.layui-show {
+    .layui-layout-admin .layui-body .layui-tabs-item.layui-show {
         border-top: 1px solid #e2e2e2;
     }
 
@@ -859,7 +869,7 @@
     }
 
     .layuimini-mini .layui-layout-admin .layui-body {
-        left: 0!important;
+        left: 0 !important;
         transition: left .2s;
         top: 0;
         z-index: 998;
@@ -910,7 +920,7 @@
     }
 }
 
-@media screen and (max-width: 550px){
+@media screen and (max-width: 550px) {
 
     /**头部右侧数据*/
     .layuimini-multi-module.layuimini-mini .layuimini-header-content .layui-layout-right {

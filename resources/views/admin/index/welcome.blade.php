@@ -17,7 +17,7 @@
                                                     <span class="layui-badge layui-bg-cyan pull-right ">实时</span>
                                                     <div class="panel-content">
                                                         <h5>用户统计</h5>
-                                                        <h1>1234</h1>
+                                                        <h2>1234</h2>
                                                         <h6>当前分类总记录数</h6>
                                                     </div>
                                                 </div>
@@ -29,7 +29,7 @@
                                                     <span class="layui-badge layui-bg-purple pull-right ">实时</span>
                                                     <div class="panel-content">
                                                         <h5>商品统计</h5>
-                                                        <h1>1234</h1>
+                                                        <h2>1234</h2>
                                                         <h6>当前分类总记录数</h6>
                                                     </div>
                                                 </div>
@@ -41,7 +41,7 @@
                                                     <span class="layui-badge layui-bg-orange pull-right ">实时</span>
                                                     <div class="panel-content">
                                                         <h5>浏览统计</h5>
-                                                        <h1>1234</h1>
+                                                        <h2>1234</h2>
                                                         <h6>当前分类总记录数</h6>
                                                     </div>
                                                 </div>
@@ -53,7 +53,7 @@
                                                     <span class="layui-badge layui-bg-red pull-right ">实时</span>
                                                     <div class="panel-content">
                                                         <h5>订单统计</h5>
-                                                        <h1>1234</h1>
+                                                        <h2>1234</h2>
                                                         <h6>当前分类总记录数</h6>
                                                     </div>
                                                 </div>
@@ -169,6 +169,12 @@
                                     <span class="layui-btn layui-btn-xs layui-btn-primary layui-border">响应式</span>
                                     <span class="layui-btn layui-btn-xs layui-btn-primary layui-border">清爽</span>
                                     <span class="layui-btn layui-btn-xs layui-btn-primary layui-border">极简</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>composer信息</td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-xs layui-bg-cyan" lay-on="showComposerInfo">点击查看</button>
                                 </td>
                             </tr>
                             <tr>
