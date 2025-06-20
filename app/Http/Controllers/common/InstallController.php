@@ -108,10 +108,10 @@ class InstallController extends Controller
             foreach ($sqlArray as $vo) {
                 DB::statement($vo);
             }
-            $_password = password($password);
-            $tableName = 'system_admin';
-            $update    = [
-                'username' => $username, 'head_img' => '/static/admin/images/head.jpg', 'password' => $_password, 'create_time' => time(), 'update_time' => time()
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $tableName      = 'system_admin';
+            $update         = [
+                'username' => $username, 'head_img' => '/static/admin/images/head.jpg', 'password' => $hashedPassword, 'create_time' => time(), 'update_time' => time()
             ];
             DB::table($tableName)->where('id', 1)->update($update);
             //  处理安装文件
