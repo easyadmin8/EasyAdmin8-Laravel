@@ -88,7 +88,7 @@ class AdminController extends Controller
                 return $this->error('两次密码输入不一致');
             }
             try {
-                $save = $this->model->where('id', $id)->update(['password' => password($post['password'])]);
+                $save = $this->model->where('id', $id)->update(['password' => password_hash($post['password'], PASSWORD_DEFAULT)]);
             }catch (\Exception $e) {
                 return $this->error('保存失败');
             }
