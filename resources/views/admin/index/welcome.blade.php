@@ -172,6 +172,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>composer info</td>
+                                <td>
+                                    <button type="button" class="layui-btn layui-btn-xs layui-bg-cyan" lay-on="showComposerInfo">detail</button>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>Gitee</td>
                                 <td>
                                     <div class="layui-btn-container">

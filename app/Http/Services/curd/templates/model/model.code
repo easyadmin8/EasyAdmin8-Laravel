@@ -5,6 +5,8 @@ namespace {{modelNamespace}};
 class {{modelName}} extends BaseModel
 {
 
+    {{softDelete}}
+
     public array $notes = {{selectArrays}};
 
 }

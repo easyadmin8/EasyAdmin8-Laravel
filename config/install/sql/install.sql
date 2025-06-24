@@ -87,7 +87,7 @@ CREATE TABLE `ea_system_admin`
     `auth_ids`    varchar(255)         DEFAULT NULL COMMENT '角色权限ID',
     `head_img`    varchar(255)         DEFAULT NULL COMMENT '头像',
     `username`    varchar(50) NOT NULL DEFAULT '' COMMENT '用户登录名',
-    `password`    char(40)    NOT NULL DEFAULT '' COMMENT '用户登录密码',
+    `password`    varchar(255)    NOT NULL DEFAULT '' COMMENT '用户登录密码',
     `phone`       varchar(16)          DEFAULT NULL COMMENT '联系手机号',
     `remark`      varchar(255)         DEFAULT '' COMMENT '备注说明',
     `login_num`   bigint(20) unsigned DEFAULT '0' COMMENT '登录次数',

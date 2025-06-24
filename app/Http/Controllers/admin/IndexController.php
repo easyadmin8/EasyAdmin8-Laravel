@@ -90,7 +90,7 @@ class IndexController extends AdminController
             if ($post['password'] != $post['password_again']) {
                 return $this->error(ea_trans('passwords do not match'));
             }
-            $newPwd = password($post['password']);
+            $newPwd = password_hash($post['password'], PASSWORD_DEFAULT);
             if ($newPwd == $row->password) return $this->error(ea_trans('The new password cannot be the same as the old password'));
             try {
                 $save = $model->where('id', $id)->update(['password' => $newPwd]);

@@ -147,4 +147,50 @@ trait Curd
         return $this->success(ea_trans('operation successful', false));
     }
 
+    #[NodeAnnotation(title: 'recycle', auth: true)]
+    public function recycle(): View|JsonResponse
+    {
+        if (!request()->ajax()) {
+            return $this->fetch();
+        }
+        $id   = request()->input('id', []);
+        $type = request()->input('type');
+        if (!is_array($id)) $id = (array)$id;
+        $deleteTimeField = $this->model->getDeletedAtColumn();
+        $defaultErrorMsg = 'The field corresponding to the soft delete deleteTime is not set in the model or does not exist in the data table';
+        if (!$deleteTimeField) return $this->success($defaultErrorMsg);
+        switch ($type) {
+            case 'restore':
+                $this->model->onlyTrashed()->whereIn('id', $id)->update([$deleteTimeField => null, 'update_time' => time()]);
+                return $this->success('success');
+                break;
+            case 'delete':
+                $this->model->whereIn('id', $id)->forceDelete();
+                return $this->success('success');
+                break;
+            default:
+                list($page, $limit, $where) = $this->buildTableParams();
+                try {
+                    $count = $this->model->onlyTrashed()->where($where)->count();
+                    $list  = $this->model->onlyTrashed()->where($where)->orderBy($this->order, $this->orderDirection)->paginate($limit)->items();
+                    $data  = [
+                        'code'  => 0,
+                        'msg'   => '',
+                        'count' => $count,
+                        'data'  => $list,
+                    ];
+                }catch (\PDOException|\Exception $e) {
+                    $error = $e->getMessage();
+                    $error .= '<br>' . $defaultErrorMsg;
+                    $data  = [
+                        'code'  => -1,
+                        'msg'   => $error,
+                        'count' => 0,
+                        'data'  => [],
+                    ];
+                }
+                return json($data);
+
+        }
+    }
 }

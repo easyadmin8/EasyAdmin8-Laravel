@@ -4,6 +4,8 @@ namespace App\Models;
 
 class SystemNode extends BaseModel
 {
+    public static function bootSoftDeletes() {}
+
     public function getNodeTreeList(): array
     {
         $list = $this->get()->toArray();

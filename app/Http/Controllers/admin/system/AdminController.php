@@ -88,7 +88,7 @@ class AdminController extends Controller
                 return $this->error(ea_trans('passwords do not match'));
             }
             try {
-                $save = $this->model->where('id', $id)->update(['password' => password($post['password'])]);
+                $save = $this->model->where('id', $id)->update(['password' => password_hash($post['password'], PASSWORD_DEFAULT)]);
             }catch (\Exception $e) {
                 return $this->error(ea_trans('operation failed', false));
             }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class SystemLog extends BaseModel
 {
+    public static function bootSoftDeletes() {}
 
     public function __construct(array $attributes = [])
     {
@@ -16,7 +17,7 @@ class SystemLog extends BaseModel
 
     public function admin(): HasOne
     {
-        return $this->hasOne(SystemAdmin::class, 'id', 'admin_id')->select('id','username');
+        return $this->hasOne(SystemAdmin::class, 'id', 'admin_id')->select('id', 'username');
     }
 
     public function setMonth($month): static

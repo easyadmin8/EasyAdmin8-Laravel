@@ -49,7 +49,7 @@ class LoginController extends AdminController
             return $this->error($validator->errors()->first());
         }
         $admin = SystemAdmin::where(['username' => $post['username']])->first();
-        if (empty($admin) || password($post['password']) != $admin->password) {
+        if (empty($admin) || !password_verify($post['password'], $admin->password)) {
             return $this->error(ea_trans('Incorrect username or password'));
         }
         if ($admin->status == 0) {

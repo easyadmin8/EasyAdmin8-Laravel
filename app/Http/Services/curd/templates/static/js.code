@@ -9,6 +9,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
         delete_url: '{{controllerUrl}}/delete',
         export_url: '{{controllerUrl}}/export',
         modify_url: '{{controllerUrl}}/modify',
+        recycle_url: '{{controllerUrl}}/recycle',
     };
 
     return Controller = {
@@ -27,6 +28,63 @@ define(["jquery", "easy-admin"], function ($, ea) {
             ea.listen();
         },
         edit: function () {
+            ea.listen();
+        },
+        recycle: function () {
+            init.index_url = init.recycle_url;
+            ea.table.render({
+                init: init,
+                toolbar: ['refresh',
+                    [{
+                        class: 'layui-btn layui-btn-sm',
+                        method: 'get',
+                        field: 'id',
+                        icon: 'fa fa-refresh',
+                        text: 'restore all',
+                        title: 'sure?',
+                        auth: 'recycle',
+                        url: init.recycle_url + '?type=restore',
+                        checkbox: true
+                    }, {
+                        class: 'layui-btn layui-btn-danger layui-btn-sm',
+                        method: 'get',
+                        field: 'id',
+                        icon: 'fa fa-delete',
+                        text: 'Completely delete',
+                        title: 'sure?',
+                        auth: 'recycle',
+                        url: init.recycle_url + '?type=delete',
+                        checkbox: true
+                    }], 'export',
+                ],
+                cols: [[
+                {{recycleCols}}
+                    {
+                        width: 250,
+                        title: 'operate',
+                        templet: ea.table.tool,
+                        operat: [
+                            [{
+                                title: 'Confirm recovery?',
+                                text: 'recovery',
+                                filed: 'id',
+                                url: init.recycle_url + '?type=restore',
+                                method: 'get',
+                                auth: 'recycle',
+                                class: 'layui-btn layui-btn-xs layui-btn-success',
+                            }, {
+                                title: 'Confirm?',
+                                text: 'Completely delete',
+                                filed: 'id',
+                                method: 'get',
+                                url: init.recycle_url + '?type=delete',
+                                auth: 'recycle',
+                                class: 'layui-btn layui-btn-xs layui-btn-normal layui-bg-red',
+                            }]]
+                    }
+                ]],
+            });
+
             ea.listen();
         },
     };
