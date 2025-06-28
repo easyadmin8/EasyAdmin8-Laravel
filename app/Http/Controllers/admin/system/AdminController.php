@@ -30,7 +30,7 @@ class AdminController extends Controller
             $authIds            = request()->post('auth_ids', []);
             $params['auth_ids'] = implode(',', array_keys($authIds));
             if (empty($post['password'])) $post['password'] = '123456';
-            $params['password'] = password($post['password']);
+            $params['password'] = password_hash($post['password'], PASSWORD_DEFAULT);
             try {
                 $save = insertFields($this->model, $params);
             }catch (\Exception $e) {
