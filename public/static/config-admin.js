@@ -28,7 +28,7 @@ require.config({
 
 // 路径配置信息
 var PATH_CONFIG = {
-    iconLess: BASE_URL + "plugs/font-awesome-4.7.0/less/variables.less",
+    iconLess: BASE_URL + "plugs/font-awesome-6.x/less/_variables.less",
 };
 window.PATH_CONFIG = PATH_CONFIG;
 

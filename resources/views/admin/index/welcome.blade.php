@@ -219,7 +219,7 @@
                     <div class="layui-card-header"><i class="fa fa-paper-plane-o icon"></i>作者心语</div>
                     <div class="layui-card-body layui-text">
                         <p class="layui-font-cyan">
-                            本模板基于layui2.9.x以及font-awesome-4.7.0进行实现。
+                            本模板基于layui2.9.x以及font-awesome-6.x进行实现。
                             <a class="layui-btn layui-btn-xs layui-btn-danger" style="vertical-align: baseline;" target="_blank" href="http://layui.dev/docs">layui文档</a>
                         </p>
                         <hr>
