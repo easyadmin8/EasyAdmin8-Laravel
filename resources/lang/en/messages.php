@@ -18,7 +18,7 @@ return [
     'admin'   => [
         'index' => [
             'welcome' => [
-                'template_message1' => 'This template is implemented based on layui2.9. x and font-awesome-4.7.0',
+                'template_message1' => 'This template is implemented based on layui2.11.x and font-awesome-6.x',
                 'template_message2' => 'Note: This backend framework is permanently open source, but please do not sell or upload it to any material website, otherwise corresponding responsibilities will be pursued',
             ],
         ],

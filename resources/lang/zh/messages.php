@@ -138,7 +138,7 @@ return [
                 'refreshing'                 => '清爽',
                 'minimalism'                 => '极简',
                 'layui document'             => 'layui文档',
-                'template_message1'          => '本模板基于layui2.9.x以及font-awesome-4.7.0进行实现',
+                'template_message1'          => '本模板基于layui2.11.x以及font-awesome-6.x进行实现',
                 'template_message2'          => '备注：此后台框架永久开源，但请勿进行出售或者上传到任何素材网站，否则将追究相应的责任',
                 'QQ communication group'     => 'QQ交流群',
                 'author suggestion'          => '作者心语',

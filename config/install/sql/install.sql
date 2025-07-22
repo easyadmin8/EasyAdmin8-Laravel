@@ -308,7 +308,7 @@ VALUES ('234', '228', 'Menu Management', 'fa fa-tree', 'system.menu/index', '', 
 INSERT INTO `ea_system_menu`
 VALUES ('244', '228', 'Administrator Management', 'fa fa-user', 'system.admin/index', '', '_self', '12', '1', '', '1573185011', '1588228573', null);
 INSERT INTO `ea_system_menu`
-VALUES ('245', '228', 'Roles Management', 'fa fa-bitbucket-square', 'system.auth/index', '', '_self', '11', '1', '', '1573435877', '1588228634', null);
+VALUES ('245', '228', 'Roles Management', 'fa fa-square-person-confined', 'system.auth/index', '', '_self', '11', '1', '', '1573435877', '1588228634', null);
 INSERT INTO `ea_system_menu`
 VALUES ('246', '228', 'Nodes Management', 'fa fa-list', 'system.node/index', '', '_self', '9', '1', '', '1573435919', '1588228648', null);
 INSERT INTO `ea_system_menu`
@@ -318,7 +318,7 @@ VALUES ('248', '228', 'Upload Management', 'fa fa-arrow-up', 'system.uploadfile/
 INSERT INTO `ea_system_menu`
 VALUES ('249', '0', 'Mall Management', 'fa fa-list', '', '', '_self', '0', '1', '', '1589439884', '1589439884', null);
 INSERT INTO `ea_system_menu`
-VALUES ('250', '249', 'Commodity Classification', 'fa fa-calendar-check-o', 'mall.cate/index', '', '_self', '0', '1', '', '1589439910', '1589439966', null);
+VALUES ('250', '249', 'Commodity Classification', 'fa fa-calendar-check', 'mall.cate/index', '', '_self', '0', '1', '', '1589439910', '1589439966', null);
 INSERT INTO `ea_system_menu`
 VALUES ('251', '249', 'Commodity Management', 'fa fa-list', 'mall.goods/index', '', '_self', '0', '1', '', '1589439931', '1589439942', null);
 INSERT INTO `ea_system_menu`
@@ -516,7 +516,7 @@ CREATE TABLE `ea_system_quick`
 INSERT INTO `ea_system_quick`
 VALUES ('1', 'Administrator Management', 'fa fa-user', 'system.admin/index', '0', '1', '', '1589624097', '1589624792', null);
 INSERT INTO `ea_system_quick`
-VALUES ('2', 'Roles Management', 'fa fa-bitbucket-square', 'system.auth/index', '0', '1', '', '1589624772', '1589624781', null);
+VALUES ('2', 'Roles Management', 'fa fa-square-person-confined', 'system.auth/index', '0', '1', '', '1589624772', '1589624781', null);
 INSERT INTO `ea_system_quick`
 VALUES ('3', 'Menu Management', 'fa fa-tree', 'system.menu/index', '0', '1', null, '1589624097', '1589624792', null);
 INSERT INTO `ea_system_quick`
@@ -526,7 +526,7 @@ VALUES ('7', 'Configuration Management', 'fa fa-asterisk', 'system.config/index'
 INSERT INTO `ea_system_quick`
 VALUES ('8', 'Upload Management', 'fa fa-arrow-up', 'system.uploadfile/index', '0', '1', null, '1589624772', '1589624781', null);
 INSERT INTO `ea_system_quick`
-VALUES ('10', 'Commodity Classification', 'fa fa-calendar-check-o', 'mall.cate/index', '0', '1', null, '1589624097', '1589624792', null);
+VALUES ('10', 'Commodity Classification', 'fa fa-calendar-check', 'mall.cate/index', '0', '1', null, '1589624097', '1589624792', null);
 INSERT INTO `ea_system_quick`
 VALUES ('11', 'Commodity Management', 'fa fa-list', 'mall.goods/index', '0', '1', null, '1589624772', '1589624781', null);
 

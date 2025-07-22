@@ -43,7 +43,7 @@
                         <a href="javascript:;" data-refresh="{{ea_trans('refresh',false)}}"><i class="fa fa-refresh"></i></a>
                     </li>
                     <li class="layui-nav-item" lay-unselect>
-                        <a href="javascript:;" data-clear="{{ea_trans('clean',false)}}" class="layuimini-clear"><i class="fa fa-trash-o"></i></a>
+                        <a href="javascript:;" data-clear="{{ea_trans('clean',false)}}" class="layuimini-clear"><i class="fa fa-trash"></i></a>
                     </li>
                     <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
                         <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
