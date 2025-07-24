@@ -14,10 +14,10 @@
                                         <div class="layui-col-xs6">
                                             <div class="layui-panel">
                                                 <div class="layui-card-body">
-                                                    <span class="layui-badge layui-bg-cyan pull-right ">{{ea_trans('real time')}}</span>
+                                                    <span class="layui-badge layui-bg-cyan fa-pull-right ">{{ea_trans('real time')}}</span>
                                                     <div class="panel-content">
                                                         <h5>{{ ea_trans('user statistics') }}</h5>
-                                                        <h1>1234</h1>
+                                                        <h2>1234</h2>
                                                         <h6>{{ ea_trans('total number') }}</h6>
                                                     </div>
                                                 </div>
@@ -26,10 +26,10 @@
                                         <div class="layui-col-xs6">
                                             <div class="layui-panel">
                                                 <div class="layui-card-body">
-                                                    <span class="layui-badge layui-bg-purple pull-right ">{{ea_trans('real time')}}</span>
+                                                    <span class="layui-badge layui-bg-purple fa-pull-right ">{{ea_trans('real time')}}</span>
                                                     <div class="panel-content">
                                                         <h5>{{ ea_trans('product statistics') }}</h5>
-                                                        <h1>1234</h1>
+                                                        <h2>1234</h2>
                                                         <h6>{{ ea_trans('total number') }}</h6>
                                                     </div>
                                                 </div>
@@ -38,10 +38,10 @@
                                         <div class="layui-col-xs6">
                                             <div class="layui-panel">
                                                 <div class="layui-card-body ">
-                                                    <span class="layui-badge layui-bg-orange pull-right ">{{ea_trans('real time')}}</span>
+                                                    <span class="layui-badge layui-bg-orange fa-pull-right ">{{ea_trans('real time')}}</span>
                                                     <div class="panel-content">
                                                         <h5>{{ ea_trans('browse statistics') }}</h5>
-                                                        <h1>1234</h1>
+                                                        <h2>1234</h2>
                                                         <h6>{{ ea_trans('total number') }}</h6>
                                                     </div>
                                                 </div>
@@ -50,10 +50,10 @@
                                         <div class="layui-col-xs6">
                                             <div class="layui-panel">
                                                 <div class="layui-card-body ">
-                                                    <span class="layui-badge layui-bg-red pull-right ">{{ea_trans('real time')}}</span>
+                                                    <span class="layui-badge layui-bg-red fa-pull-right ">{{ea_trans('real time')}}</span>
                                                     <div class="panel-content">
                                                         <h5>{{ ea_trans('order statistics') }}</h5>
-                                                        <h1>1234</h1>
+                                                        <h2>1234</h2>
                                                         <h6>{{ ea_trans('total number') }}</h6>
                                                     </div>
                                                 </div>
