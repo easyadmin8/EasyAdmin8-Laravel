@@ -14,7 +14,7 @@
                                         <div class="layui-col-xs6">
                                             <div class="layui-panel">
                                                 <div class="layui-card-body">
-                                                    <span class="layui-badge layui-bg-cyan pull-right ">实时</span>
+                                                    <span class="layui-badge layui-bg-cyan fa-pull-right ">实时</span>
                                                     <div class="panel-content">
                                                         <h5>用户统计</h5>
                                                         <h2>1234</h2>
@@ -26,7 +26,7 @@
                                         <div class="layui-col-xs6">
                                             <div class="layui-panel">
                                                 <div class="layui-card-body">
-                                                    <span class="layui-badge layui-bg-purple pull-right ">实时</span>
+                                                    <span class="layui-badge layui-bg-purple fa-pull-right ">实时</span>
                                                     <div class="panel-content">
                                                         <h5>商品统计</h5>
                                                         <h2>1234</h2>
@@ -38,7 +38,7 @@
                                         <div class="layui-col-xs6">
                                             <div class="layui-panel">
                                                 <div class="layui-card-body ">
-                                                    <span class="layui-badge layui-bg-orange pull-right ">实时</span>
+                                                    <span class="layui-badge layui-bg-orange fa-pull-right ">实时</span>
                                                     <div class="panel-content">
                                                         <h5>浏览统计</h5>
                                                         <h2>1234</h2>
@@ -50,7 +50,7 @@
                                         <div class="layui-col-xs6">
                                             <div class="layui-panel">
                                                 <div class="layui-card-body ">
-                                                    <span class="layui-badge layui-bg-red pull-right ">实时</span>
+                                                    <span class="layui-badge layui-bg-red fa-pull-right ">实时</span>
                                                     <div class="panel-content">
                                                         <h5>订单统计</h5>
                                                         <h2>1234</h2>
@@ -219,7 +219,7 @@
                     <div class="layui-card-header"><i class="fa fa-paper-plane-o icon"></i>作者心语</div>
                     <div class="layui-card-body layui-text">
                         <p class="layui-font-cyan">
-                            本模板基于layui2.9.x以及font-awesome-6.x进行实现。
+                            本模板基于layui2.11.x以及font-awesome-6.x进行实现。
                             <a class="layui-btn layui-btn-xs layui-btn-danger" style="vertical-align: baseline;" target="_blank" href="http://layui.dev/docs">layui文档</a>
                         </p>
                         <hr>
