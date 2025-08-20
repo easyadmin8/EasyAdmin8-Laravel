@@ -1,102 +1,127 @@
 @include('admin.layout.head')
 <div class="layuimini-container">
-    <form id="app-form" class="layui-form layuimini-form">
+    <form id="app-form" class="layui-form layuimini-form layui-form-pane">
+        <div class="layui-row">
+            <div class="layui-col-xl5 layui-col-lg5 layui-col-md12 layui-col-sm12 layui-col-xs12">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品分类</label>
+                    <div class="layui-input-block">
+                        <select name="cate_id" lay-verify="required" data-select="{{__url('mall.cate/index')}}" data-fields="id,title" data-value="{{$row['cate_id']}}">
+                        </select>
+                    </div>
+                </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">商品分类</label>
-            <div class="layui-input-block">
-                <select name="cate_id" lay-verify="required" data-select="{{__url('mall.cate/index')}}" data-fields="id,title" data-value="{{$row['cate_id']}}">
-                </select>
-            </div>
-        </div>
+                <!--也可以使用该方式-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品分类2</label>
+                    <div class="layui-input-block">
+                        <select name="cate_id" lay-verify="required">
+                            @foreach($cate as $key=>$vo)
+                                <option value="{{$key}}" @if($key == $row['cate_id']) selected @endif>{{$vo}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
 
-        <div class="layui-form-item">
-            <div class="layui-row">
-                <label class="layui-form-label required">商品标题</label>
-                <div class="layui-input-block layui-col-space5">
-                    <div class="layui-col-xs10">
-                        <div class="layui-input-wrap">
-                            <input type="text" name="title" class="layui-input" lay-verify="required" placeholder="请输入商品标题" value="{{$row['title']}}">
+                <!-- 展现形式不同的写法-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品分类3</label>
+                    <div data-show="switchSelect" data-list='{{json_encode($cate)}}' data-name="cate_id" data-value="{{$row['cate_id']}}" data-target="radio"></div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-row">
+                        <label class="layui-form-label required">商品标题</label>
+                        <div class="layui-input-block layui-col-space5">
+                            <div class="layui-col-xs10">
+                                <div class="layui-input-wrap">
+                                    <input type="text" name="title" class="layui-input" lay-verify="required" placeholder="请输入商品标题" value="{{$row['title']}}">
+                                </div>
+                            </div>
+                            <div class="layui-col-xs2">
+                                <button class="layui-btn layui-bg-purple layui-btn-fluid" type="button" lay-on="AiOptimization">AI优化</button>
+                            </div>
                         </div>
                     </div>
-                    <div class="layui-col-xs2">
-                        <button class="layui-btn layui-bg-purple layui-btn-fluid" type="button" lay-on="AiOptimization">AI优化</button>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">商品LOGO</label>
+                    <div class="layui-input-block layuimini-upload">
+                        <input name="logo" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传分类图片" value="{{$row['logo']}}">
+                        <div class="layuimini-upload-btn">
+                            <span><a class="layui-btn" data-upload="logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                            <span><a class="layui-btn layui-btn-normal" id="select_logo" data-upload-select="logo" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label required">商品图片</label>
+                    <div class="layui-input-block layuimini-upload">
+                        <input name="images" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传商品图片" value="{{$row['images']}}">
+                        <div class="layuimini-upload-btn">
+                            <span><a class="layui-btn" data-upload="images" data-upload-number="more" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
+                            <span><a class="layui-btn layui-btn-normal" id="select_images" data-upload-select="images" data-upload-number="more" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">市场价格</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="market_price" class="layui-input" lay-verify="required" placeholder="请输入市场价格" value="{{$row['market_price']}}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">折扣价格</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="discount_price" class="layui-input" lay-verify="required" placeholder="请输入折扣价格" value="{{$row['discount_price']}}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">虚拟销量</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="virtual_sales" class="layui-input" lay-verify="required" placeholder="请输入虚拟销量" value="{{$row['virtual_sales']}}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">分类排序</label>
+                    <div class="layui-input-block">
+                        <input type="number" name="sort" class="layui-input" placeholder="请输入分类排序" value="{{$row['sort']}}">
+                    </div>
+                </div>
+
+                <!-- 文档：https://xm-select.com/file/xm-select/v1.2.4/#/basic/use -->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">模拟多选</label>
+                    <div class="layui-input-block">
+                        <div id="demo1" class="xm-select-demo"></div>
+                    </div>
+                </div>
+
+                <div class="layui-form-item layui-form-text">
+                    <label class="layui-form-label">备注信息</label>
+                    <div class="layui-input-block">
+                        <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息">{{$row['remark']}}</textarea>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label required">商品LOGO</label>
-            <div class="layui-input-block layuimini-upload">
-                <input name="logo" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传分类图片" value="{{$row['logo']}}">
-                <div class="layuimini-upload-btn">
-                    <span><a class="layui-btn" data-upload="logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
-                    <span><a class="layui-btn layui-btn-normal" id="select_logo" data-upload-select="logo" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+            <div class="layui-col-xl7 layui-col-lg7 layui-col-md12 layui-col-sm12 layui-col-xs12">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">商品描述</label>
+                    <div class="layui-input-block">
+                        {!!editor_textarea($row['describe'],'describe') !!}
+                    </div>
                 </div>
             </div>
+
         </div>
 
-        <div class="layui-form-item">
-            <label class="layui-form-label required">商品图片</label>
-            <div class="layui-input-block layuimini-upload">
-                <input name="images" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传商品图片" value="{{$row['images']}}">
-                <div class="layuimini-upload-btn">
-                    <span><a class="layui-btn" data-upload="images" data-upload-number="more" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
-                    <span><a class="layui-btn layui-btn-normal" id="select_images" data-upload-select="images" data-upload-number="more" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
-                </div>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">市场价格</label>
-            <div class="layui-input-block">
-                <input type="text" name="market_price" class="layui-input" lay-verify="required" placeholder="请输入市场价格" value="{{$row['market_price']}}">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">折扣价格</label>
-            <div class="layui-input-block">
-                <input type="text" name="discount_price" class="layui-input" lay-verify="required" placeholder="请输入折扣价格" value="{{$row['discount_price']}}">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">虚拟销量</label>
-            <div class="layui-input-block">
-                <input type="text" name="virtual_sales" class="layui-input" lay-verify="required" placeholder="请输入虚拟销量" value="{{$row['virtual_sales']}}">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">商品描述</label>
-            <div class="layui-input-block">
-                {!!editor_textarea($row["describe"],'describe') !!}
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">分类排序</label>
-            <div class="layui-input-block">
-                <input type="number" name="sort" class="layui-input" placeholder="请输入分类排序" value="{{$row['sort']}}">
-            </div>
-        </div>
-
-        <!-- 文档：https://xm-select.com/file/xm-select/v1.2.4/#/basic/use -->
-        <div class="layui-form-item">
-            <label class="layui-form-label">模拟多选</label>
-            <div class="layui-input-block">
-                <div id="demo1" class="xm-select-demo"></div>
-            </div>
-        </div>
-
-        <div class="layui-form-item layui-form-text">
-            <label class="layui-form-label">备注信息</label>
-            <div class="layui-input-block">
-                <textarea name="remark" class="layui-textarea" placeholder="请输入备注信息">{{$row['remark']}}</textarea>
-            </div>
-        </div>
 
         <div class="hr-line"></div>
         <div class="layui-form-item text-center">

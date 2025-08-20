@@ -66,6 +66,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 method: 'open',
                                 auth: 'edit',
                                 class: 'layui-btn layui-btn-xs layui-btn-success',
+                                extend: 'data-width="90%" data-height="95%"',
                             }, {
                                 text: '入库',
                                 url: init.stock_url,
