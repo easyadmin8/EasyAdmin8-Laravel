@@ -136,7 +136,7 @@ class AdminController extends Controller
             $basePath = ".{$this->controller}.{$this->action}";
             if ($this->secondary) {
                 $template = 'admin.' . $this->secondary . $basePath;
-            }else {
+            } else {
                 $template = 'admin' . $basePath;
             }
         }
@@ -184,10 +184,18 @@ class AdminController extends Controller
                 case 'in':
                     $where[] = [DB::raw("$key IN ($val)"), 1];
                     break;
+                case 'find_in_set':
+                    $where[] = [DB::raw("FIND_IN_SET($val,$key)"), 1];
+                    break;
                 case 'range':
                     [$beginTime, $endTime] = explode(' - ', $val);
                     $where[] = [$key, '>=', strtotime($beginTime)];
                     $where[] = [$key, '<=', strtotime($endTime)];
+                    break;
+                case 'datetime':
+                    [$beginTime, $endTime] = explode(' - ', $val);
+                    $where[] = [$key, '>=', $beginTime];
+                    $where[] = [$key, '<=', $endTime];
                     break;
                 default:
                     $where[] = [$key, $op, "%{$val}"];

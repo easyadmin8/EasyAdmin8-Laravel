@@ -11,6 +11,12 @@ class SystemAdmin extends BaseModel
         ],
     ];
 
+    public function getAuthIdsAttribute($value): array
+    {
+        if (!$value) return [];
+        return explode(',', $value);
+    }
+
     public function getAuthList(): array
     {
         $list = SystemAuth::where('status', 1)->select(['id', 'title'])->get()->toArray();
