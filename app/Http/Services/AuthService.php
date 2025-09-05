@@ -131,7 +131,7 @@ class AuthService
     public function getCurrentNode(): string
     {
         $parameters = request()->route()->parameters ?? [];
-        return ($parameters['secondary'] ?? '') . '.' . ($parameters['controller'] ?? '') . '/' . ($parameters['action'] ?? '');
+        return ($parameters['secondary'] ?? '') . '/' . ($parameters['controller'] ?? '') . '/' . ($parameters['action'] ?? '');
     }
 
     /**
