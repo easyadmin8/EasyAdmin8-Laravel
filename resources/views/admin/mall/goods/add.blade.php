@@ -6,7 +6,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品分类</label>
                     <div class="layui-input-block">
-                        <select name="cate_id" lay-verify="required" data-select="{{__url('mall.cate/index')}}" data-fields="id,title">
+                        <select name="cate_id" lay-verify="required" data-select="{{__url('mall/cate/index')}}" data-fields="id,title">
                         </select>
                     </div>
                 </div>

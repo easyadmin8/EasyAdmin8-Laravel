@@ -57,7 +57,7 @@ class AuthService
      */
     public function __construct($adminId = null)
     {
-        $this->adminId   = $adminId;
+        $this->adminId = (int)$adminId;
         $this->adminInfo = $this->getAdminInfo();
         $this->nodeList  = $this->getNodeList();
         $this->adminNode = $this->getAdminNode();

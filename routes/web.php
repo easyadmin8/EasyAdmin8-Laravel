@@ -40,8 +40,8 @@ Route::middleware([CheckInstall::class, RateLimiting::class, CheckLogin::class, 
         Route::get('/', [\App\Http\Controllers\admin\IndexController::class, 'index']);
 
         $adminNamespace = config('admin.controller_namespace');
-        // 动态路由 (匹配 secondary/controller.action)
-        Route::match(['get', 'post'], '/{secondary}.{controller}/{action}', function($secondary, $controller, $action) use ($adminNamespace) {
+        // 动态路由 (匹配 secondary/controller/action)
+        Route::match(['get', 'post'], '/{secondary}/{controller}/{action}', function($secondary, $controller, $action) use ($adminNamespace) {
 
             $namespace = $adminNamespace . $secondary . '\\';
             $className = $namespace . ucfirst($controller . "Controller");

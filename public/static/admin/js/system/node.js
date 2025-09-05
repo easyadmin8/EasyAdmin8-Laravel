@@ -3,11 +3,11 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'system.node/index',
-        add_url: 'system.node/add',
-        edit_url: 'system.node/edit',
-        delete_url: 'system.node/delete',
-        modify_url: 'system.node/modify',
+        index_url: 'system/node/index',
+        add_url: 'system/node/add',
+        edit_url: 'system/node/edit',
+        delete_url: 'system/node/delete',
+        modify_url: 'system/node/modify',
     };
 
     return {
@@ -21,7 +21,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     [{
                         text: '更新节点',
                         title: '确定更新新节点？',
-                        url: 'system.node/refreshNode?force=0',
+                        url: 'system/node/refreshNode?force=0',
                         method: 'request',
                         auth: 'refresh',
                         class: 'layui-btn layui-btn-success layui-btn-sm',
@@ -30,7 +30,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     }, {
                         text: '强制更新节点',
                         title: '该操作会覆盖已存在的节点信息。<br>确定强制更新节点？',
-                        url: 'system.node/refreshNode?force=1',
+                        url: 'system/node/refreshNode?force=1',
                         method: 'request',
                         auth: 'refresh',
                         class: 'layui-btn layui-btn-sm layui-btn-normal',
@@ -40,7 +40,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
 
                         text: '清除失效节点',
                         title: '确定清除失效节点？',
-                        url: 'system.node/clearNode',
+                        url: 'system/node/clearNode',
                         method: 'request',
                         auth: 'clear',
                         class: 'layui-btn layui-btn-sm layui-btn-danger',

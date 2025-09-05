@@ -3,14 +3,14 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'mall.goods/index',
-        add_url: 'mall.goods/add',
-        edit_url: 'mall.goods/edit',
-        delete_url: 'mall.goods/delete',
-        export_url: 'mall.goods/export',
-        modify_url: 'mall.goods/modify',
-        stock_url: 'mall.goods/stock',
-        recycle_url: 'mall.goods/recycle',
+        index_url: 'mall/goods/index',
+        add_url: 'mall/goods/add',
+        edit_url: 'mall/goods/edit',
+        delete_url: 'mall/goods/delete',
+        export_url: 'mall/goods/export',
+        modify_url: 'mall/goods/modify',
+        stock_url: 'mall/goods/stock',
+        recycle_url: 'mall/goods/recycle',
     };
 
     return {
@@ -218,7 +218,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
             })
             return false
         }
-        let url = ea.url('mall.goods/aiOptimization')
+        let url = ea.url('mall/goods/aiOptimization')
         ea.request.post({url: url, data: {message: message}}, function (res) {
             let content = res.data?.choices[0]?.message?.content
             // stream 为true 时，AI 内容会逐字输出

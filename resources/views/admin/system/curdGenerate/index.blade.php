@@ -29,7 +29,7 @@
 
                 <div class="hr-line"></div>
                 <div class="layui-form-item text-center">
-                    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-filter="search" lay-submit="system.CurdGenerate/save?type=search" data-refresh="false">查询</button>
+                    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-filter="search" lay-submit="system/CurdGenerate/save?type=search" data-refresh="false">查询</button>
                 </div>
 
             </form>
@@ -98,8 +98,8 @@
             </div>
             <div class="layui-btn-container">
                 <form class="layui-form layuimini-form">
-                    <button type="button" class="layui-btn layui-bg-cyan" lay-filter="add" lay-submit="system.CurdGenerate/save?type=add">自动生成CURD</button>
-                    <button type="button" class="layui-btn layui-bg-red" lay-filter="delete" lay-submit="system.CurdGenerate/save?type=delete">删除CURD对应的文件</button>
+                    <button type="button" class="layui-btn layui-bg-cyan" lay-filter="add" lay-submit="system/CurdGenerate/save?type=add">自动生成CURD</button>
+                    <button type="button" class="layui-btn layui-bg-red" lay-filter="delete" lay-submit="system/CurdGenerate/save?type=delete">删除CURD对应的文件</button>
                 </form>
                 <div class="file-list layui-elem-quote">还未生成任何文件</div>
             </div>

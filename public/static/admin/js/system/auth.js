@@ -3,13 +3,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'system.auth/index',
-        add_url: 'system.auth/add',
-        edit_url: 'system.auth/edit',
-        delete_url: 'system.auth/delete',
-        export_url: 'system.auth/export',
-        modify_url: 'system.auth/modify',
-        authorizes_url: 'system.auth/authorizes',
+        index_url: 'system/auth/index',
+        add_url: 'system/auth/add',
+        edit_url: 'system/auth/edit',
+        delete_url: 'system/auth/delete',
+        export_url: 'system/auth/export',
+        modify_url: 'system/auth/modify',
+        authorizes_url: 'system/auth/authorizes',
     };
 
     return {

@@ -4,9 +4,9 @@ define(["jquery", "easy-admin"], function ($, ea) {
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'system.log/index',
-        export_url: 'system.log/export',
-        deleteMonthLog_url: 'system.log/deleteMonthLog',
+        index_url: 'system/log/index',
+        export_url: 'system/log/export',
+        deleteMonthLog_url: 'system/log/deleteMonthLog',
     };
 
     return {
@@ -18,7 +18,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                 toolbar: ['refresh', 'export',
                     [{
                         text: '框架日志',
-                        url: 'system.log/record',
+                        url: 'system/log/record',
                         method: 'open',
                         auth: 'record',
                         class: 'layui-btn layui-btn-sm',
@@ -26,7 +26,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         extend: 'data-width="95%" data-height="95%"'
                     }, {
                         text: '删除部分日志',
-                        url: 'system.log/deleteMonthLog',
+                        url: 'system/log/deleteMonthLog',
                         method: 'open',
                         auth: 'deleteMonthLog',
                         class: 'layui-btn layui-btn-sm layui-btn-danger',

@@ -21,10 +21,10 @@
             </div>
             <div class="layui-col-md10">
                 <table id="currentTable" class="layui-table layui-hide"
-                       data-auth-add="{{auths('system.admin/add')}}"
-                       data-auth-edit="{{auths('system.admin/edit')}}"
-                       data-auth-delete="{{auths('system.admin/delete')}}"
-                       data-auth-password="{{auths('system.admin/password')}}"
+                       data-auth-add="{{auths('system/admin/add')}}"
+                       data-auth-edit="{{auths('system/admin/edit')}}"
+                       data-auth-delete="{{auths('system/admin/delete')}}"
+                       data-auth-password="{{auths('system/admin/password')}}"
                        lay-filter="currentTable">
                 </table>
             </div>
