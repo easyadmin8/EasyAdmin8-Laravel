@@ -8,11 +8,11 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'system.menu/index',
-        add_url: 'system.menu/add',
-        delete_url: 'system.menu/delete',
-        edit_url: 'system.menu/edit',
-        modify_url: 'system.menu/modify',
+        index_url: 'system/menu/index',
+        add_url: 'system/menu/add',
+        delete_url: 'system/menu/delete',
+        edit_url: 'system/menu/edit',
+        modify_url: 'system/menu/modify',
     };
 
     return {
@@ -146,7 +146,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             })
             autocomplete.render({
                 elem: $('#href')[0],
-                url: ea.url('system.menu/getMenuTips'),
+                url: ea.url('system/menu/getMenuTips'),
                 template_val: '{{d.node}}',
                 template_txt: '【{{d.title}}】 - {{d.node}}',
                 onselect: function (resp) {
@@ -178,7 +178,7 @@ define(["jquery", "easy-admin", "treetable", "iconPickerFa", "autocomplete"], fu
             })
             autocomplete.render({
                 elem: $('#href')[0],
-                url: ea.url('system.menu/getMenuTips'),
+                url: ea.url('system/menu/getMenuTips'),
                 template_val: '{{d.node}}',
                 template_txt: '【{{d.title}}】 - {{d.node}}',
                 onselect: function (resp) {

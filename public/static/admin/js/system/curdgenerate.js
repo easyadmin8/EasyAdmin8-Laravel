@@ -4,7 +4,7 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
     var table = layui.table;
 
     var init = {
-        save_url: 'system.curd_generate/save',
+        save_url: 'system/curd_generate/save',
     };
 
     return {
@@ -31,7 +31,7 @@ define(["jquery", "easy-admin", "miniTab"], function ($, ea, miniTab) {
     </div>
   </div>
   <div class="layui-form-item">
-        <button class="layui-btn layui-btn-fluid layui-bg-cyan" type="button" lay-submit="system.CurdGenerate/save?type=console" lay-filter="curd-console-submit">一键执行</button>
+        <button class="layui-btn layui-btn-fluid layui-bg-cyan" type="button" lay-submit="system/CurdGenerate/save?type=console" lay-filter="curd-console-submit">一键执行</button>
   </div>
 </form>
 </div>

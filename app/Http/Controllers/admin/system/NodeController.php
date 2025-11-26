@@ -47,15 +47,17 @@ class NodeController extends AdminController
         $model = new SystemNode();
         try {
             if ($force == 1) {
-                $where[]        = [function ($query) use ($nodeList) {
+                $where[]        = [function($query) use ($nodeList) {
                     $query->whereIn('node', array_column($nodeList, 'node'));
                 }];
                 $updateNodeList = $model->where($where)->get()->toArray();
+
                 $formatNodeList = [];
-                array_map(function ($value) use (&$formatNodeList) {
+                array_map(function($value) use (&$formatNodeList) {
                     $formatNodeList[$value['node']]['title']   = $value['title'];
                     $formatNodeList[$value['node']]['is_auth'] = $value['is_auth'];
                 }, $nodeList);
+
                 foreach ($updateNodeList as $vo) {
                     if (isset($formatNodeList[$vo['node']])) {
                         $model->where('id', $vo['id'])->update(
@@ -79,7 +81,7 @@ class NodeController extends AdminController
             }
             $model->addAll($nodeList);
             TriggerService::updateNode();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $this->error(ea_trans('operation failed', false) . ':' . $e->getMessage());
         }
         return $this->success(ea_trans('operation successful', false));
@@ -94,14 +96,14 @@ class NodeController extends AdminController
         try {
             $existNodeList  = $model->select(explode(',', 'id,node,title,type,is_auth'))->get()->toArray();
             $formatNodeList = [];
-            array_map(function ($value) use (&$formatNodeList) {
+            array_map(function($value) use (&$formatNodeList) {
                 $formatNodeList[$value['node']] = $value['title'];
             }, $nodeList);
             foreach ($existNodeList as $vo) {
                 !isset($formatNodeList[$vo['node']]) && $model->where('id', $vo['id'])->delete();
             }
             TriggerService::updateNode();
-        }catch (\Exception $e) {
+        } catch (\Exception $e) {
             return $this->error(ea_trans('operation failed', false) . ':' . $e->getMessage());
         }
         return $this->success(ea_trans('operation successful', false));

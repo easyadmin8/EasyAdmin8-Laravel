@@ -5,7 +5,6 @@ require.config({
     baseUrl: BASE_URL,
     paths: {
         "jquery": ["plugs/jquery-3.4.1/jquery-3.4.1.min"],
-        "jquery-particleground": ["plugs/jq-module/jquery.particleground.min"],
         "echarts": ["plugs/echarts/echarts.min"],
         "echarts-theme": ["plugs/echarts/echarts-theme"],
         "easy-admin": ["plugs/easy-admin/easy-admin"],
@@ -18,6 +17,7 @@ require.config({
         "miniTongji": ["plugs/lay-module/layuimini/miniTongji"],
         "treetable": ["plugs/lay-module/treetable-lay/treetable"],
         "tableSelect": ["plugs/lay-module/tableSelect/tableSelect"],
+        "switchSelect": ["plugs/lay-module/switchSelect/switchSelect"],
         "iconPickerFa": ["plugs/lay-module/iconPicker/iconPickerFa"],
         "autocomplete": ["plugs/lay-module/autocomplete/autocomplete"],
         "xmSelect": ["plugs/xmSelect/xm-select"],

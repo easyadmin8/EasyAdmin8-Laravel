@@ -6,12 +6,12 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
     var init = {
         table_elem: '#currentTable',
         table_render_id: 'currentTableRenderId',
-        index_url: 'system.quick/index',
-        add_url: 'system.quick/add',
-        edit_url: 'system.quick/edit',
-        delete_url: 'system.quick/delete',
-        export_url: 'system.quick/export',
-        modify_url: 'system.quick/modify',
+        index_url: 'system/quick/index',
+        add_url: 'system/quick/add',
+        edit_url: 'system/quick/edit',
+        delete_url: 'system/quick/delete',
+        export_url: 'system/quick/export',
+        modify_url: 'system/quick/modify',
     };
 
     return {
@@ -51,7 +51,7 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
             })
             autocomplete.render({
                 elem: $('#href')[0],
-                url: ea.url('system.menu/getMenuTips'),
+                url: ea.url('system/menu/getMenuTips'),
                 template_val: '{{d.node}}',
                 template_txt: '{{d.node}} <span class="layui-badge">{{d.title}}</span>',
                 onselect: function (resp) {
@@ -76,7 +76,7 @@ define(["jquery", "easy-admin", "iconPickerFa", "autocomplete"], function ($, ea
             })
             autocomplete.render({
                 elem: $('#href')[0],
-                url: ea.url('system.menu/getMenuTips'),
+                url: ea.url('system/menu/getMenuTips'),
                 template_val: '{{d.node}}',
                 template_txt: '{{d.node}} <span class="layui-badge">{{d.title}}</span>',
                 onselect: function (resp) {

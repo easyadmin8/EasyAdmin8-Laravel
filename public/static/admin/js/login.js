@@ -10,7 +10,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
             $(function () {
 
                 if (backgroundUrl) {
-                    $('.container').css('background', 'url(' + backgroundUrl + ') 0% 0% / cover no-repeat')
+                    $('body').css('background', 'url(' + backgroundUrl + ') 0% 0% / cover no-repeat')
                 }
 
                 $('.bind-password').on('click', function () {

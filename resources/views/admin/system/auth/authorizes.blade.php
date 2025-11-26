@@ -27,7 +27,7 @@
 
         <div class="hr-line"></div>
         <div class="layui-form-item text-center">
-            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="system.auth/saveAuthorize">{{ea_trans('confirm',false)}}</button>
+            <button type="submit" class="layui-btn layui-btn-normal layui-btn-sm" lay-submit="system/auth/saveAuthorize">{{ea_trans('confirm',false)}}</button>
             <button type="reset" class="layui-btn layui-btn-primary layui-btn-sm">{{ea_trans('reset',false)}}</button>
         </div>
 

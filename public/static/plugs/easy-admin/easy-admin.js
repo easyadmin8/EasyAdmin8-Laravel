@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect) {
+define(["jquery", "tableSelect", "switchSelect", "xmSelect"], function ($, tableSelect, switchSelect, xmSelect) {
 
     var form = layui.form,
         layer = layui.layer,
@@ -8,6 +8,7 @@ define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect
         element = layui.element,
         laytpl = layui.laytpl,
         tableSelect = layui.tableSelect,
+        switchSelect = layui.switchSelect,
         util = layui.util;
 
     layer.config({
@@ -1703,6 +1704,24 @@ define(["jquery", "tableSelect", "xmSelect"], function ($, tableSelect, xmSelect
                             form.render();
                         }
                     );
+                });
+
+                let switchSelectList = document.querySelectorAll("[data-show]");
+                $.each(switchSelectList, function (i, v) {
+                    let _show = $(this).attr('data-show');
+                    if (_show === 'switchSelect') {
+                        let _data = $(this).attr('data-list');
+                        let _value = $(this).attr('data-value') || ''
+                        let _target = $(this).attr('data-target') || ''
+                        let _name = $(this).attr('data-name') || ''
+                        try {
+                            new switchSelect({
+                                elem: $(this), data: JSON.parse(_data), default: _value, target: _target, name: _name, disabled: $(this).attr('disabled') === 'disabled'
+                            });
+                        } catch (e) {
+                            console.error(e)
+                        }
+                    }
                 });
             },
             date: function () {

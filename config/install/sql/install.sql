@@ -304,29 +304,29 @@ VALUES ('227', '99999999', 'Home Page', 'fa fa-home', 'index/welcome', '', '_sel
 INSERT INTO `ea_system_menu`
 VALUES ('228', '0', 'System Management', 'fa fa-cog', '', '', '_self', '0', '1', '', null, '1588999529', null);
 INSERT INTO `ea_system_menu`
-VALUES ('234', '228', 'Menu Management', 'fa fa-tree', 'system.menu/index', '', '_self', '10', '1', '', null, '1588228555', null);
+VALUES ('234', '228', 'Menu Management', 'fa fa-tree', 'system/menu/index', '', '_self', '10', '1', '', null, '1588228555', null);
 INSERT INTO `ea_system_menu`
-VALUES ('244', '228', 'Administrator Management', 'fa fa-user', 'system.admin/index', '', '_self', '12', '1', '', '1573185011', '1588228573', null);
+VALUES ('244', '228', 'Administrator Management', 'fa fa-user', 'system/admin/index', '', '_self', '12', '1', '', '1573185011', '1588228573', null);
 INSERT INTO `ea_system_menu`
-VALUES ('245', '228', 'Roles Management', 'fa fa-square-person-confined', 'system.auth/index', '', '_self', '11', '1', '', '1573435877', '1588228634', null);
+VALUES ('245', '228', 'Roles Management', 'fa fa-square-person-confined', 'system/auth/index', '', '_self', '11', '1', '', '1573435877', '1588228634', null);
 INSERT INTO `ea_system_menu`
-VALUES ('246', '228', 'Nodes Management', 'fa fa-list', 'system.node/index', '', '_self', '9', '1', '', '1573435919', '1588228648', null);
+VALUES ('246', '228', 'Nodes Management', 'fa fa-list', 'system/node/index', '', '_self', '9', '1', '', '1573435919', '1588228648', null);
 INSERT INTO `ea_system_menu`
-VALUES ('247', '228', 'Configuration Management', 'fa fa-asterisk', 'system.config/index', '', '_self', '8', '1', '', '1573457448', '1588228566', null);
+VALUES ('247', '228', 'Configuration Management', 'fa fa-asterisk', 'system/config/index', '', '_self', '8', '1', '', '1573457448', '1588228566', null);
 INSERT INTO `ea_system_menu`
-VALUES ('248', '228', 'Upload Management', 'fa fa-arrow-up', 'system.uploadfile/index', '', '_self', '0', '1', '', '1573542953', '1588228043', null);
+VALUES ('248', '228', 'Upload Management', 'fa fa-arrow-up', 'system/uploadfile/index', '', '_self', '0', '1', '', '1573542953', '1588228043', null);
 INSERT INTO `ea_system_menu`
 VALUES ('249', '0', 'Mall Management', 'fa fa-list', '', '', '_self', '0', '1', '', '1589439884', '1589439884', null);
 INSERT INTO `ea_system_menu`
-VALUES ('250', '249', 'Commodity Classification', 'fa fa-calendar-check', 'mall.cate/index', '', '_self', '0', '1', '', '1589439910', '1589439966', null);
+VALUES ('250', '249', 'Commodity Classification', 'fa fa-calendar-check', 'mall/cate/index', '', '_self', '0', '1', '', '1589439910', '1589439966', null);
 INSERT INTO `ea_system_menu`
-VALUES ('251', '249', 'Commodity Management', 'fa fa-list', 'mall.goods/index', '', '_self', '0', '1', '', '1589439931', '1589439942', null);
+VALUES ('251', '249', 'Commodity Management', 'fa fa-list', 'mall/goods/index', '', '_self', '0', '1', '', '1589439931', '1589439942', null);
 INSERT INTO `ea_system_menu`
-VALUES ('252', '228', 'Quick Entrance', 'fa fa-list', 'system.quick/index', '', '_self', '0', '1', '', '1589623683', '1589623683', null);
+VALUES ('252', '228', 'Quick Entrance', 'fa fa-list', 'system/quick/index', '', '_self', '0', '1', '', '1589623683', '1589623683', null);
 INSERT INTO `ea_system_menu`
-VALUES ('253', '228', 'Log Management', 'fa fa-connectdevelop', 'system.log/index', '', '_self', '0', '1', '', '1589623684', '1589623684', null);
+VALUES ('253', '228', 'Log Management', 'fa fa-connectdevelop', 'system/log/index', '', '_self', '0', '1', '', '1589623684', '1589623684', null);
 INSERT INTO `ea_system_menu`
-VALUES ('254', '228', 'CURD Visualization', 'fa fa fa-shower', 'system.curdGenerate/index', '', '_self', '0', '1', '', '1589623684', '1589623684', null);
+VALUES ('254', '228', 'CURD Visualization', 'fa fa fa-shower', 'system/curdGenerate/index', '', '_self', '0', '1', '', '1589623684', '1589623684', null);
 
 -- ----------------------------
 -- Table structure for ea_system_node
@@ -349,147 +349,147 @@ CREATE TABLE `ea_system_node`
 -- Records of ea_system_node
 -- ----------------------------
 INSERT INTO `ea_system_node`
-VALUES ('1', 'system.admin', '管理员管理', '1', '1', '1589580432', '1589580432');
+VALUES ('1', 'system/admin', '管理员管理', '1', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('2', 'system.admin/index', '列表', '2', '1', '1589580432', '1589580432');
+VALUES ('2', 'system/admin/index', '列表', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('3', 'system.admin/add', '添加', '2', '1', '1589580432', '1589580432');
+VALUES ('3', 'system/admin/add', '添加', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('4', 'system.admin/edit', '编辑', '2', '1', '1589580432', '1589580432');
+VALUES ('4', 'system/admin/edit', '编辑', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('5', 'system.admin/password', '编辑', '2', '1', '1589580432', '1589580432');
+VALUES ('5', 'system/admin/password', '编辑', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('6', 'system.admin/delete', '删除', '2', '1', '1589580432', '1589580432');
+VALUES ('6', 'system/admin/delete', '删除', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('7', 'system.admin/modify', '属性修改', '2', '1', '1589580432', '1589580432');
+VALUES ('7', 'system/admin/modify', '属性修改', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('8', 'system.admin/export', '导出', '2', '1', '1589580432', '1589580432');
+VALUES ('8', 'system/admin/export', '导出', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('9', 'system.auth', '角色权限管理', '1', '1', '1589580432', '1589580432');
+VALUES ('9', 'system/auth', '角色权限管理', '1', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('10', 'system.auth/authorizes', '授权', '2', '1', '1589580432', '1589580432');
+VALUES ('10', 'system/auth/authorizes', '授权', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('11', 'system.auth/saveAuthorize', '授权保存', '2', '1', '1589580432', '1589580432');
+VALUES ('11', 'system/auth/saveAuthorize', '授权保存', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('12', 'system.auth/index', '列表', '2', '1', '1589580432', '1589580432');
+VALUES ('12', 'system/auth/index', '列表', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('13', 'system.auth/add', '添加', '2', '1', '1589580432', '1589580432');
+VALUES ('13', 'system/auth/add', '添加', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('14', 'system.auth/edit', '编辑', '2', '1', '1589580432', '1589580432');
+VALUES ('14', 'system/auth/edit', '编辑', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('15', 'system.auth/delete', '删除', '2', '1', '1589580432', '1589580432');
+VALUES ('15', 'system/auth/delete', '删除', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('16', 'system.auth/export', '导出', '2', '1', '1589580432', '1589580432');
+VALUES ('16', 'system/auth/export', '导出', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('17', 'system.auth/modify', '属性修改', '2', '1', '1589580432', '1589580432');
+VALUES ('17', 'system/auth/modify', '属性修改', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('18', 'system.config', '系统配置管理', '1', '1', '1589580432', '1589580432');
+VALUES ('18', 'system/config', '系统配置管理', '1', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('19', 'system.config/index', '列表', '2', '1', '1589580432', '1589580432');
+VALUES ('19', 'system/config/index', '列表', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('20', 'system.config/save', '保存', '2', '1', '1589580432', '1589580432');
+VALUES ('20', 'system/config/save', '保存', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('21', 'system.menu', '菜单管理', '1', '1', '1589580432', '1589580432');
+VALUES ('21', 'system/menu', '菜单管理', '1', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('22', 'system.menu/index', '列表', '2', '1', '1589580432', '1589580432');
+VALUES ('22', 'system/menu/index', '列表', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('23', 'system.menu/add', '添加', '2', '1', '1589580432', '1589580432');
+VALUES ('23', 'system/menu/add', '添加', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('24', 'system.menu/edit', '编辑', '2', '1', '1589580432', '1589580432');
+VALUES ('24', 'system/menu/edit', '编辑', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('25', 'system.menu/delete', '删除', '2', '1', '1589580432', '1589580432');
+VALUES ('25', 'system/menu/delete', '删除', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('26', 'system.menu/modify', '属性修改', '2', '1', '1589580432', '1589580432');
+VALUES ('26', 'system/menu/modify', '属性修改', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('27', 'system.menu/getMenuTips', '添加菜单提示', '2', '1', '1589580432', '1589580432');
+VALUES ('27', 'system/menu/getMenuTips', '添加菜单提示', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('28', 'system.menu/export', '导出', '2', '1', '1589580432', '1589580432');
+VALUES ('28', 'system/menu/export', '导出', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('29', 'system.node', '系统节点管理', '1', '1', '1589580432', '1589580432');
+VALUES ('29', 'system/node', '系统节点管理', '1', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('30', 'system.node/index', '列表', '2', '1', '1589580432', '1589580432');
+VALUES ('30', 'system/node/index', '列表', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('31', 'system.node/refreshNode', '系统节点更新', '2', '1', '1589580432', '1589580432');
+VALUES ('31', 'system/node/refreshNode', '系统节点更新', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('32', 'system.node/clearNode', '清除失效节点', '2', '1', '1589580432', '1589580432');
+VALUES ('32', 'system/node/clearNode', '清除失效节点', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('33', 'system.node/add', '添加', '2', '1', '1589580432', '1589580432');
+VALUES ('33', 'system/node/add', '添加', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('34', 'system.node/edit', '编辑', '2', '1', '1589580432', '1589580432');
+VALUES ('34', 'system/node/edit', '编辑', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('35', 'system.node/delete', '删除', '2', '1', '1589580432', '1589580432');
+VALUES ('35', 'system/node/delete', '删除', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('36', 'system.node/export', '导出', '2', '1', '1589580432', '1589580432');
+VALUES ('36', 'system/node/export', '导出', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('37', 'system.node/modify', '属性修改', '2', '1', '1589580432', '1589580432');
+VALUES ('37', 'system/node/modify', '属性修改', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('38', 'system.uploadfile', '上传文件管理', '1', '1', '1589580432', '1589580432');
+VALUES ('38', 'system/uploadfile', '上传文件管理', '1', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('39', 'system.uploadfile/index', '列表', '2', '1', '1589580432', '1589580432');
+VALUES ('39', 'system/uploadfile/index', '列表', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('40', 'system.uploadfile/add', '添加', '2', '1', '1589580432', '1589580432');
+VALUES ('40', 'system/uploadfile/add', '添加', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('41', 'system.uploadfile/edit', '编辑', '2', '1', '1589580432', '1589580432');
+VALUES ('41', 'system/uploadfile/edit', '编辑', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('42', 'system.uploadfile/delete', '删除', '2', '1', '1589580432', '1589580432');
+VALUES ('42', 'system/uploadfile/delete', '删除', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('43', 'system.uploadfile/export', '导出', '2', '1', '1589580432', '1589580432');
+VALUES ('43', 'system/uploadfile/export', '导出', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('44', 'system.uploadfile/modify', '属性修改', '2', '1', '1589580432', '1589580432');
+VALUES ('44', 'system/uploadfile/modify', '属性修改', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('45', 'mall.cate', '商品分类管理', '1', '1', '1589580432', '1589580432');
+VALUES ('45', 'mall/cate', '商品分类管理', '1', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('46', 'mall.cate/index', '列表', '2', '1', '1589580432', '1589580432');
+VALUES ('46', 'mall/cate/index', '列表', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('47', 'mall.cate/add', '添加', '2', '1', '1589580432', '1589580432');
+VALUES ('47', 'mall/cate/add', '添加', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('48', 'mall.cate/edit', '编辑', '2', '1', '1589580432', '1589580432');
+VALUES ('48', 'mall/cate/edit', '编辑', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('49', 'mall.cate/delete', '删除', '2', '1', '1589580432', '1589580432');
+VALUES ('49', 'mall/cate/delete', '删除', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('50', 'mall.cate/export', '导出', '2', '1', '1589580432', '1589580432');
+VALUES ('50', 'mall/cate/export', '导出', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('51', 'mall.cate/modify', '属性修改', '2', '1', '1589580432', '1589580432');
+VALUES ('51', 'mall/cate/modify', '属性修改', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('52', 'mall.goods', '商城商品管理', '1', '1', '1589580432', '1589580432');
+VALUES ('52', 'mall/goods', '商城商品管理', '1', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('53', 'mall.goods/index', '列表', '2', '1', '1589580432', '1589580432');
+VALUES ('53', 'mall/goods/index', '列表', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('54', 'mall.goods/stock', '入库', '2', '1', '1589580432', '1589580432');
+VALUES ('54', 'mall/goods/stock', '入库', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('55', 'mall.goods/add', '添加', '2', '1', '1589580432', '1589580432');
+VALUES ('55', 'mall/goods/add', '添加', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('56', 'mall.goods/edit', '编辑', '2', '1', '1589580432', '1589580432');
+VALUES ('56', 'mall/goods/edit', '编辑', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('57', 'mall.goods/delete', '删除', '2', '1', '1589580432', '1589580432');
+VALUES ('57', 'mall/goods/delete', '删除', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('58', 'mall.goods/export', '导出', '2', '1', '1589580432', '1589580432');
+VALUES ('58', 'mall/goods/export', '导出', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('59', 'mall.goods/modify', '属性修改', '2', '1', '1589580432', '1589580432');
+VALUES ('59', 'mall/goods/modify', '属性修改', '2', '1', '1589580432', '1589580432');
 INSERT INTO `ea_system_node`
-VALUES ('60', 'system.quick', '快捷入口管理', '1', '1', '1589623188', '1589623188');
+VALUES ('60', 'system/quick', '快捷入口管理', '1', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('61', 'system.quick/index', '列表', '2', '1', '1589623188', '1589623188');
+VALUES ('61', 'system/quick/index', '列表', '2', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('62', 'system.quick/add', '添加', '2', '1', '1589623188', '1589623188');
+VALUES ('62', 'system/quick/add', '添加', '2', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('63', 'system.quick/edit', '编辑', '2', '1', '1589623188', '1589623188');
+VALUES ('63', 'system/quick/edit', '编辑', '2', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('64', 'system.quick/delete', '删除', '2', '1', '1589623188', '1589623188');
+VALUES ('64', 'system/quick/delete', '删除', '2', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('65', 'system.quick/export', '导出', '2', '1', '1589623188', '1589623188');
+VALUES ('65', 'system/quick/export', '导出', '2', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('66', 'system.quick/modify', '属性修改', '2', '1', '1589623188', '1589623188');
+VALUES ('66', 'system/quick/modify', '属性修改', '2', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('67', 'system.log', '操作日志管理', '1', '1', '1589623188', '1589623188');
+VALUES ('67', 'system/log', '操作日志管理', '1', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('68', 'system.log/index', '列表', '2', '1', '1589623188', '1589623188');
+VALUES ('68', 'system/log/index', '列表', '2', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('69', 'system.curdGenerate', 'CURD可视化管理', '1', '1', '1589623188', '1589623188');
+VALUES ('69', 'system/curdGenerate', 'CURD可视化管理', '1', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('70', 'system.curdGenerate/index', '列表', '2', '1', '1589623188', '1589623188');
+VALUES ('70', 'system/curdGenerate/index', '列表', '2', '1', '1589623188', '1589623188');
 INSERT INTO `ea_system_node`
-VALUES ('71', 'system.curdGenerate/save', '操作', '2', '1', '1589623188', '1589623188');
+VALUES ('71', 'system/curdGenerate/save', '操作', '2', '1', '1589623188', '1589623188');
 
 -- ----------------------------
 -- Table structure for ea_system_quick
@@ -514,21 +514,21 @@ CREATE TABLE `ea_system_quick`
 -- Records of ea_system_quick
 -- ----------------------------
 INSERT INTO `ea_system_quick`
-VALUES ('1', 'Administrator Management', 'fa fa-user', 'system.admin/index', '0', '1', '', '1589624097', '1589624792', null);
+VALUES ('1', 'Administrator Management', 'fa fa-user', 'system/admin/index', '0', '1', '', '1589624097', '1589624792', null);
 INSERT INTO `ea_system_quick`
-VALUES ('2', 'Roles Management', 'fa fa-square-person-confined', 'system.auth/index', '0', '1', '', '1589624772', '1589624781', null);
+VALUES ('2', 'Roles Management', 'fa fa-square-person-confined', 'system/auth/index', '0', '1', '', '1589624772', '1589624781', null);
 INSERT INTO `ea_system_quick`
-VALUES ('3', 'Menu Management', 'fa fa-tree', 'system.menu/index', '0', '1', null, '1589624097', '1589624792', null);
+VALUES ('3', 'Menu Management', 'fa fa-tree', 'system/menu/index', '0', '1', null, '1589624097', '1589624792', null);
 INSERT INTO `ea_system_quick`
-VALUES ('6', 'Nodes Management', 'fa fa-list', 'system.node/index', '0', '1', null, '1589624772', '1589624781', null);
+VALUES ('6', 'Nodes Management', 'fa fa-list', 'system/node/index', '0', '1', null, '1589624772', '1589624781', null);
 INSERT INTO `ea_system_quick`
-VALUES ('7', 'Configuration Management', 'fa fa-asterisk', 'system.config/index', '0', '1', null, '1589624097', '1589624792', null);
+VALUES ('7', 'Configuration Management', 'fa fa-asterisk', 'system/config/index', '0', '1', null, '1589624097', '1589624792', null);
 INSERT INTO `ea_system_quick`
-VALUES ('8', 'Upload Management', 'fa fa-arrow-up', 'system.uploadfile/index', '0', '1', null, '1589624772', '1589624781', null);
+VALUES ('8', 'Upload Management', 'fa fa-arrow-up', 'system/uploadfile/index', '0', '1', null, '1589624772', '1589624781', null);
 INSERT INTO `ea_system_quick`
-VALUES ('10', 'Commodity Classification', 'fa fa-calendar-check', 'mall.cate/index', '0', '1', null, '1589624097', '1589624792', null);
+VALUES ('10', 'Commodity Classification', 'fa fa-calendar-check', 'mall/cate/index', '0', '1', null, '1589624097', '1589624792', null);
 INSERT INTO `ea_system_quick`
-VALUES ('11', 'Commodity Management', 'fa fa-list', 'mall.goods/index', '0', '1', null, '1589624772', '1589624781', null);
+VALUES ('11', 'Commodity Management', 'fa fa-list', 'mall/goods/index', '0', '1', null, '1589624772', '1589624781', null);
 
 -- ----------------------------
 -- Table structure for ea_system_uploadfile

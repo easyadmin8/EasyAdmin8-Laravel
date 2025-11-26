@@ -54,10 +54,9 @@ define(["jquery"], function ($) {
          * 渲染一级菜单
          */
         compileMenu: function(menu,isSub){
-            menu.title = __(menu.title)
-            var menuHtml = '<li {{#if( d.menu){ }}  data-menu="{{- d.menu}}" {{#}}} class="layui-nav-item menu-li {{- d.childOpenClass}} {{- d.className}}"  {{#if( d.id){ }}  id="{{- d.id}}" {{#}}}> <a {{#if( d.href){ }} layuimini-href="{{- d.href}}" {{#}}} {{#if( d.target){ }}  target="{{- d.target}}" {{#}}} href="javascript:;" title="{{-d .title}}">{{#if( d.icon){ }}  <i class="{{- d.icon}}"></i> {{#}}} <span class="layui-left-nav">{{- d.title}}</span></a>  {{# if(d.children){}} {{- d.children}} {{#}}} </li>' ;
+            var menuHtml = '<li {{#if( d.menu){ }}  data-menu="{{- d.menu}}" {{#}}} class="layui-nav-item menu-li {{- d.childOpenClass}} {{- d.className}}"  {{#if( d.id){ }}  id="{{- d.id}}" {{#}}}> <a {{#if( d.href){ }} layuimini-href="{{- d.href}}" {{#}}} {{#if( d.target){ }}  target="{{- d.target}}" {{#}}} href="javascript:;">{{#if( d.icon){ }}  <i class="{{- d.icon}}"></i> {{#}}} <span class="layui-left-nav">{{- d.title}}</span></a>  {{# if(d.children){}} {{- d.children}} {{#}}} </li>' ;
             if(isSub){
-                menuHtml = '<dd class="menu-dd {{- d.childOpenClass}} {{ d.className }}"> <a href="javascript:;"  {{#if( d.menu){ }}  data-menu="{{- d.menu}}" {{#}}} {{#if( d.id){ }}  id="{{- d.id}}" {{#}}} {{#if(( !d.child || !d.child.length ) && d.href){ }} layuimini-href="{{- d.href}}" {{#}}} {{#if( d.target){ }}  target="{{- d.target}}" {{#}}} title="{{-d .title}}"> {{#if( d.icon){ }}  <i class="{{- d.icon}}"></i> {{#}}} <span class="layui-left-nav"> {{- d.title}}</span></a> {{# if(d.children){}} {{- d.children}} {{#}}}</dd>'
+                menuHtml = '<dd class="menu-dd {{- d.childOpenClass}} {{ d.className }}"> <a href="javascript:;"  {{#if( d.menu){ }}  data-menu="{{- d.menu}}" {{#}}} {{#if( d.id){ }}  id="{{- d.id}}" {{#}}} {{#if(( !d.child || !d.child.length ) && d.href){ }} layuimini-href="{{- d.href}}" {{#}}} {{#if( d.target){ }}  target="{{- d.target}}" {{#}}}> {{#if( d.icon){ }}  <i class="{{- d.icon}}"></i> {{#}}} <span class="layui-left-nav"> {{- d.title}}</span></a> {{# if(d.children){}} {{- d.children}} {{#}}}</dd>'
             }
             return laytpl(menuHtml).render(menu);
         },
@@ -247,5 +246,5 @@ define(["jquery"], function ($) {
     };
 
 
-   return miniMenu;
+    return miniMenu;
 });

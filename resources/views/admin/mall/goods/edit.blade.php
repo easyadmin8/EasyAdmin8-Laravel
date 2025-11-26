@@ -1,13 +1,29 @@
 @include('admin.layout.head')
 <div class="layuimini-container">
-    <form id="app-form" class="layui-form layuimini-form">
+    <form id="app-form" class="layui-form layuimini-form layui-form-pane">
 
         <div class="layui-form-item">
             <label class="layui-form-label">{{ea_trans('goods cate',true,'common')}}</label>
             <div class="layui-input-block">
-                <select name="cate_id" lay-verify="required" data-select="{{__url('mall.cate/index')}}" data-fields="id,title" data-value="{{$row['cate_id']}}">
+                <select name="cate_id" lay-verify="required" data-select="{{__url('mall/cate/index')}}" data-fields="id,title" data-value="{{$row['cate_id']}}">
                 </select>
             </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">{{ea_trans('goods cate',true,'common')}}2</label>
+            <div class="layui-input-block">
+                <select name="cate_id" lay-verify="required">
+                    @foreach($cate as $key=>$vo)
+                        <option value="{{$key}}" @if($key == $row['cate_id']) selected @endif>{{$vo}}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">{{ea_trans('goods cate',true,'common')}}3</label>
+            <div data-show="switchSelect" data-list='{{json_encode($cate)}}' data-name="cate_id" data-value="{{$row['cate_id']}}" data-target="radio"></div>
         </div>
 
         <div class="layui-form-item">

@@ -1,0 +1,44 @@
+.layui-switch-select {
+    position: relative;
+}
+
+.layui-switch-select .radio-container {
+    border: 1px solid #eee;
+    padding: 0 5px;
+}
+
+.layui-switch-select .toggle-dots {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 8px;
+    z-index: 999;
+    background: #e9e9e9;
+    padding: 5px;
+    border-radius: 25px;
+}
+
+.layui-switch-select .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.layui-switch-select .dot.active {
+    background-color: #1E9FFF;
+}
+
+.layui-switch-select .radio-group {
+    display: flex;
+}
+
+.layui-switch-select .toggle-hidden {
+    display: none !important;
+}
+
+.layui-form-pane .layui-switch-select .radio-container {
+    padding: 0;
+}

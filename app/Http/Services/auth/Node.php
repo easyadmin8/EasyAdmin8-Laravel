@@ -8,7 +8,6 @@ use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\DocParser;
 use App\Http\Services\annotation\ControllerAnnotation;
 use App\Http\Services\annotation\NodeAnnotation;
-use Illuminate\Support\Facades\App;
 use ReflectionException;
 
 /**
@@ -147,7 +146,7 @@ class Node
                 }
                 // 根目录下的文件
                 $className               = str_replace('.php', '', $file);
-                $controllerFormat        = str_replace('\\', '.', $middleDir) . lcfirst($className);
+                $controllerFormat        = str_replace('\\', '/', $middleDir) . lcfirst($className);
                 $controllerFormat        = str_replace('Controller', '', $controllerFormat);
                 $list[$controllerFormat] = "{$this->baseNamespace}\\{$middleDir}" . $className;
             }
