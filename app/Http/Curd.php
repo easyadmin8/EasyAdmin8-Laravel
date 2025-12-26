@@ -7,8 +7,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
-use jianyan\excel\Excel;
-use PhpOffice\PhpSpreadsheet\Writer\Exception;
 use App\Http\Services\annotation\NodeAnnotation;
 use App\Http\Services\annotation\ControllerAnnotation;
 
@@ -110,10 +108,11 @@ trait Curd
         $list     = $list->toArray();
         $fileName = time();
         try {
-            return Excel::exportData($list, $header, $fileName, 'xlsx');
-        }catch (Exception|\PhpOffice\PhpSpreadsheet\Exception$e) {
+            exportExcel($header, $list, $fileName);
+        }catch (\Throwable $e) {
             return $this->error($e->getMessage());
         }
+        return $this->success('success');
     }
 
     #[NodeAnnotation(title: 'modify', auth: true)]

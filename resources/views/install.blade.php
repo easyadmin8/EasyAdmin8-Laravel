@@ -40,7 +40,7 @@
                 <label class="layui-form-label">{{ea_trans('Database Address',false,'','install')}}</label>
                 <div class="layui-input-block">
                     <input class="layui-input" name="hostname" autocomplete="off" lay-verify="required" lay-reqtext="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Address',false,'','install')}}"
-                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Address',false,'','install')}}" value="127.0.0.1">
+                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Address',false,'','install')}}" value="{{$envInfo['DB_HOST']}}">
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
                 <label class="layui-form-label">{{ea_trans('Database Port',false,'','install')}}</label>
                 <div class="layui-input-block">
                     <input class="layui-input" name="hostport" autocomplete="off" lay-verify="required" lay-reqtext="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Port',false,'','install')}}"
-                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Port',false,'','install')}}" value="3306">
+                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Port',false,'','install')}}" value="{{$envInfo['DB_PORT']}}">
                 </div>
             </div>
 
@@ -56,7 +56,7 @@
                 <label class="layui-form-label">{{ea_trans('Database Name',false,'','install')}}</label>
                 <div class="layui-input-block">
                     <input class="layui-input" name="database" autocomplete="off" lay-verify="required" lay-reqtext="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Name',false,'','install')}}"
-                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Name',false,'','install')}}" value="easyadmin8">
+                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Name',false,'','install')}}" value="{{$envInfo['DB_NAME']}}">
                 </div>
             </div>
 
@@ -64,7 +64,7 @@
                 <label class="layui-form-label">{{ea_trans('Database Prefix',false,'','install')}}</label>
                 <div class="layui-input-block">
                     <input class="layui-input" name="prefix" autocomplete="off" lay-verify="required" lay-reqtext="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Prefix',false,'','install')}}"
-                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Prefix',false,'','install')}}" value="ea8_">
+                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Prefix',false,'','install')}}" value="{{$envInfo['DB_PREFIX']}}">
                 </div>
             </div>
 
@@ -72,7 +72,7 @@
                 <label class="layui-form-label">{{ea_trans('Database Account',false,'','install')}}</label>
                 <div class="layui-input-block">
                     <input class="layui-input" name="db_username" autocomplete="off" lay-verify="required" lay-reqtext="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Account',false,'','install')}}"
-                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Account',false,'','install')}}" value="root">
+                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Account',false,'','install')}}" value="{{$envInfo['DB_USER']}}">
                 </div>
             </div>
 
@@ -80,7 +80,7 @@
                 <label class="layui-form-label">{{ea_trans('Database Password',false,'','install')}}</label>
                 <div class="layui-input-block">
                     <input type="password" class="layui-input" name="db_password" autocomplete="off" lay-verify="required" lay-reqtext="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Password',false,'','install')}}"
-                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Password',false,'','install')}}">
+                           placeholder="{{ea_trans('Please Enter',false,'','install')}} {{ea_trans('Database Password',false,'','install')}}" value="{{$envInfo['DB_PASS']}}">
                 </div>
             </div>
 

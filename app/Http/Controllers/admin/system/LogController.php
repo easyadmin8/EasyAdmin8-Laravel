@@ -8,12 +8,9 @@ use App\Http\Services\tool\CommonTool;
 use App\Models\SystemLog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use App\Http\Services\annotation\NodeAnnotation;
 use App\Http\Services\annotation\ControllerAnnotation;
-use jianyan\excel\Excel;
-use PhpOffice\PhpSpreadsheet\Writer\Exception;
 
 #[ControllerAnnotation(title: 'Operation log Management')]
 class LogController extends AdminController
@@ -74,12 +71,12 @@ class LogController extends AdminController
         }
         if (empty($list)) return $this->error(ea_trans('No data available', false));
         $list     = $list->toArray();
-        $fileName = time();
         try {
-            return Excel::exportData($list, $header, $fileName, 'xlsx');
-        }catch (Exception|\PhpOffice\PhpSpreadsheet\Exception$e) {
+            exportExcel($header, $list, 'log');
+        }catch (\Throwable $e) {
             return $this->error($e->getMessage());
         }
+        return $this->success('success');
     }
 
     #[MiddlewareAnnotation(ignore: MiddlewareAnnotation::IGNORE_LOG)]
