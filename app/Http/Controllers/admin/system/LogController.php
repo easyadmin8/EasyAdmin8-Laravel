@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use App\Http\Services\annotation\NodeAnnotation;
 use App\Http\Services\annotation\ControllerAnnotation;
-use jianyan\excel\Excel;
-use PhpOffice\PhpSpreadsheet\Writer\Exception;
 
 #[ControllerAnnotation(title: '操作日志管理')]
 class LogController extends AdminController
@@ -73,12 +71,12 @@ class LogController extends AdminController
         }
         if (empty($list)) return $this->error('暂无数据');
         $list     = $list->toArray();
-        $fileName = time();
         try {
-            return Excel::exportData($list, $header, $fileName, 'xlsx');
-        }catch (Exception|\PhpOffice\PhpSpreadsheet\Exception$e) {
+            exportExcel($header, $list, '操作日志');
+        }catch (\Throwable $e) {
             return $this->error($e->getMessage());
         }
+        return $this->success('导出成功');
     }
 
     #[MiddlewareAnnotation(ignore: MiddlewareAnnotation::IGNORE_LOG)]

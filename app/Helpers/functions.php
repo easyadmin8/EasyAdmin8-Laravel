@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Schema;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 /**
  * 首页的PID
@@ -193,4 +195,47 @@ function editor_textarea(?string $detail, string $name = 'desc', string $placeho
         'EasyMDE'  => "<textarea id='{$name}' class='editor' name='{$name}'>{$detail}</textarea>",
         default    => "<div class='wangEditor_div'><textarea name='{$name}' rows='20' class='layui-textarea editor layui-hide'>{$detail}</textarea><div id='editor_toolbar_{$name}'></div><div id='editor_{$name}' style='height: 500px'></div></div>",
     };
+}
+
+
+/**
+ * @desc 导出excel
+ * @tip 追求性能请使用 xlsWriter https://xlswriter-docs.viest.me/zh-cn
+ * @param array $header
+ * @param array $list
+ * @param string $fileName
+ * @return void
+ * @throws Exception
+ */
+function exportExcel(array $header = [], array $list = [], string $fileName = ''): void
+{
+    if (empty($fileName)) $fileName = time();
+    if (empty($header) || empty($list)) throw new \Exception('导出数据不能为空');
+    $spreadsheet = new Spreadsheet();
+    $sheet       = $spreadsheet->getActiveSheet();
+    $headers     = array_column($header, 0) ?? array_keys($list[0]);
+    $sheet->fromArray([$headers], null, 'A1');
+    $rowIndex = 2;
+    foreach ($list as $row) {
+        $rowData = [];
+        foreach ($header as $item) {
+            $value = $row[$item[1]] ?? '';
+            if ($value === null) {
+                $rowData[] = '';
+                continue;
+            }
+            $rowData[] = $value;
+        }
+        $sheet->fromArray([$rowData], null, "A{$rowIndex}");
+        $rowIndex++;
+    }
+    foreach (range('A', $sheet->getHighestColumn()) as $col) {
+        $sheet->getColumnDimension($col)->setAutoSize(true);
+    }
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="' . $fileName . '.xlsx"');
+    header('Cache-Control: max-age=0');
+    $writer = new Xlsx($spreadsheet);
+    $writer->save('php://output');
+    die();
 }
