@@ -3,6 +3,7 @@
 use App\Http\Middleware\CheckAuth;
 use App\Http\Middleware\CheckInstall;
 use App\Http\Middleware\CheckLogin;
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\SystemLog;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +43,7 @@ Route::get('/install/language/{lang}', function($lang) {
     return back();
 });
 
-Route::middleware([CheckInstall::class, CheckLogin::class, SystemLog::class, CheckAuth::class])->group(function() use ($admin) {
+Route::middleware([SetLocale::class, CheckInstall::class, CheckLogin::class, SystemLog::class, CheckAuth::class])->group(function() use ($admin) {
     Route::prefix($admin)->group(function() {
 
         // 后台首页
