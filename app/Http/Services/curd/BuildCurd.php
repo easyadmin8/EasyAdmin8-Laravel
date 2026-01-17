@@ -629,7 +629,7 @@ class BuildCurd
         foreach ($nodeArray as $vo) {
             $formatArray[] = Str::snake(lcfirst($vo));
         }
-        $this->controllerUrl = implode('.', $formatArray);
+        $this->controllerUrl = implode('/', $formatArray);
         $this->viewFilename  = implode($this->DS, $formatArray);
         $this->jsFilename    = $this->viewFilename;
 
@@ -1427,8 +1427,6 @@ class BuildCurd
                 $indexCols .= $this->formatColsRow("{$templateValue},\r");
             }
         }
-
-        $indexCols .= $this->formatColsRow("{width: 250, title: '操作', templet: ea.table.tool},\r");
 
         $jsValue                 = CommonTool::replaceTemplate(
             $this->getTemplate("static{$this->DS}js"),

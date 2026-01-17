@@ -109,7 +109,7 @@ class CurdGenerateController extends AdminController
                     if (!empty($_file)) {
                         $_fileExp      = explode(DIRECTORY_SEPARATOR, $_file);
                         $_fileExp_last = array_slice($_fileExp, -2);
-                        $link          = '/' . config('easyadmin.ADMIN', 'admin') . '/' . $_fileExp_last[0] . '.' . Str::snake(explode('Controller.php', end($_fileExp_last))[0] ?? '') . '/index';
+                        $link          = '/' . config('easyadmin.ADMIN', 'admin') . '/' . $_fileExp_last[0] . '/' . Str::snake(explode('Controller.php', end($_fileExp_last))[0] ?? '') . '/index';
                     }
                     return $this->success('生成成功', compact('result', 'link'));
                 }catch (FileException $exception) {

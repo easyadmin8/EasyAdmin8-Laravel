@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Services\tool\CommonTool;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use App\Http\Services\annotation\NodeAnnotation;
@@ -43,7 +44,7 @@ trait Curd
         if (request()->ajax()) {
             try {
                 $save = insertFields($this->model);
-            }catch (\Exception $e) {
+            } catch (\Exception $e) {
                 return $this->error('保存失败:' . $e->getMessage());
             }
             return $save ? $this->success('保存成功') : $this->error('保存失败');
@@ -60,7 +61,7 @@ trait Curd
         if (request()->ajax()) {
             try {
                 $save = updateFields($this->model, $row);
-            }catch (\PDOException|\Exception $e) {
+            } catch (\PDOException|\Exception $e) {
                 return $this->error('保存失败:' . $e->getMessage());
             }
             return $save ? $this->success('保存成功') : $this->error('保存失败');
@@ -79,7 +80,7 @@ trait Curd
         if (empty($row)) return $this->error('数据不存在');
         try {
             $save = $this->model->whereIn('id', $id)->delete();
-        }catch (\PDOException|\Exception $e) {
+        } catch (\PDOException|\Exception $e) {
             return $this->error('删除失败:' . $e->getMessage());
         }
         return $save ? $this->success('删除成功') : $this->error('删除失败');
@@ -109,7 +110,7 @@ trait Curd
         $fileName = time();
         try {
             exportExcel($header, $list, $fileName);
-        }catch (\Throwable $e) {
+        } catch (\Throwable $e) {
             return $this->error($e->getMessage());
         }
         return $this->success('导出成功');
@@ -140,7 +141,7 @@ trait Curd
         try {
             foreach ($post as $key => $item) if ($key == 'field') $row->$item = $post['value'];
             $row->save();
-        }catch (\PDOException|\Exception $e) {
+        } catch (\PDOException|\Exception $e) {
             return $this->error("操作失败:" . $e->getMessage());
         }
         return $this->success('保存成功');
@@ -160,7 +161,11 @@ trait Curd
         if (!$deleteTimeField) return $this->success($defaultErrorMsg);
         switch ($type) {
             case 'restore':
-                $this->model->onlyTrashed()->whereIn('id', $id)->update([$deleteTimeField => null, 'update_time' => time()]);
+                $update = [$deleteTimeField => null,];
+                if (Schema::hasColumn($this->model->getTable(), 'update_time')) {
+                    $update['update_time'] = time();
+                }
+                $this->model->onlyTrashed()->whereIn('id', $id)->update($update);
                 return $this->success('success');
                 break;
             case 'delete':
