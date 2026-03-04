@@ -339,6 +339,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     d.search = admin.parame(d.search, true);
                     d.searchTip = d.searchTip || '请输入' + d.title || '';
                     d.searchValue = d.searchValue || '';
+                    d.laySearch = d.laySearch || false;
                     d.searchOp = d.searchOp || '%*%';
                     d.timeType = d.timeType || 'datetime';
                     if (d.field !== false && d.search !== false) {
@@ -361,6 +362,10 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                                     }
                                     selectHtml += '<option value="' + sI + '" ' + selected + '>' + sV + '</option>/n';
                                 });
+                                var laySearch = ''
+                                if (true === d.laySearch) {
+                                    laySearch = 'lay-search'
+                                }
                                 formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
