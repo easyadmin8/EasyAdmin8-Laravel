@@ -33,7 +33,7 @@
 > 项目地址：[http://easyadmin8.top](http://easyadmin8.top)
 >
 > 演示地址：
-> - `12.x版本` [http://laravel.easyadmin8.top/admin](http://laravel.easyadmin8.top/admin)
+> - `13.x版本` [http://laravel.easyadmin8.top/admin](http://laravel.easyadmin8.top/admin)
 > - `11.x多语言版本` [http://laravel-i18n.easyadmin8.top/admin](http://laravel-i18n.easyadmin8.top/admin)
 > - `10.x版本` [http://laravel-10.easyadmin8.top/admin](http://laravel-10.easyadmin8.top/admin)
 >
