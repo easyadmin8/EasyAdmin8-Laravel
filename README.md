@@ -2,10 +2,10 @@
 <img alt="log" src="public/static/common/images/logo-8.png" />
 
 <p>
-<span><img src="https://img.shields.io/badge/php-%3E=8.2.0-brightgreen.svg?maxAge=2592000&amp;" alt="php"></span>
+<span><img src="https://img.shields.io/badge/php-%3E=8.3.0-brightgreen.svg?maxAge=2592000&amp;" alt="php"></span>
 <span><img src="https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?maxAge=2592000&amp;color=blue" alt="MySQL"></span>
 <span><img src="https://img.shields.io/badge/laravel-%3E=12.0.0-brightgreen.svg?maxAge=2592000" alt="Laravel"></span>
-<span><img src="https://img.shields.io/badge/layui-%3E=2.9.0-brightgreen.svg?maxAge=2592000&amp;color=critical" alt="layui"></span>
+<span><img src="https://img.shields.io/badge/layui-%3E=2.x-brightgreen.svg?maxAge=2592000&amp;color=critical" alt="layui"></span>
 <span><img src="https://img.shields.io/badge/license-MIT-green?maxAge=2592000&amp;color=yellow" alt="License"></span>
 </p>
 </div>
@@ -20,17 +20,15 @@
 
 ## 项目介绍
 
-> `EasyAdmin8-Laravel` 在 [`EasyAdmin8`](https://gitee.com/EasyAdmin8/EasyAdmin8) 的基础上使用 Laravel 12.x 重构，PHP 最低版本要求不低于 8.2
+> `EasyAdmin8-Laravel` 在 [`EasyAdmin8`](https://gitee.com/EasyAdmin8/EasyAdmin8) 的基础上使用 Laravel 13.x 重构，PHP 最低版本要求不低于 8.3
 >
-> 请注意：当前项目采用 `laravel 12.x` 构建
+> 请注意：当前项目采用 `laravel 13.x` 构建
 >
-> 如需要 `多语言版本` 请在分支中选择 `11.x-i18n`
+> 如需要 `多语言版本` 请在分支中选择 `12.x-i18n`
 >
-> 如需要 `laravel 11.x` 请在分支中选择 `11.x`
+> 如需要 `laravel 12.x` 请在分支中选择 `12.x`
 >
-> 如需要 `laravel 10.x` 请在分支中选择 `10.x`
->
-> Laravel v12.x 和 layui v2.9.x 的快速开发的后台管理系统。
+> Laravel v13.x 和 layui v2.x 的快速开发的后台管理系统。
 >
 > 项目地址：[http://easyadmin8.top](http://easyadmin8.top)
 >
