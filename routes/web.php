@@ -13,63 +13,54 @@ use Illuminate\Support\Str;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
 */
 
-// 系统首页
-Route::get('/', function() {
-    return redirect('/' . config('easyadmin.ADMIN'));
-})->middleware([CheckInstall::class]);
+Route::middleware([CheckInstall::class])->group(function () {
+    require __DIR__ . '/website.php';
+});
 
 // 首次安装管理系统
-Route::controller(\App\Http\Controllers\common\InstallController::class)->group(function() {
+Route::controller(\App\Http\Controllers\common\InstallController::class)->group(function () {
     Route::match(['get', 'post'], '/install', 'index');
 });
 
 // 后台所有路由
 $admin = config('admin.admin_alias_name');
 
-Route::middleware([CheckInstall::class, RateLimiting::class, CheckLogin::class, SystemLog::class, CheckAuth::class])->group(function() use ($admin) {
-    Route::prefix($admin)->group(function() {
+Route::middleware([CheckInstall::class, RateLimiting::class, CheckLogin::class, SystemLog::class, CheckAuth::class])->group(function () use ($admin) {
+    Route::prefix($admin)->group(function () {
 
         // 后台首页
         Route::get('/', [\App\Http\Controllers\admin\IndexController::class, 'index']);
 
         $adminNamespace = config('admin.controller_namespace');
-        // 动态路由 (匹配 secondary/controller/action)
-        Route::match(['get', 'post'], '/{secondary}/{controller}/{action}', function($secondary, $controller, $action) use ($adminNamespace) {
 
+        // 动态路由 (匹配 secondary/controller/action)
+        Route::match(['get', 'post'], '/{secondary}/{controller}/{action}', function ($secondary, $controller, $action) use ($adminNamespace) {
             $namespace = $adminNamespace . $secondary . '\\';
-            $className = $namespace . ucfirst($controller . "Controller");
+            $className = $namespace . ucfirst($controller . 'Controller');
             $className = Str::studly($className);
             return webRouteExtracted($className, $action);
         });
 
         // 动态路由 (匹配 controller)
-        Route::match(['get', 'post'], '/{controller}/', function($controller) use ($adminNamespace) {
+        Route::match(['get', 'post'], '/{controller}/', function ($controller) use ($adminNamespace) {
             $namespace = $adminNamespace;
-            $className = $namespace . ucfirst($controller . "Controller");
+            $className = $namespace . ucfirst($controller . 'Controller');
             $action    = 'index';
             return webRouteExtracted($className, $action);
         });
 
         // 动态路由 (匹配 controller/action)
-        Route::match(['get', 'post'], '/{controller}/{action}', function($controller, $action) use ($adminNamespace) {
+        Route::match(['get', 'post'], '/{controller}/{action}', function ($controller, $action) use ($adminNamespace) {
             $namespace = $adminNamespace;
-            $className = $namespace . ucfirst($controller . "Controller");
+            $className = $namespace . ucfirst($controller . 'Controller');
             return webRouteExtracted($className, $action);
         });
-
     });
 });
 
-
 if (!function_exists('webRouteExtracted')) {
-
     function webRouteExtracted(string $className, string $action)
     {
         if (class_exists($className)) {
