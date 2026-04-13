@@ -6,7 +6,7 @@
  */
 
 
-define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, miniTheme, miniTab) {
+define(["jquery", "miniMenu", "miniTheme", "miniTab", "colorMode"], function ($, miniMenu, miniTheme, miniTab, colorMode) {
 
     var $ = layui.$,
         layer = layui.layer,
@@ -247,6 +247,40 @@ define(["jquery", "miniMenu", "miniTheme", "miniTab"], function ($, miniMenu, mi
                 let checked = data.elem.checked;
                 let mode = checked ? 'dark' : 'light';
                 changeTheme(mode);
+            });
+
+            /**
+             * 浅色和暗色主题切换
+             */
+            const theme = colorMode.init({
+                initialValue: 'light',
+                storageKey: 'layuiminiElemStyleName',
+                modes: {
+                    auto: '',
+                    light: 'normal',
+                    dark: 'dark',
+                },
+                onChanged(mode, defaultHandler) {
+                    const isAppearanceTransition =
+                        document.startViewTransition && !window.matchMedia(`(prefers-reduced-motion: reduce)`).matches;
+                    const isDark = mode === 'dark';
+                    //跟随windows系统主题色的变化而变化，但没法保存选择的元素风格
+                    // var darkThemeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+                    // var preferredDark = darkThemeMediaQuery.matches;
+                    // var currMode = preferredDark ? 'dark' : 'light';
+                    // changeTheme(currMode);
+                    $('#change-theme').attr('class', `layui-icon layui-icon-${isDark ? 'moon' : 'light'}`);
+
+                    if (!isAppearanceTransition) {
+                        defaultHandler();
+                    } else {
+                        rippleViewTransition(isDark, function () {
+                            // 动画需要
+                            document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+                            defaultHandler();
+                        });
+                    }
+                },
             });
 
             //切换特效

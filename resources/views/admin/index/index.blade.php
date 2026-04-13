@@ -48,6 +48,15 @@
                     <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
                         <a href="javascript:;" data-check-screen="full"><i class="fa fa-arrows-alt"></i></a>
                     </li>
+                    <li class="layui-nav-item mobile layui-hide-xs" lay-unselect>
+                        <div class="layui-form ws-header-theme" lay-filter="header-theme">
+                            <input type="checkbox" name="theme-mode" lay-filter="header-theme-mode" lay-skin="switch">
+                            <div lay-checkbox>
+                                <i class="layui-icon layui-icon-moon"></i> |
+                                <i class="layui-icon layui-icon-light"></i>
+                            </div>
+                        </div>
+                    </li>
                     <li class="layui-nav-item layuimini-setting">
                         <a href="javascript:;">
                             <img src="{{session('admin.head_img')}}" class="layui-nav-img" width="50" height="50">

@@ -13,7 +13,7 @@
     <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="/static/admin/css/public.css?v={{$version}}" media="all">
-    <link rel="stylesheet" href="" id="layuicss-theme-dark" media="all">
+    <link rel="stylesheet" href="/static/admin/css/layui-theme-dark.css" id="layuicss-theme-dark" media="all">
     <script>
         window.CONFIG = {
             ADMIN: "{{$adminModuleName}}",
@@ -29,7 +29,7 @@
         };
     </script>
     <script src="/static/plugs/layui-v2.x/layui.js" charset="utf-8"></script>
-    <script src="/static/plugs/require-2.3.6/require.js" charset="utf-8"></script>
+    <script src="/static/plugs/require-2.3.8/require.js" charset="utf-8"></script>
     <script src="/static/config-admin.js?v={{$version}}" charset="utf-8"></script>
     <script src="/static/common/js/admin.js?v={{$version}}" charset="utf-8"></script>
     @include('admin.layout.editor')

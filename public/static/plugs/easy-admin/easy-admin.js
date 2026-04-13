@@ -1,5 +1,20 @@
 define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], function ($, tableSelect, switchSelect, miniTheme, xmSelect) {
 
+    //切换日夜模式
+    window.onInitElemStyle = function () {
+        try {
+            miniTheme.renderElemStyle();
+            $('iframe').each(function (index, iframe) {
+                if (typeof iframe.contentWindow.onInitElemStyle == "function") {
+                    iframe.contentWindow.onInitElemStyle();
+                }
+            });
+            miniTheme.changeThemeMainColor();
+        } catch (e) {
+        }
+    };
+    window.onInitElemStyle();
+
     var form = layui.form,
         layer = layui.layer,
         table = layui.table,
@@ -380,7 +395,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                                 formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<div id="c-' + d.fieldAlias + '" class="tableSearch-xmSelect xmSelect-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '"></div>\n' +
+                                    '<div id="c-' + d.fieldAlias + '" class="tableSearch-xmSelect xmSelect-' + d.fieldAlias + '" name="' + d.fieldAlias + '" data-search-op="' + d.searchOp + '" data-search-value="' + d.searchValue + '"></div>\n' +
                                     '</div>\n' +
                                     '</div>';
                                 init.xmSelectList[d.fieldAlias] = d.selectList
@@ -856,8 +871,10 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
             listenTableSearch: function (tableId) {
                 if (Object.keys(init.xmSelectList).length > 0) {
                     $.each(init.xmSelectList, function (index, value) {
+                        let xmSearchValue = $('#c-' + index).data('search-value') || [];
+                        if (!Array.isArray(xmSearchValue)) xmSearchValue = (xmSearchValue.toString()).split(',')
                         const keysArray = Object.keys(value).map((key) => {
-                            return {name: value[key], value: key}
+                            return {name: value[key], value: key, selected: xmSearchValue.indexOf(key) !== -1}
                         })
                         init.xmSelectModel[index] = xmSelect.render({
                             el: '.xmSelect-' + index, language: 'zn', data: keysArray, name: index,
@@ -873,7 +890,8 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     $.each(dataField, function (key, val) {
                         if (val !== '') {
                             formatFilter[key] = val;
-                            var op = $('#c-' + key).attr('data-search-op');
+                            const domEl = document.getElementById('c-' +key);
+                            let op = $(domEl).attr('data-search-op');
                             op = op || '%*%';
                             formatOp[key] = op;
                         }
@@ -1222,9 +1240,25 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                 if (tableId === undefined || tableId === '' || tableId == null) {
                     tableId = init.table_render_id;
                 }
+                let cols = table.getOptions(tableId)?.cols || {}
+                let defaultWhere = {}
+                let formatFilter = {}
+                let formatOp = {}
+                $.each(cols, function (_, colsV) {
+                    $.each(colsV, function (i, v) {
+                        if (v.field) {
+                            if (v.searchValue) {
+                                formatFilter[v.field] = v.searchValue
+                                formatOp[v.field] = v.searchOp || '='
+                                defaultWhere['filter'] = JSON.stringify(formatFilter);
+                                defaultWhere['op'] = JSON.stringify(formatOp);
+                            }
+                        }
+                    })
+                })
                 if (Object.keys(init.xmSelectModel).length > 0) {
                     $.each(init.xmSelectModel, function (index, value) {
-                        init.xmSelectModel[index].setValue([])
+                        init.xmSelectModel[index].setValue([formatFilter[index] || ''])
                     })
                 }
                 table.reload(tableId, {
@@ -1329,15 +1363,29 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     admin.msg.error('请勾选需要删除的数据');
                     return false;
                 }
-                var ids = [];
-                $.each(data, function (i, v) {
-                    ids.push(v.id);
-                });
+                let ids = [], _filed = 'id'
+                if (data[0][_filed] || '') {
+                    $.each(data, function (i, v) {
+                        ids.push(v.id);
+                    });
+                } else {
+                    let tableCols = table.getOptions(tableId).cols[0]
+                    $.each(tableCols, function (i, v) {
+                        let _i = i
+                        if (v.type === 'checkbox') {
+                            _i = i + 1
+                            _filed = tableCols[_i]['field']
+                        }
+                    });
+                    $.each(data, function (i, v) {
+                        ids.push(v[_filed]);
+                    });
+                }
                 admin.msg.confirm('确定删除？', function () {
                     admin.request.post({
                         url: url,
                         data: {
-                            id: ids
+                            [_filed]: ids
                         },
                     }, function (res) {
                         admin.msg.success(res.msg, function () {
