@@ -67,7 +67,7 @@ class SystemLog
                 }
                 $title = $controllerTitle . ' - ' . $nodeTitle;
             }
-        }catch (\Throwable $exception) {
+        } catch (\Throwable $exception) {
         }
         $ip        = $request->ip();
         $_response = json_encode($response->original, JSON_UNESCAPED_UNICODE);
@@ -80,7 +80,7 @@ class SystemLog
             'ip'          => $ip,
             'content'     => json_encode($params, JSON_UNESCAPED_UNICODE),
             'response'    => $_response,
-            'useragent'   => $request->header('HTTP_USER_AGENT'),
+            'useragent'   => $request->header('user-agent'),
             'create_time' => time(),
         ];
         SystemLogService::instance()->save($data);
