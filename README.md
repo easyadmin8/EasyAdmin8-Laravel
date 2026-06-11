@@ -4,7 +4,8 @@
 <p>
 <span><img src="https://img.shields.io/badge/php-%3E=8.3.0-brightgreen.svg?maxAge=2592000&amp;" alt="php"></span>
 <span><img src="https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?maxAge=2592000&amp;color=blue" alt="MySQL"></span>
-<span><img src="https://img.shields.io/badge/laravel-%3E=12.0.0-brightgreen.svg?maxAge=2592000" alt="Laravel"></span>
+<span><img src="https://img.shields.io/badge/PostgreSQL-%3E=12.0-brightgreen.svg?maxAge=2592000&amp;color=blue" alt="PostgreSQL"></span>
+<span><img src="https://img.shields.io/badge/laravel-%3E=13.0.0-brightgreen.svg?maxAge=2592000" alt="Laravel"></span>
 <span><img src="https://img.shields.io/badge/layui-%3E=2.x-brightgreen.svg?maxAge=2592000&amp;color=critical" alt="layui"></span>
 <span><img src="https://img.shields.io/badge/license-MIT-green?maxAge=2592000&amp;color=yellow" alt="License"></span>
 </p>
@@ -60,7 +61,7 @@ if [ -f /usr/bin/curl ];then curl -sSO https://easyadmin8.top/auto-install-EasyA
 
   git clone https://gitee.com/wolf18/EasyAdmin8-Laravel
 
-2.安装依赖包（确保 PHP 版本 >= 8.2 如需要本地上传则须装 fileinfo 扩展）
+2.安装依赖包（确保 PHP 版本 >= 8.3 如需要本地上传则须装 fileinfo 扩展）
 
   在根目录下 composer install ，如果有报错信息可以使用命令 composer install --ignore-platform-reqs
   

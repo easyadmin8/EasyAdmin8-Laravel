@@ -216,13 +216,13 @@
                                 <td>
                                     <div class="layui-row layui-col-space8">
                                         <div class="layui-col-xs6">
-                                            <a href='https://github.com/EasyAdmin8/EasyAdmin8' target="_blank">
-                                                <img src='https://img.shields.io/github/stars/easyadmin8/easyadmin8' alt='star' style="max-width:100%;">
+                                            <a href='https://github.com/EasyAdmin8/EasyAdmin8-Laravel' target="_blank">
+                                                <img src='https://img.shields.io/github/stars/easyadmin8/easyadmin8-Laravel' alt='star' style="max-width:100%;">
                                             </a>
                                         </div>
                                         <div class="layui-col-xs6">
-                                            <a href='https://gitee.com/EasyAdmin8/EasyAdmin8' target="_blank">
-                                                <img src='https://gitee.com/easyadmin8/EasyAdmin8/badge/star.svg?theme=white' alt='star' style="max-width:100%;">
+                                            <a href='https://gitee.com/EasyAdmin8/EasyAdmin8-Laravel' target="_blank">
+                                                <img src='https://gitee.com/easyadmin8/EasyAdmin8-Laravel/badge/star.svg?theme=white' alt='star' style="max-width:100%;">
                                             </a>
                                         </div>
                                     </div>
