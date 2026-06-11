@@ -337,6 +337,8 @@ INSERT INTO `ea_system_menu`
 VALUES ('17', '15', '问答社区', 'fa fa-comments', 'https://meta.easyadmin8.top', '', '_blank', '0', '1', '', '1589623684', '1589623684', null);
 INSERT INTO `ea_system_menu`
 VALUES ('18', '15', '常见问题', 'fa fa-circle-question', 'https://easyadmin8.top/guide/question.html', '', '_self', '2', '1', '', '1589623684', '1589623684', null);
+INSERT INTO `ea_system_menu`
+VALUES ('19', '2', '日志分析', 'fa fa-robot', 'system/LogAnalyzer/index', '', '_self', '1', '1', '', '1589623684', '1589623684', null);
 
 -- ----------------------------
 -- Table structure for ea_system_node

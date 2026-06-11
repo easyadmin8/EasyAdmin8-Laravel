@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Webman\Captcha\CaptchaBuilder;
 use Webman\Captcha\PhraseBuilder;
+use Wolfcode\CloudflareTurnstile\Exception\ValidationException;
+use Wolfcode\CloudflareTurnstile\Turnstile;
+use Wolfcode\CloudflareTurnstile\Widget;
 use Wolfcode\RateLimiting\Attributes\RateLimitingMiddleware;
 
 class LoginController extends AdminController
@@ -27,9 +30,14 @@ class LoginController extends AdminController
     #[RateLimitingMiddleware(key: [Utils::class, 'getIp'], seconds: 1, limit: 1, message: '操作过于频繁，请稍后再试')]
     public function index(): View|JsonResponse
     {
-        $captcha = config('easyadmin.CAPTCHA', false);
+        $captcha     = config('easyadmin.CAPTCHA', false);
+        $cfTurnstile = config('easyadmin.CF_TURNSTILE_STATUS', false);
         if (!request()->ajax()) {
-            return view('admin.login', compact('captcha'));
+            if ($cfTurnstile) {
+                $widget = (new Widget(siteKey: config('easyadmin.CF_TURNSTILE_SITE_KEY'), theme: 'light', size: 'flexible'));
+                $this->assign(compact('widget'));
+            }
+            return view('admin.login', compact('captcha', 'cfTurnstile'));
         }
         if ($captcha) {
             if (strtolower(request()->post('captcha')) !== request()->session()->get('captcha')) {
@@ -60,6 +68,14 @@ class LoginController extends AdminController
             if (empty($post['ga_code'])) return $this->error('请输入谷歌验证码', ['is_ga_code' => true]);
             $ga = new \Wolfcode\Authenticator\google\PHPGangstaGoogleAuthenticator();
             if (!$ga->verifyCode($admin->ga_secret, $post['ga_code'])) return $this->error('谷歌验证码错误');;
+        }
+        if ($cfTurnstile) {
+            try {
+                $checkCfTurnstile = (new Turnstile(secretKey: config('easyadmin.CF_TURNSTILE_SECRET_KEY')))->isValid(request()->post('cf-turnstile-response', ''), request()->ip());
+                if (!$checkCfTurnstile) $this->error('验证真人失败');
+            }catch (ValidationException $exception) {
+                return $this->error($exception->getMessage());
+            }
         }
         $admin->login_num   += 1;
         $admin->update_time = time();

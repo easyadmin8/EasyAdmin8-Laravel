@@ -1,4 +1,4 @@
-define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], function ($, tableSelect, switchSelect, miniTheme, xmSelect) {
+define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect", "lazyload"], function ($, tableSelect, switchSelect, miniTheme, xmSelect, lazyload) {
 
     //切换日夜模式
     window.onInitElemStyle = function () {
@@ -25,7 +25,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
         tableSelect = layui.tableSelect,
         switchSelect = layui.switchSelect,
         util = layui.util;
-    miniTheme.changeThemeMainColor();
+
     layer.config({
         skin: 'layui-layer-easy'
     });
@@ -40,6 +40,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
         xmSelectList: {},
         xmSelectModel: {},
     };
+
 
     var admin = {
         config: {
@@ -76,7 +77,6 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
         },
         request: {
             post: function (option, ok, no, ex) {
-                if (!option['data']['_token']) option['data']['_token'] = init.csrf_token
                 return admin.request.ajax('post', option, ok, no, ex);
             },
             get: function (option, ok, no, ex) {
@@ -89,7 +89,6 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                 option.prefix = option.prefix || false;
                 option.statusName = option.statusName || 'code';
                 option.statusCode = option.statusCode || 1;
-                if (!option['data']['_token']) option['data']['_token'] = init.csrf_token
                 ok = ok || function (res) {
                 };
                 no = no || function (res) {
@@ -227,21 +226,24 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                 options.limit = options.limit || 15;
                 options.limits = options.limits || [10, 15, 20, 25, 50, 100];
                 options.cols = options.cols || [];
-                options.defaultToolbar = (options.defaultToolbar === undefined && !options.search) ? ['filter', 'print', 'exports'] : ['filter', 'print', 'exports', {
+                let searchBtn = options.search ? {
                     title: '搜索',
                     layEvent: 'TABLE_SEARCH',
                     icon: 'layui-icon-search',
                     extend: 'data-table-id="' + options.id + '"'
-                }];
-
+                } : []
+                options.defaultToolbar = options.defaultToolbar !== false ? (
+                    (options.defaultToolbar === undefined ? ['filter', 'print', 'exports'].concat(searchBtn) : options.defaultToolbar.concat(searchBtn))
+                ) : false;
                 // 判断是否为移动端
                 if (admin.checkMobile()) {
-                    options.defaultToolbar = !options.search ? ['filter'] : ['filter', {
-                        title: '搜索',
-                        layEvent: 'TABLE_SEARCH',
-                        icon: 'layui-icon-search',
-                        extend: 'data-table-id="' + options.id + '"'
-                    }];
+                    options.defaultToolbar = options.defaultToolbar !== false ? (
+                        !options.search ? ['filter'] : ['filter', {
+                            title: '搜索',
+                            layEvent: 'TABLE_SEARCH',
+                            icon: 'layui-icon-search',
+                            extend: 'data-table-id="' + options.id + '"'
+                        }]) : false;
                 }
 
                 // 判断元素对象是否有嵌套的
@@ -279,6 +281,17 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     })
                 })
 
+                // 初始化表格顶部分页
+                if (options.pageTop !== false) {
+                    let originDone = options.done;
+                    options.done = function (res, curr, count) {
+                        if (typeof originDone === 'function') {
+                            originDone.call(this, res, curr, count);
+                        }
+                        admin.table.addTopPage(this);
+                    };
+                }
+
                 // 初始化表格
                 var newTable = table.render(options);
 
@@ -298,48 +311,51 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
             },
             renderToolbar: function (data, elem, tableId, init) {
                 data = data || [];
-                var toolbarHtml = '';
-                $.each(data, function (i, v) {
-                    if (v === 'refresh') {
-                        toolbarHtml += ' <button class="layui-btn layui-btn-sm layuimini-btn-primary" data-table-refresh="' + tableId + '"><i class="fa fa-refresh"></i> </button>\n';
-                    } else if (v === 'add') {
-                        if (admin.checkAuth('add', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="fa fa-plus"></i> 添加</button>\n';
-                        }
-                    } else if (v === 'delete') {
-                        if (admin.checkAuth('delete', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-url="' + init.delete_url + '" data-table-delete="' + tableId + '"><i class="fa fa-trash"></i> 删除</button>\n';
-                        }
-                    } else if (v === 'export') {
-                        if (admin.checkAuth('export', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel"></i> 导出</button>\n';
-                        }
-                    } else if (v === 'recycle') {
-                        if (init.recycle_url === undefined) {
-                            console.warn('未定义回收站地址 init.recycle_url')
-                            return false
-                        }
-                        if (admin.checkAuth('recycle', elem)) {
-                            toolbarHtml += '<button class="layui-btn layui-btn-sm layui-bg-orange" data-open="' + init.recycle_url + '" data-title="回收站"><i class="fa fa-recycle"></i> 回收站</button>\n';
-                        }
-                    } else if (typeof v === "object") {
-                        $.each(v, function (ii, vv) {
-                            vv.class = vv.class || '';
-                            vv.icon = vv.icon || '';
-                            vv.auth = vv.auth || '';
-                            vv.url = vv.url || '';
-                            vv.method = vv.method || 'open';
-                            vv.title = vv.title || vv.text;
-                            vv.text = vv.text || vv.title;
-                            vv.extend = vv.extend || '';
-                            vv.checkbox = vv.checkbox || false;
-                            if (admin.checkAuth(vv.auth, elem)) {
-                                toolbarHtml += admin.table.buildToolbarHtml(vv, tableId);
+                if (typeof data == "object") {
+                    var toolbarHtml = '';
+                    $.each(data, function (i, v) {
+                        if (v === 'refresh') {
+                            toolbarHtml += ' <button class="layui-btn layui-btn-sm layuimini-btn-primary" data-table-refresh="' + tableId + '"><i class="fa fa-refresh"></i> </button>\n';
+                        } else if (v === 'add') {
+                            if (admin.checkAuth('add', elem)) {
+                                toolbarHtml += '<button class="layui-btn layui-btn-normal layui-btn-sm" data-open="' + init.add_url + '" data-title="添加"><i class="fa fa-plus"></i> 添加</button>\n';
                             }
-                        });
-                    }
-                });
-                return '<div>' + toolbarHtml + '</div>';
+                        } else if (v === 'delete') {
+                            if (admin.checkAuth('delete', elem)) {
+                                toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-danger" data-url="' + init.delete_url + '" data-table-delete="' + tableId + '"><i class="fa fa-trash"></i> 删除</button>\n';
+                            }
+                        } else if (v === 'export') {
+                            if (admin.checkAuth('export', elem)) {
+                                toolbarHtml += '<button class="layui-btn layui-btn-sm layui-btn-success easyadmin-export-btn" data-url="' + init.export_url + '" data-table-export="' + tableId + '"><i class="fa fa-file-excel"></i> 导出</button>\n';
+                            }
+                        } else if (v === 'recycle') {
+                            if (init.recycle_url === undefined) {
+                                console.warn('未定义回收站地址 init.recycle_url')
+                                return false
+                            }
+                            if (admin.checkAuth('recycle', elem)) {
+                                toolbarHtml += '<button class="layui-btn layui-btn-sm layui-bg-orange" data-open="' + init.recycle_url + '" data-title="回收站"><i class="fa fa-recycle"></i> 回收站</button>\n';
+                            }
+                        } else if (typeof v === "object") {
+                            $.each(v, function (ii, vv) {
+                                vv.class = vv.class || '';
+                                vv.icon = vv.icon || '';
+                                vv.auth = vv.auth || '';
+                                vv.url = vv.url || '';
+                                vv.method = vv.method || 'open';
+                                vv.title = vv.title || vv.text;
+                                vv.text = vv.text || vv.title;
+                                vv.extend = vv.extend || '';
+                                vv.checkbox = vv.checkbox || false;
+                                if (admin.checkAuth(vv.auth, elem)) {
+                                    toolbarHtml += admin.table.buildToolbarHtml(vv, tableId);
+                                }
+                            });
+                        }
+                    });
+                    return `<div><div class="layui-btn-group">${toolbarHtml}</div></div>`;
+                }
+                return data
             },
             renderSearch: function (cols, elem, tableId) {
                 // TODO 只初始化第一个table搜索字段，如果存在多个(绝少数需求)，得自己去扩展
@@ -372,7 +388,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                                 var selectHtml = '';
                                 $.each(d.selectList, function (sI, sV) {
                                     var selected = '';
-                                    if (sI === d.searchValue) {
+                                    if (sI == d.searchValue) {
                                         selected = 'selected=""';
                                     }
                                     selectHtml += '<option value="' + sI + '" ' + selected + '>' + sV + '</option>/n';
@@ -384,8 +400,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                                 formHtml += '\t<div class="layui-form-item layui-inline">\n' +
                                     '<label class="layui-form-label">' + d.title + '</label>\n' +
                                     '<div class="layui-input-inline">\n' +
-                                    '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" ' + laySearch + ' lay-filter="' + d.fieldAlias + '">\n' +
-                                    '<option value="">- 全部 -</option> \n' +
+                                    '<select class="layui-select" id="c-' + d.fieldAlias + '" name="' + d.fieldAlias + '"  data-search-op="' + d.searchOp + '" ' + laySearch + ' lay-filter="' + d.fieldAlias + '">\n' + '<option value="">- 全部 -</option> \n' +
                                     selectHtml +
                                     '</select>\n' +
                                     '</div>\n' +
@@ -442,7 +457,12 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     }
                 });
                 if (formHtml !== '') {
+
+                    // 默认显示搜索表单
                     let searchTableShow = $(elem).attr('searchTableShow') || 'true'
+                    // 默认关闭搜索表单自动补全功能
+                    let searchTableAutocomplete = $(elem).attr('searchTableAutocomplete') || 'false'
+
                     let tableSearchClass = searchTableShow === 'false' ? 'table-search-fieldset layui-hide' : 'table-search-fieldset'
                     $(elem).before('<fieldset id="searchFieldset_' + tableId + '" class="' + tableSearchClass + '">\n' +
                         '<legend>条件搜索</legend>\n' +
@@ -458,6 +478,10 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     admin.table.listenTableSearch(tableId);
 
                     // 初始化form表单
+                    form.set({
+                        // 是否阻止 input 框默认的自动输入完成功能
+                        autocomplete: searchTableAutocomplete == 'false' ? 'off' : 'on'
+                    })
                     form.render();
                     $.each(newCols, function (ncI, ncV) {
                         if (ncV.search === 'range' || ncV.search === 'datetime') {
@@ -757,8 +781,11 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     var values = value.split(option.imageSplit),
                         valuesHtml = [];
                     values.forEach((value, index) => {
-                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" src="' + value + '" data-image="' + title + '">');
+                        valuesHtml.push('<img style="max-width: ' + option.imageWidth + 'px; max-height: ' + option.imageHeight + 'px;" class="lazyload" src="/static/common/images/loading.gif" data-src="' + value + '" data-image="' + title + '">');
                     });
+                    $(function () {
+                        $("img.lazyload").lazyload({threshold: 1});
+                    })
                     return valuesHtml.join(option.imageJoin);
                 }
             },
@@ -890,7 +917,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     $.each(dataField, function (key, val) {
                         if (val !== '') {
                             formatFilter[key] = val;
-                            const domEl = document.getElementById('c-' +key);
+                            const domEl = document.getElementById('c-' + key);
                             let op = $(domEl).attr('data-search-op');
                             op = op || '%*%';
                             formatOp[key] = op;
@@ -1016,6 +1043,69 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                         where: {...defaultWhere, ...sortWhere}
                     });
                 });
+            },
+            addTopPage: function (tableOptions) {
+                try {
+                    let $view = $(tableOptions.elem).next('.layui-table-view');
+                    if (!$view.length) return;
+                    let $bottomPage = $view.children('.layui-table-page').not('.layui-table-page-top');
+                    if (!$bottomPage.length) return;
+                    let $topPage = $view.children('.layui-table-page-top');
+                    if ($topPage.length) return;
+                    $topPage = $bottomPage.clone(false);
+                    $topPage.addClass('layui-table-page-top');
+                    $view.children('.layui-table-tool').after($topPage);
+                    let bid = tableOptions.id;
+                    $topPage.on('click', 'a, button', function (e) {
+                        e.preventDefault();
+                        let $t = $(this);
+                        if ($t.hasClass('layui-disabled') || $t.hasClass('layui-btn-disabled')) return;
+                        if ($t.hasClass('layui-laypage-btn')) {
+                            let v = parseInt($topPage.find('input').val());
+                            if (v > 0) layui.table.reload(bid, { page: { curr: v } });
+                            return;
+                        }
+                        let page = $t.data('page');
+                        if (page !== undefined) {
+                            let pn = parseInt(page);
+                            if (!isNaN(pn) && pn > 0) {
+                                layui.table.reload(bid, { page: { curr: pn } });
+                                return;
+                            }
+                        }
+                        let $bottom = $view.children('.layui-table-page').not('.layui-table-page-top');
+                        let tag = this.tagName;
+                        let idx = $topPage.find(tag).index(this);
+                        if (idx >= 0) {
+                            let el = $bottom.find(tag).get(idx);
+                            if (el) el.click();
+                        }
+                    });
+                    $topPage.on('change', 'select', function () {
+                        layui.table.reload(bid, { page: { limit: parseInt(this.value) } });
+                    });
+                    $topPage.on('keydown', 'input', function (e) {
+                        if (e.keyCode === 13) {
+                            let v = parseInt(this.value);
+                            if (v > 0) layui.table.reload(bid, { page: { curr: v } });
+                        }
+                    });
+                    let bottomEl = $bottomPage[0];
+                    if (bottomEl) {
+                        let obs = new MutationObserver(function () {
+                            let $tp = $view.children('.layui-table-page-top');
+                            let $bp = $view.children('.layui-table-page').not('.layui-table-page-top');
+                            if ($tp.length && $bp.length) {
+                                $tp.html($bp.html());
+                                $tp.find('[id]').attr('id', function () {
+                                    return $(this).attr('id') + '_top';
+                                });
+                            }
+                        });
+                        obs.observe(bottomEl, { childList: true, subtree: true, characterData: true, attributes: true });
+                    }
+                } catch (e) {
+                }
             }
         },
         checkMobile: function () {
@@ -1104,7 +1194,6 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
             // 监听时间控件生成
             admin.api.date();
 
-            // 初始化layui表单
             form.render();
 
             // 表格修改
@@ -1115,7 +1204,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
             // 监听弹出层的打开
             $('body').on('click', '[data-open]', function () {
 
-                var clienWidth = $(this).attr('data-width'),
+                var clientWidth = $(this).attr('data-width'),
                     clientHeight = $(this).attr('data-height'),
                     dataFull = $(this).attr('data-full'),
                     checkbox = $(this).attr('data-checkbox'),
@@ -1142,19 +1231,18 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     }
                 }
 
-                if (clienWidth === undefined || clientHeight === undefined) {
-                    clienWidth = '65%';
-                    clientHeight = '85%';
-                }
+                clientWidth = clientWidth ?? '65%';
+                clientHeight = clientHeight ?? '85%';
+
                 if (dataFull === 'true') {
-                    clienWidth = '100%';
+                    clientWidth = '100%';
                     clientHeight = '100%';
                 }
 
                 admin.open(
                     $(this).attr('data-title'),
                     external ? url : admin.url(url),
-                    clienWidth,
+                    clientWidth,
                     clientHeight,
                 );
             });
@@ -1236,7 +1324,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
 
             // 监听搜索表格重置
             $('body').on('click', '[data-table-reset]', function () {
-                var tableId = $(this).attr('data-table-reset');
+                let tableId = $(this).attr('data-table-reset');
                 if (tableId === undefined || tableId === '' || tableId == null) {
                     tableId = init.table_render_id;
                 }
@@ -1262,13 +1350,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                     })
                 }
                 table.reload(tableId, {
-                    page: {
-                        curr: 1
-                    }
-                    , where: {
-                        filter: '{}',
-                        op: '{}'
-                    }
+                    page: {curr: 1}, where: {...defaultWhere}
                 }, 'data');
             });
 
@@ -1353,12 +1435,11 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
 
             // 数据表格多删除
             $('body').on('click', '[data-table-delete]', function () {
-                var tableId = $(this).attr('data-table-delete'),
+                let tableId = $(this).attr('data-table-delete'),
                     url = $(this).attr('data-url');
                 tableId = tableId || init.table_render_id;
                 url = url !== undefined ? admin.url(url) : window.location.href;
-                var checkStatus = table.checkStatus(tableId),
-                    data = checkStatus.data;
+                let checkStatus = table.checkStatus(tableId), data = checkStatus.data;
                 if (data.length <= 0) {
                     admin.msg.error('请勾选需要删除的数据');
                     return false;
@@ -1652,7 +1733,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                                 cols: [[
                                     {type: selectCheck},
                                     {field: 'id', title: 'ID'},
-                                    {field: 'url', minWidth: 80, search: false, title: '图片信息', imageHeight: 40, align: "center", templet: admin.table.image},
+                                    {field: 'url', minWidth: 80, search: false, title: '图片信息', imageHeight: 30, align: "center", templet: admin.table.image},
                                     {field: 'original_name', width: 150, title: '文件原名', align: "center"},
                                     {field: 'mime_type', width: 120, title: 'mime类型', align: "center"},
                                     {field: 'create_time', width: 200, title: '创建时间', align: "center", search: 'range'},
@@ -1670,9 +1751,7 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                                 });
                             }
                         })
-
                     });
-
                 }
             },
             editor: function () {
@@ -1696,15 +1775,31 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                                     html: $(this).text(),
                                     config: {
                                         MENU_CONF: {
+                                            // 上传图片
                                             uploadImage: {
                                                 server: window.CONFIG.ADMIN_UPLOAD_URL,
                                                 fieldName: 'file',
+                                                maxFileSize: window.CONFIG.MAX_FILE_SIZE,
                                                 meta: {
                                                     editor: 'editor',
                                                 },
-                                                headers: {
-                                                    'X-CSRF-TOKEN': init.csrf_token,
-                                                },
+                                                async customInsert(res, insertFn) {
+                                                    let code = res.code || 0
+                                                    if (code != '1') {
+                                                        layer.msg(res.msg || '上传失败', {icon: 2});
+                                                        return
+                                                    }
+                                                    let url = res.data?.url || ''
+                                                    let alt = ''
+                                                    let href = ''
+                                                    insertFn(url, alt, href)
+                                                }
+                                            },
+                                            // 上传视频
+                                            uploadVideo: {
+                                                server: window.CONFIG.ADMIN_UPLOAD_URL,
+                                                fieldName: 'file',
+                                                meta: {editor: 'editor',},
                                                 async customInsert(res, insertFn) {
                                                     let code = res.code || 0
                                                     if (code != '1') {
@@ -1849,55 +1944,25 @@ define(["jquery", "tableSelect", "switchSelect", "miniTheme", "xmSelect"], funct
                 layer.open({
                     'title': options?.title || 'AI建议',
                     type: 1,
-                    area: options?.area || ['42%', '60%'],
+                    area: options?.area || (admin.checkMobile() ? ['95%', '80%'] : ['70%', '80%']),
                     shade: options?.shade || 0,
                     shadeClose: options?.shadeClose || false,
                     scrollbar: options?.scrollbar || false,
                     maxmin: options?.maxmin || true,
                     anim: options?.anim || 0,
-                    content: `<div style="padding: 20px;white-space: pre-wrap;" id="${id}"></div>`,
+                    content: `<div id="${id}"></div>`,
                     success: function (layero, index) {
                         let elem = document.getElementById(id)
-                        if (options?.stream) {
-                            clearTimeout(aiStreamTimeout)
-                            aiStreamCurrentIndex = 0
-                            setTimeout(() => {
-                                admin.ai.streamOutput(elem, content)
-                            }, 300)
-                        } else {
-                            content = content.replace(/\r\n/g, '<br>').replace(/\n/g, '<br>')
-                            setTimeout(() => {
-                                elem.innerHTML = content
-                            }, 100)
-                        }
+                        content = marked.parse(content)
+                        elem.innerHTML = `<div class="markdown-body">${content}</div>`
                     },
                     cancel: function (index, layero) {
                         cancel()
                     }
                 })
             },
-            streamOutput: function (dom, htmlContent, id) {
-                const chunkSize = 1;
-                let length = htmlContent.length;
-                if (aiStreamCurrentIndex < length) {
-                    const endIndex = Math.min(aiStreamCurrentIndex + chunkSize, length);
-                    const chunk = htmlContent.slice(aiStreamCurrentIndex, endIndex);
-                    const tempDiv = document.createElement('div');
-                    tempDiv.innerHTML = chunk;
-                    while (tempDiv.firstChild) {
-                        dom.appendChild(tempDiv.firstChild);
-                    }
-                    aiStreamCurrentIndex = endIndex;
-                    aiStreamTimeout = setTimeout(() => {
-                        admin.ai.streamOutput(dom, htmlContent);
-                        dom.scrollIntoView({behavior: "smooth", block: "end"});
-                    }, 60);
-                }
-            }
         },
     };
-    var aiStreamCurrentIndex = 0;
-    var aiStreamTimeout = null;
 
     return admin;
 });

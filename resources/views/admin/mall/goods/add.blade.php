@@ -1,8 +1,11 @@
 @include('admin.layout.head')
+<link rel="stylesheet" href="/static/common/css/marked.css?v={{$version}}">
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form layui-form-pane">
+
         <div class="layui-row">
             <div class="layui-col-xl5 layui-col-lg5 layui-col-md12 layui-col-sm12 layui-col-xs12">
+                <!-- 可以使用该方式 推荐写法-->
                 <div class="layui-form-item">
                     <label class="layui-form-label">商品分类</label>
                     <div class="layui-input-block">
@@ -31,16 +34,16 @@
 
                 <div class="layui-form-item">
                     <div class="layui-row">
-                        <label class="layui-form-label required">商品标题</label>
-                        <div class="layui-input-block layui-col-space5">
-                            <div class="layui-col-xs10">
+                        <div class="layui-col-xs10">
+                            <label class="layui-form-label required">商品标题</label>
+                            <div class="layui-input-block layui-col-space5">
                                 <div class="layui-input-wrap">
                                     <input type="text" name="title" class="layui-input" lay-verify="required" placeholder="请输入商品标题" value="">
                                 </div>
                             </div>
-                            <div class="layui-col-xs2">
-                                <button class="layui-btn layui-bg-purple layui-btn-fluid" type="button" lay-on="AiOptimization">AI优化</button>
-                            </div>
+                        </div>
+                        <div class="layui-col-xs2">
+                            <button class="layui-btn layui-bg-purple " type="button" lay-on="AiOptimization">AI优化</button>
                         </div>
                     </div>
                 </div>
@@ -50,8 +53,8 @@
                     <div class="layui-input-block layuimini-upload">
                         <input name="logo" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传分类图片" value="">
                         <div class="layuimini-upload-btn">
-                            <span><a class="layui-btn" data-upload="logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
-                            <span><a class="layui-btn layui-btn-normal" id="select_logo" data-upload-select="logo" data-upload-number="one" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                            <span><a class="layui-btn" data-upload="logo" data-upload-number="one" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image" data-upload-mimetype="image/*"><i class="fa fa-upload"></i> 上传</a></span>
+                            <span><a class="layui-btn layui-btn-normal" id="select_logo" data-upload-select="logo" data-upload-number="one"><i class="fa fa-list"></i> 选择</a></span>
                         </div>
                     </div>
                 </div>
@@ -61,8 +64,8 @@
                     <div class="layui-input-block layuimini-upload">
                         <input name="images" class="layui-input layui-col-xs6" lay-verify="required" placeholder="请上传商品图片" value="">
                         <div class="layuimini-upload-btn">
-                            <span><a class="layui-btn" data-upload="images" data-upload-number="more" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image"><i class="fa fa-upload"></i> 上传</a></span>
-                            <span><a class="layui-btn layui-btn-normal" id="select_images" data-upload-select="images" data-upload-number="more" data-upload-mimetype="image/*"><i class="fa fa-list"></i> 选择</a></span>
+                            <span><a class="layui-btn" data-upload="images" data-upload-number="more" data-upload-exts="png|jpg|ico|jpeg" data-upload-icon="image" data-upload-mimetype="image/*"><i class="fa fa-upload"></i> 上传</a></span>
+                            <span><a class="layui-btn layui-btn-normal" id="select_images" data-upload-select="images" data-upload-number="more"><i class="fa fa-list"></i> 选择</a></span>
                         </div>
                     </div>
                 </div>
@@ -91,7 +94,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">分类排序</label>
                     <div class="layui-input-block">
-                        <input type="number" name="sort" class="layui-input" placeholder="请输入分类排序" value="0">
+                        <input type="number" name="sort" class="layui-input" lay-affix="number" placeholder="请输入分类排序" value="0">
                     </div>
                 </div>
 
@@ -110,18 +113,15 @@
                     </div>
                 </div>
             </div>
-
             <div class="layui-col-xl7 layui-col-lg7 layui-col-md12 layui-col-sm12 layui-col-xs12">
-                <div class="layui-form-item">
+                <div class="layui-form-item layui-form-text">
                     <label class="layui-form-label">商品描述</label>
                     <div class="layui-input-block">
                         {!!editor_textarea('','describe') !!}
                     </div>
                 </div>
             </div>
-
         </div>
-
 
         <div class="hr-line"></div>
         <div class="layui-form-item text-center">
@@ -131,4 +131,5 @@
 
     </form>
 </div>
+<script src="/static/common/js/marked.js?v={{$version}}"></script>
 @include('admin.layout.foot')

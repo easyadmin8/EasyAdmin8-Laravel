@@ -89,6 +89,13 @@
                     </div>
                 </div>
                 @endif
+
+                @if($cfTurnstile == 1)
+                    <div class="field item">
+                        {!! $widget->renderComplete() !!}
+                    </div>
+                @endif
+
                 <div class="row">
                     <label class="remember"><input type="checkbox" class="icon-nocheck"/>保持登录</label><a href="#">忘记密码？</a>
                 </div>

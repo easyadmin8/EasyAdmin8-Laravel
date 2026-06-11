@@ -1,5 +1,5 @@
 @include('admin.layout.head')
-<link rel="stylesheet" href="/static/plugs/lay-module/treetable-lay/treetable.css?v={$version}" media="all">
+<link rel="stylesheet" href="/static/plugs/lay-module/treetable-lay/treetable.css?v={{$version}}" media="all">
 <style>
     .layui-btn:not(.layui-btn-lg ):not(.layui-btn-sm):not(.layui-btn-xs) {
         height: 34px;

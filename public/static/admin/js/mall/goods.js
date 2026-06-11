@@ -26,15 +26,16 @@ define(["jquery", "easy-admin"], function ($, ea) {
                         auth: 'add',
                         class: 'layui-btn layui-btn-normal layui-btn-sm',
                         icon: 'fa fa-plus ',
+                        extend: 'data-width="90%" data-height="95%"',
                     }],
                     'delete', 'export', 'recycle'],
                 cols: [[
                     {type: "checkbox"},
                     {field: 'id', width: 80, title: 'ID', searchOp: '='},
                     {field: 'sort', width: 80, title: '排序', edit: 'text'},
-                    {field: 'cate_id', minWidth: 80, title: '商品分类', selectList: cate,},
-                    {field: 'title', minWidth: 80, title: '商品名称'},
-                    {field: 'logo', minWidth: 80, title: '分类图片', search: false, templet: ea.table.image},
+                    {field: 'cate_id', width: 100, title: '商品分类', search: 'select', selectList: cateSelects, laySearch: true},
+                    {field: 'title', width: 100, title: '商品名称'},
+                    {field: 'logo', width: 100, title: '分类图片', search: false, templet: ea.table.image},
                     {field: 'market_price', width: 100, title: '市场价', templet: ea.table.price},
                     {field: 'discount_price', width: 100, title: '折扣价', templet: ea.table.price},
                     {field: 'total_stock', width: 100, title: '库存统计'},
@@ -44,15 +45,18 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {field: 'status', title: '状态', width: 85, selectList: {0: '禁用', 1: '启用'}, templet: ea.table.switch},
                     // 演示多选，实际数据库并无 status2 字段，搜索后会报错
                     {
-                        field: 'status2', title: '演示多选', width: 105, search: 'xmSelect', selectList: {1: '模拟选项1', 2: '模拟选项2', 3: '模拟选项3', 4: '模拟选项4', 5: '模拟选项5'},
+                        field: 'status2', title: '演示多选', width: 105, search: 'xmSelect', selectList: {1: '模拟选项1', 2: '模拟选项2', 3: '模拟选项3', 4: '模拟选项4', 5: '模拟选项5'}, hide: true,
                         searchOp: 'in', templet: function (res) {
                             // 根据自己实际项目进行输出
                             return res?.status2 || '模拟数据'
                         }
                     },
+                    {field: 'province', minWidth: 80, title: '省份', toolbar: '#provinceDemo', search: 'select', hide: true},
+                    {field: 'city', minWidth: 80, title: '城市', toolbar: '#cityDemo', search: 'select', hide: true},
+                    {field: 'area', minWidth: 80, title: '地区', toolbar: '#areaDemo', search: 'select', hide: true},
                     {field: 'create_time', minWidth: 80, title: '创建时间', search: 'range'},
                     {
-                        width: 250,
+                        minWidth: 250,
                         title: '操作',
                         templet: ea.table.tool,
                         operat: [
@@ -75,12 +79,70 @@ define(["jquery", "easy-admin"], function ($, ea) {
                                 class: 'layui-btn layui-btn-xs layui-btn-normal',
                                 visible: function (row) {
                                     return row.status === 1;
-                                }
+                                },
                             }],
                             'delete']
                     }
                 ]],
+                done: (res) => {
+                    // 状态为1的商品背景高亮 展示写法 可根据自己项目自定义
+                    $.each(res.data, function (idx, item) {
+                        if (item.status === 1) {
+                            $(`tr[data-index="${idx}"]`).css({
+                                'background': 'linear-gradient(to left, #77eb7c, #bbffbe, #ffffff, transparent)',
+                                'border': 'none',
+                            })
+                        }
+                    })
+                }
             });
+
+            let form = layui.form
+            let provinceHtml = ``, cityHtml = ``, areaHtml = ``
+            let provinceCityData = [], cityAreaData = []
+            // 首次进来默认渲染省市区
+            areaData.forEach(item => {
+                provinceHtml += `<option value="${item.value}">${item.label}</option>`
+                provinceCityData[item.value] = item.children
+            })
+            $('#c-province').html(provinceHtml)
+            $('#c-city').html(cityHtml)
+            $('#c-area').html(areaHtml)
+            form.render('select');
+
+            // 监听省份选择
+            form.on('select(province)', function (data) {
+                let value = data.value
+                let cityHtml = ``
+                let areaHtml = ``
+                if (!value) {
+                    cityHtml = areaHtml = ``
+                } else {
+                    provinceCityData[value].forEach(item => {
+                        cityHtml += `<option value="${item.value}">${item.label}</option>`
+                        cityAreaData[item.value] = item.children
+                        item.children.forEach(item2 => {
+                            areaHtml += `<option value="${item2.value}">${item2.label}</option>`
+                        })
+                    })
+                }
+                $('#c-city').html(cityHtml)
+                $('#c-area').html(areaHtml)
+                form.render('select')
+            })
+
+            // 监听城市选择
+            form.on('select(city)', function (data) {
+                let value = data.value
+                let areaHtml = ``
+                if (value) {
+                    cityAreaData[value].forEach(item => {
+                        areaHtml += `<option value="${item.value}">${item.label}</option>`
+                    })
+                }
+                $('#c-area').html(areaHtml)
+                form.render('select')
+            })
 
             ea.listen();
         },
@@ -162,13 +224,13 @@ define(["jquery", "easy-admin"], function ($, ea) {
                     {type: "checkbox"},
                     {field: 'id', width: 80, title: 'ID', searchOp: '='},
                     {field: 'sort', width: 80, title: '排序', edit: 'text'},
-                    {field: 'cate_id', minWidth: 80, title: '商品分类', search: 'select', selectList: cate, laySearch: true},
+                    {field: 'cate_id', minWidth: 80, title: '商品分类', search: 'select', selectList: cateSelects, laySearch: true},
                     {field: 'title', minWidth: 80, title: '商品名称'},
                     {field: 'logo', minWidth: 80, title: '分类图片', search: false, templet: ea.table.image},
                     {field: 'status', title: '状态', width: 85, selectList: {0: '禁用', 1: '启用'}},
                     // 演示多选，实际数据库并无 status2 字段，搜索后会报错
                     {
-                        field: 'status2', title: '演示多选', width: 105, search: 'xmSelect', selectList: {1: '模拟选项1', 2: '模拟选项2', 3: '模拟选项3', 4: '模拟选项4', 5: '模拟选项5'},
+                        field: 'status2', title: '演示多选', width: 105, search: 'xmSelect', selectList: {1: '模拟选项1', 2: '模拟选项2', 3: '模拟选项3', 4: '模拟选项4', 5: '模拟选项5'}, hide: true,
                         searchOp: 'in', templet: function (res) {
                             // 根据自己实际项目进行输出
                             return res?.status2 || '模拟数据'
@@ -211,8 +273,7 @@ define(["jquery", "easy-admin"], function ($, ea) {
 
         // 告诉AI 你需要做什么
         let message = `优化这个标题 ${title}`
-
-        if ($.trim(title) === '') {
+        if (title.trim() === '') {
             ea.msg.error('标题不能为空', function () {
                 $(data).attr('lay-on', layOn.split('Loading')[0])
             })

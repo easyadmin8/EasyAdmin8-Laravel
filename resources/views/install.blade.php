@@ -33,6 +33,12 @@
         @endif
         <div class="bg">
             <div class="layui-form-item">
+                <label class="layui-form-label">数据库类型</label>
+                <div class="layui-input-block">
+                    <input class="layui-input" name="db_type" autocomplete="off" placeholder="请输入数据库类型" value="{{$envInfo['DB_TYPE']}}" disabled readonly>
+                </div>
+            </div>
+            <div class="layui-form-item">
                 <label class="layui-form-label">数据库地址</label>
                 <div class="layui-input-block">
                     <input class="layui-input" name="hostname" autocomplete="off" lay-verify="required" lay-reqtext="请输入数据库地址" placeholder="请输入数据库地址" value="{{$envInfo['DB_HOST']}}">
@@ -73,6 +79,14 @@
                     <input type="password" class="layui-input" name="db_password" autocomplete="off" lay-verify="required" lay-reqtext="请输入数据库密码" placeholder="请输入数据库密码" value="{{$envInfo['DB_PASS']}}">
                 </div>
             </div>
+
+            <div class="layui-form-item layui-hide">
+                <label class="layui-form-label">数据库字符集</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" name="db_charset" autocomplete="off" value="{{$envInfo['DB_CHARSET']}}" disabled readonly>
+                </div>
+            </div>
+
 
             <div class="layui-form-item">
                 <label class="layui-form-label">覆盖数据库</label>

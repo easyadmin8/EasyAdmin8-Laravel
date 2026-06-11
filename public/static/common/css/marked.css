@@ -1,0 +1,110 @@
+/* 基础通用样式（明暗共用） */
+.markdown-body {
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 1rem;
+    line-height: 1.7;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow-wrap: break-word;
+}
+@media (max-width: 768px) {
+    .markdown-body {
+        padding: 1.2rem 1.5rem;
+        margin: 1rem;
+    }
+}
+
+/* 标题通用 */
+.markdown-body h1 {
+    font-size: 2rem;
+    padding-bottom: 0.5rem;
+    margin: 1.6rem 0 1rem;
+}
+.markdown-body h2 {
+    font-size: 1.6rem;
+    border-left: 4px solid #42b983;
+    padding-left: 0.8rem;
+    margin: 1.4rem 0 0.8rem;
+}
+.markdown-body h3 {
+    font-size: 1.35rem;
+    margin: 1.2rem 0 0.7rem;
+}
+.markdown-body h4,.markdown-body h5,.markdown-body h6 {
+    font-size: 1.15rem;
+    margin: 1rem 0 0.6rem;
+}
+
+.markdown-body p { margin: 0.8rem 0; font-size: 1rem; }
+.markdown-body ul,.markdown-body ol { margin: 0.8rem 0; padding-left: 1.8rem; }
+.markdown-body li { margin: 0.4rem 0; }
+.markdown-body a { text-decoration: none; border-bottom:1px solid transparent; transition:0.2s; }
+.markdown-body a:hover { border-color: currentColor; }
+
+/* 行内代码 */
+.markdown-body code {
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    font-family: Consolas,Monaco,monospace;
+    font-size: 0.9rem;
+}
+/* 代码块 */
+.markdown-body pre {
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1rem 0;
+}
+.markdown-body pre code { background: none; padding:0; }
+
+/* 引用 */
+.markdown-body blockquote {
+    border-left:4px solid #42b983;
+    padding:0.8rem 1rem;
+    margin:1rem 0;
+    font-style: italic;
+}
+
+/* 表格 */
+.markdown-body table { width:100%; border-collapse:collapse; margin:1rem 0; }
+.markdown-body th,.markdown-body td { padding:0.6rem 1rem; text-align:left; }
+.markdown-body img { max-width:100%; border-radius:6px; margin:0.5rem 0; }
+.markdown-body hr { height:1px; border:none; margin:1.5rem 0; }
+
+
+/* ========== 明亮默认（无.dark） ========== */
+.markdown-body {
+    background:#fff;
+    box-shadow:0 2px 12px rgba(0,0,0,.06);
+    color:#333;
+}
+.markdown-body h1 { border-bottom:2px solid #eaecef; color:#222; }
+.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6 { color:#222; }
+.markdown-body a { color:#42b983; }
+.markdown-body code { background:#f6f8fa; color:#e53935; }
+.markdown-body pre { background:#f6f8fa; }
+.markdown-body pre code { color:#333; }
+.markdown-body blockquote { background:#f9fff9; color:#555; }
+.markdown-body th,.markdown-body td { border:1px solid #eaecef; }
+.markdown-body th { background:#f6f8fa; }
+.markdown-body hr { background:#eaecef; }
+.markdown-body img { box-shadow:0 1px 6px rgba(0,0,0,.05); }
+
+
+/* ========== 暗黑主题（父级增加 .dark 类） ========== */
+.dark .markdown-body {
+    background:#1e1e1e;
+    box-shadow:0 2px 12px rgba(0,0,0,.25);
+    color:#d4d4d4;
+}
+.dark .markdown-body h1 { border-bottom-color:#3a3a3a; color:#fff; }
+.dark .markdown-body h2,.dark .markdown-body h3,.dark .markdown-body h4,.dark .markdown-body h5,.dark .markdown-body h6 { color:#fff; }
+.dark .markdown-body h2 { border-left-color:#4ec9b0; }
+.dark .markdown-body a { color:#4ec9b0; }
+.dark .markdown-body code { background:#2d2d30; color:#ce9178; }
+.dark .markdown-body pre { background:#2d2d30; }
+.dark .markdown-body pre code { color:#ddd; }
+.dark .markdown-body blockquote { border-left-color:#4ec9b0; background:#252525; color:#aaa; }
+.dark .markdown-body th,.dark .markdown-body td { border:1px solid #3c3c3c; }
+.dark .markdown-body th { background:#2d2d30; }
+.dark .markdown-body hr { background:#3a3a3a; }

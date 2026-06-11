@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\common;
 
 use App\Http\JumpTrait;
+use App\Http\Services\SystemLogService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
@@ -21,19 +22,23 @@ class InstallController extends Controller
         if (is_file($installPath . DIRECTORY_SEPARATOR . 'lock' . DIRECTORY_SEPARATOR . 'install.lock')) {
             $isInstall = true;
             $errorInfo = '已安装系统，如需重新安装请删除文件：/config/install/lock/install.lock，或者删除 /install 路由';
-        }elseif (version_compare(phpversion(), '8.1.0', '<')) {
-            $errorInfo = 'PHP版本不能小于8.1.0';
+        }elseif (version_compare(phpversion(), '8.3.0', '<')) {
+            $errorInfo = 'PHP版本不能小于8.3.0';
         }elseif (!extension_loaded("PDO")) {
             $errorInfo = '当前未开启PDO，无法进行安装';
         }
         if (!$request->ajax()) {
+            $isInstall   = false;
+            $db_type     = config('database.default', 'mysql');
             $envInfo     = [
-                'DB_HOST'   => $isInstall ? '' : env('DB_HOST', '127.0.0.1'),
-                'DB_NAME'   => $isInstall ? '' : env('DB_DATABASE', 'easyadmin8_laravel'),
-                'DB_USER'   => $isInstall ? '' : env('DB_USERNAME', 'root'),
-                'DB_PASS'   => $isInstall ? '' : env('DB_PASSWORD', 'root'),
-                'DB_PORT'   => $isInstall ? '' : env('DB_PORT', 3306),
-                'DB_PREFIX' => $isInstall ? '' : env('DB_PREFIX', 'ea8_'),
+                'DB_TYPE'    => $isInstall ? '' : $db_type,
+                'DB_HOST'    => $isInstall ? '' : config("database.connections.{$db_type}.host", '127.0.0.1'),
+                'DB_NAME'    => $isInstall ? '' : config("database.connections.{$db_type}.database", 'easyadmin8_laravel'),
+                'DB_USER'    => $isInstall ? '' : config("database.connections.{$db_type}.username", 'root'),
+                'DB_PASS'    => $isInstall ? '' : config("database.connections.{$db_type}.password", 'root'),
+                'DB_PORT'    => $isInstall ? '' : config("database.connections.{$db_type}.port", 3306),
+                'DB_PREFIX'  => $isInstall ? '' : config("database.connections.{$db_type}.prefix", 'ea8_'),
+                'DB_CHARSET' => $isInstall ? '' : config("database.connections.{$db_type}.charset", 'utf8mb4'),
             ];
             $currentHost = ($_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/';
             $result      = compact('errorInfo', 'currentHost', 'isInstall', 'envInfo');
@@ -42,9 +47,9 @@ class InstallController extends Controller
         if ($errorInfo) return $this->error($errorInfo);
         $envFile = base_path() . DIRECTORY_SEPARATOR . '.env';
         if (!is_file($envFile)) return $this->error('.env 配置文件不存在');
-        $charset = 'utf8mb4';
-
         $post       = $request->post();
+        $db_type    = $post['db_type'];
+        $charset    = $post['db_charset'];
         $cover      = $post['cover'] == 1;
         $database   = $post['database'];
         $hostname   = $post['hostname'];
@@ -73,7 +78,7 @@ class InstallController extends Controller
         }
         if (!empty($validateError)) return $this->error($validateError);
         $config = [
-            "driver"   => 'mysql',
+            "driver"   => $db_type,
             "host"     => $hostname,
             "database" => $database,
             "port"     => $hostport,
@@ -83,47 +88,63 @@ class InstallController extends Controller
             "charset"  => $charset,
         ];
         try {
-            Config::set("database.connections.mysql", $config);
-        }catch (\Throwable|Exception $exception) {
+            Config::set("database.connections.$db_type", $config);
+        }catch (\Throwable $exception) {
             return $this->error($exception->getMessage());
         }
         // 检测数据库连接
         $this->checkConnect($config);
         // 检测数据库是否存在
-        if (!$cover && $this->checkDatabase($database)) return $this->error('数据库已存在，请选择覆盖安装或者修改数据库名');
+        if (!$cover && $this->checkDatabase($database, $config)) return $this->error('数据库已存在，请选择覆盖安装或者修改数据库名');
         // 创建数据库
         $this->createDatabase($database, $config);
 
         // 导入sql语句等等
         $this->install($username, $password, array_merge($config, ['database' => $database]), $adminUrl);
+        SystemLogService::instance()->clearLogCache();
         return $this->success('系统安装成功，正在跳转登录页面');
     }
 
     protected function install($username, $password, $config): bool|string
     {
         $installPath = config_path() . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR;
-        $sqlPath     = file_get_contents($installPath . 'sql' . DIRECTORY_SEPARATOR . 'install.sql');
+        $driver      = $config['driver'];
+        $sqlPath     = match ($driver) {
+            'mysql' => file_get_contents($installPath . 'sql' . DIRECTORY_SEPARATOR . 'install.sql'),
+            'pgsql' => file_get_contents($installPath . 'sql' . DIRECTORY_SEPARATOR . 'install_pgsql.sql'),
+        };
         $sqlArray    = $this->parseSql($sqlPath, $config['prefix'], 'ea_');
+        $dsn         = $this->pdoDsn($config, true);
         try {
-            foreach ($sqlArray as $vo) {
-                DB::statement($vo);
+            $pdo = new \PDO($dsn, $config['username'] ?? 'root', $config['password'] ?? '');
+            foreach ($sqlArray as $sql) {
+                $pdo->query($sql);
             }
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $tableName      = 'system_admin';
             $update         = [
-                'username' => $username, 'head_img' => '/static/admin/images/head.jpg', 'password' => $hashedPassword, 'create_time' => time(), 'update_time' => time()
+                'username'    => $username,
+                'head_img'    => '/static/admin/images/head.jpg',
+                'password'    => $hashedPassword,
+                'create_time' => time(),
+                'update_time' => time()
             ];
-            DB::table($tableName)->where('id', 1)->update($update);
+            foreach ($update as $_k => $_up) {
+                $pdo->query("UPDATE {$config['prefix']}{$tableName} SET {$_k} = '{$_up}' WHERE id = 1");
+            }
+            if ($driver == 'pgsql') {
+                $pdo->exec('CREATE OR REPLACE FUNCTION pgsql_type(a_type varchar) RETURNS varchar AS $$ DECLARE v_type varchar; BEGIN IF a_type=\'int8\' THEN v_type:=\'bigint\'; ELSIF a_type=\'int4\' THEN v_type:=\'integer\'; ELSIF a_type=\'int2\' THEN v_type:=\'smallint\'; ELSIF a_type=\'bpchar\' THEN v_type:=\'char\'; ELSE v_type:=a_type; END IF; RETURN v_type; END; $$ LANGUAGE PLPGSQL; CREATE TYPE "public"."tablestruct" AS ("fields_key_name" varchar(100),"fields_name" VARCHAR(200),"fields_type" VARCHAR(20),"fields_length" BIGINT,"fields_not_null" VARCHAR(10),"fields_default" VARCHAR(500),"fields_comment" VARCHAR(1000)); CREATE OR REPLACE FUNCTION "public"."table_msg" (a_schema_name varchar, a_table_name varchar) RETURNS SETOF "public"."tablestruct" AS $$ DECLARE v_ret tablestruct; v_oid oid; v_sql varchar; v_rec RECORD; v_key varchar; BEGIN SELECT pg_class.oid INTO v_oid FROM pg_class INNER JOIN pg_namespace ON (pg_class.relnamespace = pg_namespace.oid AND lower(pg_namespace.nspname) = a_schema_name) WHERE pg_class.relname=a_table_name; IF NOT FOUND THEN RETURN; END IF; v_sql=\'SELECT pg_attribute.attname AS fields_name,pg_attribute.attnum AS fields_index,pgsql_type(pg_type.typname::varchar) AS fields_type,pg_attribute.atttypmod-4 as fields_length,CASE WHEN pg_attribute.attnotnull THEN \'\'not null\'\' ELSE \'\'\'\' END AS fields_not_null,pg_get_expr(pg_attrdef.adbin, pg_attrdef.adrelid) AS fields_default,pg_description.description AS fields_comment FROM pg_attribute INNER JOIN pg_class ON pg_attribute.attrelid = pg_class.oid INNER JOIN pg_type ON pg_attribute.atttypid = pg_type.oid LEFT OUTER JOIN pg_attrdef ON pg_attrdef.adrelid = pg_class.oid AND pg_attrdef.adnum = pg_attribute.attnum LEFT OUTER JOIN pg_description ON pg_description.objoid = pg_class.oid AND pg_description.objsubid = pg_attribute.attnum WHERE pg_attribute.attnum > 0 AND attisdropped <> \'\'t\'\' AND pg_class.oid = \' || v_oid || \' ORDER BY pg_attribute.attnum\'; FOR v_rec IN EXECUTE v_sql LOOP v_ret.fields_name=v_rec.fields_name; v_ret.fields_type=v_rec.fields_type; IF v_rec.fields_length > 0 THEN v_ret.fields_length:=v_rec.fields_length; ELSE v_ret.fields_length:=NULL; END IF; v_ret.fields_not_null=v_rec.fields_not_null; v_ret.fields_default=v_rec.fields_default; v_ret.fields_comment=v_rec.fields_comment; SELECT constraint_name INTO v_key FROM information_schema.key_column_usage WHERE table_schema=a_schema_name AND table_name=a_table_name AND column_name=v_rec.fields_name; IF FOUND THEN v_ret.fields_key_name=v_key; ELSE v_ret.fields_key_name=\'\'; END IF; RETURN NEXT v_ret; END LOOP; RETURN ; END; $$ LANGUAGE \'plpgsql\' VOLATILE CALLED ON NULL INPUT SECURITY INVOKER; COMMENT ON FUNCTION "public"."table_msg"(a_schema_name varchar, a_table_name varchar) IS \'获得表信息\'; CREATE OR REPLACE FUNCTION "public"."table_msg" (a_table_name varchar) RETURNS SETOF "public"."tablestruct" AS $$ DECLARE v_ret tablestruct; BEGIN FOR v_ret IN SELECT * FROM table_msg(\'public\',a_table_name) LOOP RETURN NEXT v_ret; END LOOP; RETURN; END; $$ LANGUAGE \'plpgsql\' VOLATILE CALLED ON NULL INPUT SECURITY INVOKER; COMMENT ON FUNCTION "public"."table_msg"(a_table_name varchar) IS \'获得表信息\';');
+            }
             //  处理安装文件
             !is_dir($installPath) && @mkdir($installPath);
             !is_dir($installPath . 'lock' . DIRECTORY_SEPARATOR) && @mkdir($installPath . 'lock' . DIRECTORY_SEPARATOR);
             @file_put_contents($installPath . 'lock' . DIRECTORY_SEPARATOR . 'install.lock', date('Y-m-d H:i:s'));
-        }catch (\Exception $e) {
+        }catch (\Exception $exception) {
             $data = [
                 'code' => 0,
-                'msg'  => "系统安装失败：" . $e->getMessage(),
+                'msg'  => "系统安装失败：" . $exception->getMessage(),
             ];
-            die(json_encode($data));
+            die(json_encode($data, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE));
         }
         return true;
     }
@@ -155,11 +176,12 @@ class InstallController extends Controller
             }
             if ($from != '') {
                 $line = str_replace('`' . $from, '`' . $to, $line);
+                $line = str_replace('"' . $from, '"' . $to, $line);
             }
             if ($line == 'BEGIN;' || $line == 'COMMIT;') {
                 continue;
             }
-            array_push($pure_sql, $line);
+            $pure_sql[] = $line;
         }
         //$pure_sql = implode($pure_sql, "\n");
         $pure_sql = implode("\n", $pure_sql);
@@ -170,18 +192,42 @@ class InstallController extends Controller
     {
         $dsn = $this->pdoDsn($config);
         try {
-            $pdo = new \PDO($dsn, $config['username'] ?? 'root', $config['password'] ?? '');
-            $pdo->query("CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET {$config['charset']} COLLATE=utf8mb4_general_ci");
-        }catch (\PDOException $e) {
+            $pdo        = new \PDO($dsn, $config['username'] ?? 'root', $config['password'] ?? '');
+            $create_sql = match ($config['driver'] ?? 'mysql') {
+                'mysql' => <<<SQL
+CREATE DATABASE IF NOT EXISTS `{$database}` DEFAULT CHARACTER SET {$config['charset']} COLLATE=utf8mb4_general_ci;
+SQL,
+                'pgsql' => <<<SQL
+CREATE DATABASE {$database} ENCODING {$config['charset']}
+SQL,
+            };
+            $pdo->query($create_sql);
+        }catch (\PDOException $exception) {
             return false;
         }
         return true;
     }
 
-    protected function checkDatabase($database): bool
+    protected function checkDatabase($database, $config): bool
     {
         try {
-            $check = DB::select("SELECT * FROM information_schema.schemata WHERE schema_name='{$database}'");
+            switch ($config['driver'] ?? 'mysql') {
+                case 'mysql':
+                    $sql   = <<<SQL
+SELECT * FROM information_schema.schemata WHERE schema_name='{$database}'
+SQL;
+                    $check = DB::select($sql);
+                    break;
+                case 'pgsql':
+                    $sql = <<<SQL
+SELECT 1 FROM pg_database WHERE datname='{$database}'
+SQL;
+
+                    $pdo    = new \PDO($this->pdoDsn($config), $config['username'] ?? 'root', $config['password'] ?? '');
+                    $result = $pdo->query($sql);
+                    $check  = $result->fetch();
+                    break;
+            }
         }catch (\Throwable $exception) {
             $check = false;
         }
@@ -196,22 +242,28 @@ class InstallController extends Controller
     {
         $dsn = $this->pdoDsn($config);
         try {
-            $pdo      = new \PDO($dsn, $config['username'] ?? 'root', $config['password'] ?? '');
-            $res      = $pdo->query('select VERSION()');
-            $_version = $res->fetch()[0] ?? 0;
-            if (version_compare($_version, '5.7.0', '<')) {
-                $data = [
-                    'code' => 0,
-                    'msg'  => 'mysql版本最低要求 5.7.x',
-                ];
-                die(json_encode($data));
+            $pdo = new \PDO($dsn, $config['username'] ?? 'root', $config['password'] ?? '');
+            switch ($config['driver'] ?? 'mysql') {
+                case 'mysql':
+                    $res      = $pdo->query('select VERSION()');
+                    $_version = $res->fetch()[0] ?? 0;
+                    if (version_compare($_version, '5.7.0', '<')) {
+                        $this->error('mysql版本最低要求 5.7.x');
+                    }
+                    break;
+                case 'pgsql':
+                    $_version = $pdo->getAttribute(\PDO::ATTR_SERVER_VERSION);
+                    if (version_compare($_version, '12.0', '<')) {
+                        $this->error('pgsql版本最低要求 12.x');
+                    }
+                    break;
             }
-        }catch (\PDOException $e) {
+        }catch (\Throwable $exception) {
             $data = [
                 'code' => 0,
-                'msg'  => $e->getMessage()
+                'msg'  => $exception->getMessage()
             ];
-            die(json_encode($data));
+            die(json_encode($data, JSON_UNESCAPED_UNICODE | JSON_INVALID_UTF8_SUBSTITUTE));
         }
         return true;
     }
@@ -227,7 +279,11 @@ class InstallController extends Controller
         $database = $config['database'] ?? '';
         $port     = $config['port'] ?? '3306';
         $charset  = $config['charset'] ?? 'utf8mb4';
-        if ($needDatabase) return "mysql:host=$host;port=$port;dbname=$database;charset=$charset";
-        return "mysql:host=$host;port=$port;charset=$charset";
+        $driver   = $config['driver'] ?? 'mysql';
+        $dsn      = "{$config['driver']}:host=$host;port=$port;";
+        if ($needDatabase) $dsn = $dsn . "dbname=$database;";
+        if ($driver == 'mysql') $dsn = $dsn . "charset=$charset;";
+        return $dsn;
     }
+
 }

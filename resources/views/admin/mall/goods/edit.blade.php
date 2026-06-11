@@ -1,4 +1,5 @@
 @include('admin.layout.head')
+<link rel="stylesheet" href="/static/common/css/marked.css?v={{$version}}">
 <div class="layuimini-container">
     <form id="app-form" class="layui-form layuimini-form layui-form-pane">
         <div class="layui-row">
@@ -31,16 +32,16 @@
 
                 <div class="layui-form-item">
                     <div class="layui-row">
-                        <label class="layui-form-label required">商品标题</label>
-                        <div class="layui-input-block layui-col-space5">
-                            <div class="layui-col-xs10">
+                        <div class="layui-col-xs10">
+                            <label class="layui-form-label required">商品标题</label>
+                            <div class="layui-input-block layui-col-space5">
                                 <div class="layui-input-wrap">
                                     <input type="text" name="title" class="layui-input" lay-verify="required" placeholder="请输入商品标题" value="{{$row['title']}}">
                                 </div>
                             </div>
-                            <div class="layui-col-xs2">
-                                <button class="layui-btn layui-bg-purple layui-btn-fluid" type="button" lay-on="AiOptimization">AI优化</button>
-                            </div>
+                        </div>
+                        <div class="layui-col-xs2">
+                            <button class="layui-btn layui-bg-purple layui-btn-fluid" type="button" lay-on="AiOptimization">AI优化</button>
                         </div>
                     </div>
                 </div>
@@ -131,4 +132,5 @@
 
     </form>
 </div>
+<script src="/static/common/js/marked.js?v={{$version}}"></script>
 @include('admin.layout.foot')

@@ -27,11 +27,17 @@ class IndexController extends AdminController
     public function welcome(): View
     {
         $laravelVersion = app()::VERSION;
-        $mysqlVersion   = DB::select("select VERSION() as version")[0]->version ?? '未知';
+
+        $dbType = config('database.default');
+        Db::query('SELECT 1');
+        $pdo            = DB::getPdo();
+        $sqlVersion     = $pdo->getAttribute(\PDO::ATTR_SERVER_VERSION);
+        $sqlVersion     = $dbType . "（{$sqlVersion}）";
         $phpVersion     = phpversion();
+        $jitStatus      = function_exists('opcache_get_status') ? (opcache_get_status()['jit']['on'] ?? false) : false;
         $branch         = json_decode(file_get_contents(base_path() . '/composer.json'))->branch ?? 'main';
         $configIsCached = file_exists(base_path() . '/bootstrap/cache/config.php');
-        $versions       = compact('laravelVersion', 'mysqlVersion', 'phpVersion', 'branch', 'configIsCached');
+        $versions       = compact('laravelVersion', 'sqlVersion', 'phpVersion', 'jitStatus', 'branch', 'configIsCached');
         $quick_list     = SystemQuick::where('status', 1)->select('id', 'title', 'icon', 'href')->orderByDesc('sort')->limit(50)->get()->toArray();
         $quicks         = array_chunk($quick_list, 8);
         return $this->fetch('', compact('quicks', 'versions'));

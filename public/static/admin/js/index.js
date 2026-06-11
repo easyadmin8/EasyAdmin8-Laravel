@@ -1,4 +1,4 @@
-define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTab", "swiper"], function ($, ea, echarts, undefined, miniAdmin, miniTab) {
+define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTheme", "miniTab", "swiper"], function ($, ea, echarts, undefined, miniAdmin, miniTheme, miniTab) {
 
     return {
         index: function () {
@@ -24,28 +24,6 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
                         window.location = ea.url('login/index');
                     })
                 });
-            });
-            layui.form.on('switch(header-theme-mode)', function (data) {
-                let dark_mode = this.checked
-                let that = $('iframe').contents()
-                if (dark_mode) {
-                    $('#layuicss-theme-dark').attr({
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: "/static/admin/css/layui-theme-dark.css"
-                    })
-                        .appendTo("head");
-                    that.find("html").addClass('dark')
-                    $('html').addClass('dark')
-                } else {
-                    $('#layuicss-theme-dark').attr({
-                        rel: "stylesheet",
-                        type: "text/css",
-                        href: ""
-                    })
-                    that.find("html").removeClass('dark')
-                    $('html').removeClass('dark')
-                }
             });
         },
         welcome: function () {
@@ -97,7 +75,7 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
                 let echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
                 let optionRecords = {
                     title: {
-                        text: '访问统计'
+                        text: ''
                     },
                     tooltip: {
                         trigger: 'axis'
@@ -157,10 +135,12 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
                         }
                     ]
                 };
-                echartsRecords.setOption(optionRecords);
-                window.addEventListener("resize", function () {
-                    echartsRecords.resize();
-                });
+                setTimeout(function () {
+                    echartsRecords.setOption(optionRecords);
+                    window.addEventListener("resize", function () {
+                        echartsRecords.resize();
+                    });
+                }, 100)
             })
 
             let util = layui.util;
@@ -179,7 +159,7 @@ define(["jquery", "easy-admin", "echarts", "echarts-theme", "miniAdmin", "miniTa
                         layer.open({
                             type: 1,
                             title: 'composer 信息',
-                            area: ['50%', '90%'],
+                            area: ea.checkMobile() ? ['95%', '90%'] : ['50%', '90%'],
                             shade: 0.8,
                             shadeClose: true,
                             scrollbar: false,

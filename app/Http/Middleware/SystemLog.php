@@ -72,6 +72,7 @@ class SystemLog
         $ip        = $request->ip();
         $_response = json_encode($response->original, JSON_UNESCAPED_UNICODE);
         $_response = mb_substr($_response, 0, 3000, 'utf-8');
+        if (!json_validate($_response)) $_response = json_encode(['message' => '内容太长 不适合记录']);
         $data      = [
             'admin_id'    => request()->session()->get('admin.id'),
             'title'       => $title,
