@@ -2,7 +2,7 @@
 <img alt="log" src="public/static/common/images/logo-8.png" />
 
 <p>
-<span><img src="https://img.shields.io/badge/php-%3E=8.4.0-brightgreen.svg?maxAge=2592000&amp;" alt="php"></span>
+<span><img src="https://img.shields.io/badge/php-%3E=8.3.0-brightgreen.svg?maxAge=2592000&amp;" alt="php"></span>
 <span><img src="https://img.shields.io/badge/mysql-%3E=5.7-brightgreen.svg?maxAge=2592000&amp;color=blue" alt="MySQL"></span>
 <span><img src="https://img.shields.io/badge/laravel-%3E=12.0.0-brightgreen.svg?maxAge=2592000" alt="Laravel"></span>
 <span><img src="https://img.shields.io/badge/layui-%3E=2.x-brightgreen.svg?maxAge=2592000&amp;color=critical" alt="layui"></span>
@@ -20,7 +20,7 @@
 
 ## 项目介绍
 
-> `EasyAdmin8-Laravel` 在 [`EasyAdmin8`](https://gitee.com/EasyAdmin8/EasyAdmin8) 的基础上使用 Laravel 13.x 重构，PHP 最低版本要求不低于 8.4
+> `EasyAdmin8-Laravel` 在 [`EasyAdmin8`](https://gitee.com/EasyAdmin8/EasyAdmin8) 的基础上使用 Laravel 13.x 重构，PHP 最低版本要求不低于 8.3
 >
 > 请注意：当前项目采用 `laravel 13.x` 构建
 >
