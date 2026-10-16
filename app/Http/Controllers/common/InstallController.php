@@ -28,7 +28,6 @@ class InstallController extends Controller
             $errorInfo = '当前未开启PDO，无法进行安装';
         }
         if (!$request->ajax()) {
-            $isInstall   = false;
             $db_type     = config('database.default', 'mysql');
             $envInfo     = [
                 'DB_TYPE'    => $isInstall ? '' : $db_type,
